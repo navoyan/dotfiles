@@ -12,8 +12,7 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 
 
 # --- Parameters for Oh My ZSH plugins ---
-ZSH_TMUX_AUTOSTART=true
-
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#abb4be"
 
 # --- Oh My ZSH plugins ---
 plugins=(
@@ -22,15 +21,12 @@ plugins=(
   kubectl
   helm
   bazel
-  tmux
 )
 
 
 source $ZSH/oh-my-zsh.sh
 
-
 # --- Parameters for custom ZSH startup scripts ---
-OPENVPN_PROFILE_NAME="sagesse"
 
 
 # --- Load custom ZSH scripts ---
@@ -43,12 +39,30 @@ done
 alias cl='clear && tmux clear-history'
 alias g='git'
 alias b='bazel'
+alias v='nvim'
+alias vh='v .'
+
+# PATH changes
+export PATH="/usr/bin/flutter-sdk/bin:/usr/local/go/bin:/home/narek/.pub-cache/bin:~/.local/bin:${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
 
 
-# Krew PATH changes
-export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
+# Setups
+source ~/.cargo/env
+eval "$(zoxide init --cmd cd zsh)"
 
 
 # --- P10k ---
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+# --- fzf ---
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# pnpm
+export PNPM_HOME="/home/narek/.local/share/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
+

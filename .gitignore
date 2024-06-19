@@ -2,3 +2,4 @@
 dotfiles.iml
 
 .custom-zsh/vpn.zsh
+.config/nvim/target
