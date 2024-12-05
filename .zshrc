@@ -16,8 +16,6 @@ ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#abb4be"
 
 # --- Oh My ZSH plugins ---
 plugins=(
-  zsh-syntax-highlighting
-  zsh-autosuggestions
   kubectl
   helm
   bazel
@@ -26,43 +24,45 @@ plugins=(
 
 source $ZSH/oh-my-zsh.sh
 
-# --- Parameters for custom ZSH startup scripts ---
-
-
-# --- Load custom ZSH scripts ---
-for SCRIPT in ~/.custom-zsh/*; do
-    source $SCRIPT
-done
-
+# --- custom ZSH functions ---
+function mk-start {
+  if minikube status | grep -E "Running"; then
+    printf "\nMINIKUBE IS ALREADY RUNNING\n"
+  else
+    minikube start
+  fi
+}
 
 # --- Custom aliases ---
 alias cl='clear && tmux clear-history'
 alias g='git'
 alias b='bazel'
 alias v='nvim'
+alias vi='nvim'
+alias vim='nvim'
 alias vh='v .'
+alias kctx='kubectx'
+alias kns='kubens'
+alias ls='eza'
+alias ll='eza --long --all --icons'
+alias tree='eza --tree --all --icons'
 
-# PATH changes
-export PATH="/usr/bin/flutter-sdk/bin:/usr/local/go/bin:/home/narek/.pub-cache/bin:~/.local/bin:${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
+# Well-known variable changes
+export PATH="/home/narek/sdk/flutter/bin:/home/narek/go/bin:/home/narek/.pub-cache/bin:~/.local/bin:${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
 
+export EDITOR=nvim
 
 # Setups
-source ~/.cargo/env
+# source ~/.cargo/env
 eval "$(zoxide init --cmd cd zsh)"
 
+source <(fzf --zsh)
+
+eval "$(register-python-argcomplete pipx)"
 
 # --- P10k ---
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-# --- fzf ---
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
-# pnpm
-export PNPM_HOME="/home/narek/.local/share/pnpm"
-case ":$PATH:" in
-  *":$PNPM_HOME:"*) ;;
-  *) export PATH="$PNPM_HOME:$PATH" ;;
-esac
-# pnpm end
-
+source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh

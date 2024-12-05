@@ -1,5 +1,8 @@
 return { -- Autoformat
     "stevearc/conform.nvim",
+    dependencies = {
+        "zapling/mason-conform.nvim",
+    },
     keys = {
         {
             -- Customize or remove this keymap to your liking
@@ -27,6 +30,8 @@ return { -- Autoformat
             lua = { "stylua" },
             python = { "black" },
             rust = { "rustfmt" },
+            bzl = { "buildifier" },
+            json = { "prettier" },
 
             -- You can use a sub-list to tell conform to run *until* a formatter
             -- is found.

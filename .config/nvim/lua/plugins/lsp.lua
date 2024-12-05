@@ -171,7 +171,9 @@ return {
                         },
                     },
                 },
-                tsserver = {},
+                tsserver = {
+                    filetypes = { "javascript" },
+                },
             }
 
             require("mason").setup()

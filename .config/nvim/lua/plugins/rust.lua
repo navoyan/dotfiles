@@ -30,7 +30,7 @@ return {
                     ["rust-analyzer"] = {
                         checkOnSave = false,
                         check = {
-                            command = "clippy",
+                            command = "check",
                         },
                         cargo = {
                             buildScripts = {

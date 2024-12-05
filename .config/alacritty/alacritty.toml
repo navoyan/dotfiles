@@ -1,5 +1,5 @@
+[general]
 import = ["/home/narek/.config/alacritty/alacritty-theme/themes/catppuccin_mocha.toml"]
-live_config_reload = true
 
 [bell]
 animation = "EaseOutExpo"
@@ -44,7 +44,7 @@ mouse = "Middle"
 [selection]
 semantic_escape_chars = ",│`|:\"' ()[]{}<>"
 
-[shell]
+[terminal.shell]
 program = "/bin/zsh"
 
 [window]
@@ -52,4 +52,3 @@ decorations = "none"
 dynamic_title = true
 startup_mode = "Maximized"
 padding = { x = 0, y = 0 }
-
