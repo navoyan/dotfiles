@@ -1,7 +1,6 @@
 return {
     { -- LSP Configuration & Plugins
         "neovim/nvim-lspconfig",
-        event = "LspAttach",
         dependencies = {
             -- Automatically install LSPs and related tools to stdpath for Neovim
             "williamboman/mason.nvim",
@@ -12,8 +11,6 @@ return {
 
             -- Useful status updates for LSP.
             { "j-hui/fidget.nvim", opts = {} },
-
-            { "folke/lazydev.nvim", ft = "lua", opts = {} },
 
             "nvimdev/lspsaga.nvim",
         },
@@ -171,7 +168,7 @@ return {
                         },
                     },
                 },
-                tsserver = {
+                ts_ls = {
                     filetypes = { "javascript" },
                 },
             }
@@ -198,6 +195,17 @@ return {
                 },
             })
         end,
+    },
+    {
+        "folke/lazydev.nvim",
+        ft = "lua", -- only load on lua files
+        opts = {
+            library = {
+                -- See the configuration section for more details
+                -- Load luvit types when the `vim.uv` word is found
+                { path = "${3rd}/luv/library", words = { "vim%.uv" } },
+            },
+        },
     },
     -- LSP Saga Configuration
     {
