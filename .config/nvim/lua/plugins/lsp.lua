@@ -3,9 +3,11 @@ return {
         "neovim/nvim-lspconfig",
         dependencies = {
             -- Automatically install LSPs and related tools to stdpath for Neovim
-            "williamboman/mason.nvim",
+            { "williamboman/mason.nvim", opts = {} },
             "williamboman/mason-lspconfig.nvim",
             "WhoIsSethDaniel/mason-tool-installer.nvim",
+
+            "saghen/blink.cmp",
 
             "nvim-lua/plenary.nvim",
 
@@ -93,31 +95,12 @@ return {
                 end,
             })
 
-            -- LSP servers and clients are able to communicate to each other what features they support.
-            --  By default, Neovim doesn't support everything that is in the LSP specification.
-            --  When you add nvim-cmp, luasnip, etc. Neovim now has *more* capabilities.
-            --  So, we create new capabilities with nvim cmp, and then broadcast that to the servers.
-            local capabilities = vim.lsp.protocol.make_client_capabilities()
-            -- capabilities = vim.tbl_deep_extend("force", capabilities, require("cmp_nvim_lsp").default_capabilities())
-
-            -- Enabled language servers
-            --  Add any additional override configuration in the following tables. Available keys are:
             --  - cmd (table): Override the default command used to start the server
             --  - filetypes (table): Override the default list of associated filetypes for the server
             --  - capabilities (table): Override fields in capabilities. Can be used to disable certain LSP features.
             --  - settings (table): Override the default settings passed when initializing the server.
-            --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
             local servers = {
-                pyright = {
-                    settings = {
-                        autoImportCompletion = true,
-                        python = {
-                            analysis = {
-                                typeCheckingMode = "off",
-                            },
-                        },
-                    },
-                },
+                basedpyright = {},
                 yamlls = {
                     settings = {
                         yaml = {
@@ -158,8 +141,6 @@ return {
                 },
             }
 
-            require("mason").setup()
-
             -- Ensure listed tools are installed
             local ensure_installed = vim.tbl_keys(servers or {})
             vim.list_extend(ensure_installed, {
@@ -174,6 +155,7 @@ return {
                         -- This handles overriding only values explicitly passed
                         -- by the server configuration above. Useful when disabling
                         -- certain features of an LSP (for example, turning off formatting for tsserver)
+                        local capabilities = require("blink.cmp").get_lsp_capabilities(server.capabilities)
                         server.capabilities = vim.tbl_deep_extend("force", {}, capabilities, server.capabilities or {})
                         require("lspconfig")[server_name].setup(server)
                     end,
