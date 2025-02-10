@@ -24,6 +24,14 @@ return {
         },
     },
     opts = {
+        indent = {
+            animate = {
+                enabled = false,
+            },
+            scope = {
+                enabled = false,
+            },
+        },
         gitbrowse = {
             remote_patterns = {
                 { "^ssh://git@git%.(.+):(.+)/main/(.+)%.git$", "https://space.%1:%2/p/main/repositories/%3" },
