@@ -2,7 +2,6 @@ return {
     "nvim-lualine/lualine.nvim",
     dependencies = {
         "nvim-tree/nvim-web-devicons",
-        "letieu/harpoon-lualine",
     },
     opts = {
         options = {
@@ -26,13 +25,7 @@ return {
                     padding = 0,
                 },
             },
-            lualine_x = {
-                {
-                    "harpoon2",
-                    indicators = { "A", "S", "Q", "W" },
-                    active_indicators = { "[A]", "[S]", "[Q]", "[W]" },
-                },
-            },
+            lualine_x = {},
             lualine_y = {
                 "diagnostics",
             },
