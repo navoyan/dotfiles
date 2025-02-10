@@ -9,6 +9,9 @@ return {
                     enabled = false,
                 },
             },
+            presets = {
+                inc_rename = true,
+            },
             views = {
                 mini = {
                     reverse = false,
@@ -27,6 +30,10 @@ return {
                 optional = true,
             },
         },
+    },
+    {
+        "smjonas/inc-rename.nvim",
+        opts = {},
     },
     -- Useful status updates for LSP.
     {

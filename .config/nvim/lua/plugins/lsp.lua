@@ -61,7 +61,9 @@ return {
 
                     -- Rename the variable under the cursor.
                     --  Most Language Servers support renaming across files, etc.
-                    map("<leader>rn", "<cmd>Lspsaga rename<cr>", "[R]e[n]ame")
+                    vim.keymap.set("n", "<leader>rn", function()
+                        return ":IncRename " .. vim.fn.expand("<cword>")
+                    end, { expr = true, buffer = event.buf, desc = "LSP: [R]e[n]ame" })
 
                     -- Execute a code action aviailable for the current symbol or line
                     vim.keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, {
@@ -188,43 +190,6 @@ return {
                 -- Load luvit types when the `vim.uv` word is found
                 { path = "${3rd}/luv/library", words = { "vim%.uv" } },
             },
-        },
-    },
-    -- LSP Saga Configuration
-    {
-        "nvimdev/lspsaga.nvim",
-        opts = {
-            lightbulb = {
-                enable = false,
-            },
-            definition = {
-                keys = {
-                    quit = "q",
-                    edit = "<Nop>",
-                    vsplit = "<Nop>",
-                    split = "<Nop>",
-                    tabe = "<Nop>",
-                },
-            },
-            outline = {
-                layout = "float",
-                win_position = "center",
-                close_after_jump = true,
-                keys = {
-                    toggle_or_jump = "l",
-                    jump = "h",
-                },
-            },
-            rename = {
-                auto_save = true,
-                keys = {
-                    quit = "<C-q>",
-                },
-            },
-        },
-        dependencies = {
-            "nvim-treesitter/nvim-treesitter",
-            "nvim-tree/nvim-web-devicons",
         },
     },
 }
