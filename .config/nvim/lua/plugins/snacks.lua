@@ -24,6 +24,13 @@ return {
         },
     },
     opts = {
+        notifier = {
+            style = "minimal",
+            margin = { top = 0, right = 0, bottom = 0 },
+        },
+        words = {
+            debounce = 10,
+        },
         indent = {
             animate = {
                 enabled = false,
@@ -32,6 +39,8 @@ return {
                 enabled = false,
             },
         },
+        bigfile = {},
+        quickfile = {},
         gitbrowse = {
             remote_patterns = {
                 { "^ssh://git@git%.(.+):(.+)/main/(.+)%.git$", "https://space.%1:%2/p/main/repositories/%3" },
