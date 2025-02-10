@@ -1,1 +1,150 @@
-bars/spectrum/style.css
+@import "colors/current-theme.css";
+
+/* Waybar styling */
+window#waybar {
+    background-color: transparent;
+}
+
+window > box {
+    background-color: @backgrounddark;
+    padding: 0px 5px;
+    margin: 5px 7px 0px 7px;
+    border-radius: 7px;
+}
+
+* {
+    font-family: SpaceMono Nerd Font;
+    font-weight: 600;
+    font-size: 16px;
+    padding: 0;
+}
+
+#cpu,
+#memory,
+#disk,
+#custom-updates,
+#pulseaudio,
+#workspaces,
+#clock,
+#sys-settings,
+#custom-spotify,
+#network,
+#network.linked,
+#network.ethernet,
+#network.wifi {
+    background-color: @background;
+}
+
+#cpu {
+    color: @module1;
+}
+
+#memory {
+    color: @module2;
+}
+
+#disk {
+    color: @module3;
+}
+
+#pulseaudio {
+    color: @module2;
+}
+
+#clock {
+    color: @module1;
+}
+
+#cpu, #memory, #disk, #mpris, #sys-settings, #pulseaudio, #custom-updates, #clock {
+    border-radius: 7px;
+    padding: 0px 9px;
+    margin: 6px 2px;
+}
+
+/* Internet module spaced away from bluetooth */
+#bluetooth {
+    margin-right: 10px;
+}
+
+#workspaces {
+    border-radius: 7px;
+    padding: 0px 1px;
+    margin: 6px 2px;
+}
+
+#workspaces button {
+    color: @textdark;
+    padding: 0px 5px;
+}
+
+#workspaces button.active {
+    color: @module2;
+}
+
+#workspaces button.urgent {
+    color: @color5;
+}
+
+#workspaces button.empty {
+    color: @textdark;
+}
+
+#workspaces button:hover {
+    color: @color7;
+    background-color: @background;
+}
+
+#bluetooth {
+    color: @color12;
+    padding: 0px;
+}
+
+#bluetooth:hover {
+    color: @color7;
+}
+
+#network {
+    margin-right: 2px;
+}
+
+@keyframes blink {
+    to {
+        color: @text;
+    }
+}
+
+#battery.charging {
+    animation-name: blink;
+    animation-duration: 3s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+tooltip {
+    padding: 25px;
+    background-color: @backgrounddark;
+    color: @foreground;
+    font-family: CartographCF Nerd Font;
+}
+
+tooltip label {
+    padding: 15px;
+    color: @textdark;
+}
+
+#battery {
+    margin-left: 2px;
+    margin-right: 10px;
+}
+
+#custom-nc-center {
+    color: @color14;
+    padding: 0px 10px;
+    margin: 6px 2px;
+}
+
+#tray {
+    margin: 6px 2px;
+    padding: 0px 10px;
+}

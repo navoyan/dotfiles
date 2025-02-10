@@ -1,5 +1,13 @@
 return {
     {
+        "folke/tokyonight.nvim",
+        lazy = false,
+        priority = 1000,
+        opts = {
+            transparent = true,
+        },
+    },
+    {
         "catppuccin/nvim",
         name = "catppuccin",
         enabled = true,
@@ -20,17 +28,10 @@ return {
         },
     },
     {
-        "folke/tokyonight.nvim",
-        enabled = false,
-        lazy = false,
-        priority = 1000,
-        opts = {},
-    },
-    {
         "rose-pine/neovim",
         name = "rose-pine",
         enabled = false,
-        lazy = false,
+        lazy = true,
         priority = 1000,
         opts = {},
     },

@@ -19,6 +19,4 @@ require("lazy").setup("plugins")
 
 require("mappings")
 require("autocmds")
-
-vim.cmd.colorscheme("catppuccin")
-
+require("current_theme")

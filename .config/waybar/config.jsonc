@@ -1,1 +1,111 @@
-bars/spectrum/config.jsonc
+[
+	{
+		"layer": "top",
+		"position": "top",
+		"height": 45,
+		"output": [
+			"DP-2",
+			"HDMI-A-2",
+		],
+		"modules-left": [
+			"cpu",
+			"memory",
+			"disk",
+		],
+		"modules-center": [
+			"hyprland/workspaces#numbers",
+		],
+		"modules-right": [
+			"tray",
+			"pulseaudio",
+			"clock",
+			"custom/nc-center"
+		],
+		// MODULES
+		"cpu": {
+			"interval": 10,
+			"format": "  {}%",
+			"max-length": 10
+		},
+		"memory": {
+			"interval": 30,
+			"format": "  {used} GiB",
+		},
+		"disk": {
+			"interval": 1,
+			"format": "  {specific_used:0.2f} GB",
+			//"path": "/",
+			"unit": "GB"
+		},
+		// Numbers Style workspace 
+		"hyprland/workspaces#numbers": {
+			"all-outputs": true,
+			"active-only": false,
+			"show-special": false,
+			"on-click": "activate",
+			"on-scroll-up": "hyprctl dispatch workspace e+1",
+			"on-scroll-down": "hyprctl dispatch workspace e-1",
+			"persistent-workspaces": {
+				"1": [],
+				"2": [],
+				"3": [],
+				"4": [],
+				"5": [],
+			},
+			"format": "{icon}",
+			"format-icons": {
+				"1": "1",
+				"2": "2",
+				"3": "3",
+				"4": "4",
+				"5": "5",
+				"6": "6",
+				"7": "7",
+				"8": "8",
+				"9": "9",
+				"10": "10",
+				"urgent": "",
+			},
+		},
+		"tray": {
+			"icon-size": 14,
+			"spacing": 10
+		},
+		"pulseaudio": {
+			"format": "{icon} {volume}%",
+			"format-bluetooth": "󰂰 {volume}%",
+			"format-muted": " ",
+			"format-icons": {
+				"bluetooth": "󰥰 ",
+				"headphone": " ",
+				"hands-free": " ",
+				"headset": " ",
+				"phone": " ",
+				"phone-muted": " ",
+				"portable": " ",
+				"car": " ",
+				"default": [
+					" ",
+					" "
+				]
+			},
+			"scroll-step": 1,
+			"on-click": "pavucontrol",
+			"on-click-right": "blueman-manager",
+			"on-click-middle": "pactl set-sink-mute @DEFAULT_SINK@ toggle",
+			"ignored-sinks": [
+				"Easy Effects Sink"
+			]
+		},
+		"clock": {
+			"format": "{:%OI:%OM %p}",
+			"format-alt": "{:%A, %b %e}",
+			"interval": 60
+		},
+		"custom/nc-center": {
+			"format": "󰂚",
+			"on-click": "swaync-client -t -sw",
+			"tooltip": false
+		},
+	}
+]

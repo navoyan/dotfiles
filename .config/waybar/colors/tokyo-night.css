@@ -5,9 +5,12 @@
 @define-color foreground #3b4261; 
 @define-color foregrounddark #292e42; 
 
+@define-color background rgba(41, 46, 66, 0.9);
+@define-color backgrounddark rgba(26, 27, 38, 0.9);
 
-@define-color background #292e42;
-@define-color backgrounddark #24283b;
+@define-color module1 #f9e2af;
+@define-color module2 #89b4fa;
+@define-color module3 #f38ba8;
 
 @define-color color1 #d3869b; /* purple-d */
 @define-color color2 #9d7cd8;  /* purple */
@@ -23,5 +26,3 @@
 @define-color color12 #7aa2f7;  /* blue */
 @define-color color13 #ff007c;  /* orange-d */
 @define-color color14 #4fd6be; /* orange */
-
-

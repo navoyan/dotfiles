@@ -3,3 +3,4 @@ dotfiles.iml
 
 .custom-zsh/vpn.zsh
 .config/nvim/target
+.config/nvim/lua/current_theme.lua
