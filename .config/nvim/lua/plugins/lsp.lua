@@ -26,40 +26,33 @@ return {
                         vim.keymap.set("n", keys, func, { buffer = event.buf, desc = "LSP: " .. desc })
                     end
 
+                    local function with_preview(picker_fn)
+                        return function()
+                            picker_fn({ layout = { preset = "vscode", preview = "main" } })
+                        end
+                    end
+
+                    local picker = Snacks.picker
+
                     -- Jump to the definition of the word under the cursor.
-                    map("gd", require("telescope.builtin").lsp_definitions, "[G]oto [D]efinition")
+                    map("gd", with_preview(picker.lsp_definitions), "[G]oto [D]efinition")
 
                     -- Find references for the word under the cursor.
-                    map("gr", require("telescope.builtin").lsp_references, "[G]oto [R]eferences")
+                    map("gr", with_preview(picker.lsp_references), "[G]oto [R]eferences")
 
                     -- Jump to the implementation of the word under the cursor.
                     --  Useful when your language has ways of declaring types without an actual implementation.
-                    map("gI", require("telescope.builtin").lsp_implementations, "[G]oto [I]mplementation")
+                    map("gI", with_preview(picker.lsp_implementations), "[G]oto [I]mplementation")
 
                     -- Jump to the type of the symbol under the cursor.
-                    map("gD", require("telescope.builtin").lsp_type_definitions, "[G]oto Type [D]efinition")
+                    map("gy", with_preview(picker.lsp_type_definitions), "[G]oto T[y]pe Definition")
 
                     -- Fuzzy find all the symbols in your current document.
                     --  Symbols are things like variables, functions, types, etc.
-                    map("<leader>sd", require("telescope.builtin").lsp_document_symbols, "[S]ymbols in [D]ocument")
-
-                    -- List all symbols in the current document (symbol structure)
-                    map("<leader>ss", "<cmd>Lspsaga outline<cr>", "[S]ymbols [S]structure")
-
-                    -- Find current symbol references in the current workspace
-                    map("<leader>sf", "<cmd>Lspsaga finder<cr>", "[S]ymbols: [F]ind current word")
-
-                    -- Peek the definition of the current symbol
-                    map("<leader>sp", "<cmd>Lspsaga peek_definition<cr>", "[S]ymbol: [P]eek Definition")
-                    -- Peek the type definition of the current symbol
-                    map("<leader>st", "<cmd>Lspsaga peek_type_definition<cr>", "[S]ymbol: Peek [T]ype Definition")
+                    map("<leader>sd", with_preview(picker.lsp_symbols), "[S]ymbols in [D]ocument")
 
                     -- Fuzzy find all the symbols in your current workspace.
-                    map(
-                        "<leader>sw",
-                        require("telescope.builtin").lsp_dynamic_workspace_symbols,
-                        "[S]ymbols in [W]orkspace"
-                    )
+                    map("<leader>sw", with_preview(picker.lsp_workspace_symbols), "[S]ymbols in [W]orkspace")
 
                     -- Rename the variable under the cursor.
                     --  Most Language Servers support renaming across files, etc.
@@ -84,7 +77,7 @@ return {
 
                     -- Jump to the next or previous diagnostic in the current buffer
                     map("<leader>dn", vim.diagnostic.goto_next, "[D]iagnostics: jump to [N]ext")
-                    map("<leader>dN", vim.diagnostic.goto_prev, "[D]iagnostics: jump to previous")
+                    map("<leader>dp", vim.diagnostic.goto_prev, "[D]iagnostics: jump to previous")
 
                     -- Opens a popup that displays documentation about the word under the cursor
                     map("K", vim.lsp.buf.hover, "Hover Documentation")
