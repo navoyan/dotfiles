@@ -14,23 +14,6 @@ return {
         },
     },
     {
-        "christoomey/vim-tmux-navigator",
-        enabled = false,
-        cmd = {
-            "TmuxNavigateLeft",
-            "TmuxNavigateDown",
-            "TmuxNavigateUp",
-            "TmuxNavigateRight",
-            "TmuxNavigatePrevious",
-        },
-        keys = {
-            { "<M-h>", "<cmd>TmuxNavigateLeft<cr>" },
-            { "<M-j>", "<cmd>TmuxNavigateDown<cr>" },
-            { "<M-k>", "<cmd>TmuxNavigateUp<cr>" },
-            { "<M-l>", "<cmd>TmuxNavigateRight<cr>" },
-        },
-    },
-    {
         "epwalsh/obsidian.nvim",
         version = "*",
         lazy = true,
@@ -56,16 +39,5 @@ return {
                 },
             },
         },
-    },
-    {
-        "mikesmithgh/kitty-scrollback.nvim",
-        lazy = true,
-        cmd = { "KittyScrollbackGenerateKittens", "KittyScrollbackCheckHealth" },
-        event = { "User KittyScrollbackLaunch" },
-        -- version = '*', -- latest stable version, may have breaking changes if major version changed
-        -- version = '^6.0.0', -- pin major version, include fixes and features that do not have breaking changes
-        config = function()
-            require("kitty-scrollback").setup()
-        end,
     },
 }
