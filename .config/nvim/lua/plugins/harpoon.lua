@@ -36,7 +36,6 @@ return {
                     :find()
             end
 
-
             vim.keymap.set("n", "<leader>a", function()
                 harpoon:list():add()
             end)

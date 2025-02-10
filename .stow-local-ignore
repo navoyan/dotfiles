@@ -3,4 +3,5 @@
 .gitignore
 .gitmodules
 dotfiles.iml
+.stylua.toml
 LICENSE

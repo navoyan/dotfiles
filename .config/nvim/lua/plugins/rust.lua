@@ -35,7 +35,7 @@ return {
                         cargo = {
                             buildScripts = {
                                 rebuildOnSave = true,
-                            }
+                            },
                         },
                         imports = {
                             granularity = {
