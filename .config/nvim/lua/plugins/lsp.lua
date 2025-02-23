@@ -2,18 +2,56 @@ return {
     { -- LSP Configuration & Plugins
         "neovim/nvim-lspconfig",
         dependencies = {
-            -- Automatically install LSPs and related tools to stdpath for Neovim
-            { "williamboman/mason.nvim", opts = {} },
-            "williamboman/mason-lspconfig.nvim",
-            "WhoIsSethDaniel/mason-tool-installer.nvim",
+            "nvim-lua/plenary.nvim",
 
             "saghen/blink.cmp",
 
-            "nvim-lua/plenary.nvim",
-
             "j-hui/fidget.nvim",
         },
-        config = function()
+        opts = {
+            servers = {
+                lua_ls = {
+                    -- cmd = {...},
+                    -- filetypes = { ...},
+                    -- capabilities = {},
+                    settings = {
+                        Lua = {
+                            completion = {
+                                callSnippet = "Replace",
+                            },
+                            -- You can toggle below to ignore Lua_LS's noisy `missing-fields` warnings
+                            -- diagnostics = { disable = { 'missing-fields' } },
+                        },
+                    },
+                },
+                basedpyright = {},
+                ts_ls = {
+                    filetypes = { "javascript" },
+                },
+                yamlls = {
+                    settings = {
+                        yaml = {
+                            schemas = {
+                                kubernetes = "*.yaml",
+                                ["http://json.schemastore.org/github-workflow"] = ".github/workflows/*",
+                                ["http://json.schemastore.org/github-action"] = ".github/action.{yml,yaml}",
+                                ["http://json.schemastore.org/ansible-stable-2.9"] = "roles/tasks/*.{yml,yaml}",
+                                ["http://json.schemastore.org/prettierrc"] = ".prettierrc.{yml,yaml}",
+                                ["http://json.schemastore.org/kustomization"] = "kustomization.{yml,yaml}",
+                                ["http://json.schemastore.org/ansible-playbook"] = "*play*.{yml,yaml}",
+                                ["http://json.schemastore.org/chart"] = "Chart.{yml,yaml}",
+                                ["https://json.schemastore.org/dependabot-v2"] = ".github/dependabot.{yml,yaml}",
+                                ["https://json.schemastore.org/gitlab-ci"] = "*gitlab-ci*.{yml,yaml}",
+                                ["https://raw.githubusercontent.com/OAI/OpenAPI-Specification/main/schemas/v3.1/schema.json"] = "*api*.{yml,yaml}",
+                                ["https://raw.githubusercontent.com/compose-spec/compose-spec/master/schema/compose-spec.json"] = "*docker-compose*.{yml,yaml}",
+                                ["https://raw.githubusercontent.com/argoproj/argo-workflows/master/api/jsonschema/schema.json"] = "*flow*.{yml,yaml}",
+                            },
+                        },
+                    },
+                },
+            },
+        },
+        config = function(_, opts)
             --  This function gets run when an LSP attaches to a particular buffer.
             --    That is to say, every time a new file is opened that is associated with
             --    an lsp (for example, opening `main.rs` is associated with `rust_analyzer`) this
@@ -87,72 +125,11 @@ return {
                 end,
             })
 
-            --  - cmd (table): Override the default command used to start the server
-            --  - filetypes (table): Override the default list of associated filetypes for the server
-            --  - capabilities (table): Override fields in capabilities. Can be used to disable certain LSP features.
-            --  - settings (table): Override the default settings passed when initializing the server.
-            local servers = {
-                basedpyright = {},
-                yamlls = {
-                    settings = {
-                        yaml = {
-                            schemas = {
-                                kubernetes = "*.yaml",
-                                ["http://json.schemastore.org/github-workflow"] = ".github/workflows/*",
-                                ["http://json.schemastore.org/github-action"] = ".github/action.{yml,yaml}",
-                                ["http://json.schemastore.org/ansible-stable-2.9"] = "roles/tasks/*.{yml,yaml}",
-                                ["http://json.schemastore.org/prettierrc"] = ".prettierrc.{yml,yaml}",
-                                ["http://json.schemastore.org/kustomization"] = "kustomization.{yml,yaml}",
-                                ["http://json.schemastore.org/ansible-playbook"] = "*play*.{yml,yaml}",
-                                ["http://json.schemastore.org/chart"] = "Chart.{yml,yaml}",
-                                ["https://json.schemastore.org/dependabot-v2"] = ".github/dependabot.{yml,yaml}",
-                                ["https://json.schemastore.org/gitlab-ci"] = "*gitlab-ci*.{yml,yaml}",
-                                ["https://raw.githubusercontent.com/OAI/OpenAPI-Specification/main/schemas/v3.1/schema.json"] = "*api*.{yml,yaml}",
-                                ["https://raw.githubusercontent.com/compose-spec/compose-spec/master/schema/compose-spec.json"] = "*docker-compose*.{yml,yaml}",
-                                ["https://raw.githubusercontent.com/argoproj/argo-workflows/master/api/jsonschema/schema.json"] = "*flow*.{yml,yaml}",
-                            },
-                        },
-                    },
-                },
-                lua_ls = {
-                    -- cmd = {...},
-                    -- filetypes = { ...},
-                    -- capabilities = {},
-                    settings = {
-                        Lua = {
-                            completion = {
-                                callSnippet = "Replace",
-                            },
-                            -- You can toggle below to ignore Lua_LS's noisy `missing-fields` warnings
-                            -- diagnostics = { disable = { 'missing-fields' } },
-                        },
-                    },
-                },
-                ts_ls = {
-                    filetypes = { "javascript" },
-                },
-            }
-
-            -- Ensure listed tools are installed
-            local ensure_installed = vim.tbl_keys(servers or {})
-            vim.list_extend(ensure_installed, {
-                "stylua", -- Used to format Lua code
-            })
-            require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
-
-            require("mason-lspconfig").setup({
-                handlers = {
-                    function(server_name)
-                        local server = servers[server_name] or {}
-                        -- This handles overriding only values explicitly passed
-                        -- by the server configuration above. Useful when disabling
-                        -- certain features of an LSP (for example, turning off formatting for tsserver)
-                        local capabilities = require("blink.cmp").get_lsp_capabilities(server.capabilities)
-                        server.capabilities = vim.tbl_deep_extend("force", {}, capabilities, server.capabilities or {})
-                        require("lspconfig")[server_name].setup(server)
-                    end,
-                },
-            })
+            local lspconfig = require("lspconfig")
+            for server, config in pairs(opts.servers) do
+                config.capabilities = require("blink.cmp").get_lsp_capabilities(config.capabilities)
+                lspconfig[server].setup(config)
+            end
         end,
     },
     {
