@@ -67,7 +67,15 @@ return {
             -- Default list of enabled providers defined so that you can extend it
             -- elsewhere in your config, without redefining it, due to `opts_extend`
             sources = {
-                default = { "lsp", "snippets", "path", "buffer" },
+                default = { "lazydev", "lsp", "snippets", "path", "buffer" },
+                providers = {
+                    lazydev = {
+                        name = "LazyDev",
+                        module = "lazydev.integrations.blink",
+                        -- make lazydev completions top priority
+                        score_offset = 100,
+                    },
+                },
             },
 
             snippets = { preset = "luasnip" },
