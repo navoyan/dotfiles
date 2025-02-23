@@ -175,6 +175,12 @@ return {
                 scores = false,
             },
         },
+        dashboard = {
+            sections = {
+                { section = "header" },
+                { section = "startup" },
+            },
+        },
         notifier = {
             style = "minimal",
             margin = { top = 0, right = 0, bottom = 0 },
