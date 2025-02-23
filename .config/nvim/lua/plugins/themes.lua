@@ -10,16 +10,13 @@ return {
     {
         "catppuccin/nvim",
         name = "catppuccin",
-        enabled = true,
+        enabled = false,
         priority = 1000,
         opts = {
             flavour = "mocha",
             integrations = {
                 cmp = true,
                 treesitter = true,
-                telescope = {
-                    enabled = true,
-                },
                 mini = {
                     enabled = true,
                 },

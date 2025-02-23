@@ -12,7 +12,6 @@ return {
             "nvim-lua/plenary.nvim",
 
             "j-hui/fidget.nvim",
-            "nvimdev/lspsaga.nvim",
         },
         config = function()
             --  This function gets run when an LSP attaches to a particular buffer.
