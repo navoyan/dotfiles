@@ -6,6 +6,7 @@
   "colorful-menu.nvim": { "branch": "master", "commit": "33497aef03a90c9166ee642c3f0d36369d670a3e" },
   "conform.nvim": { "branch": "master", "commit": "363243c03102a531a8203311d4f2ae704c620d9b" },
   "crates.nvim": { "branch": "main", "commit": "1c924d5a9ea3496c4e1a02d0d51388ba809f8468" },
+  "cybu.nvim": { "branch": "main", "commit": "fe07ac6825c30c5e8c4506ff27571a7f58f327ee" },
   "diffview.nvim": { "branch": "main", "commit": "4516612fe98ff56ae0415a259ff6361a89419b0a" },
   "fidget.nvim": { "branch": "main", "commit": "d9ba6b7bfe29b3119a610892af67602641da778e" },
   "flash.nvim": { "branch": "main", "commit": "f899265876ecdcf7352dbc9f0adf87068cedefbb" },

@@ -46,4 +46,35 @@ return {
             },
         },
     },
+    {
+        "ghillb/cybu.nvim",
+        enabled = true,
+        dependencies = {
+            "nvim-tree/nvim-web-devicons",
+            "nvim-lua/plenary.nvim",
+        },
+        opts = {
+            display_time = 500,
+            style = {
+                highlights = { -- see highlights via :highlight
+                    current_buffer = "CybuFocus", -- current / selected buffer
+                    adjacent_buffers = "CybuBorder", -- buffers not in focus
+                    background = "CybuBorder", -- window background
+                    border = "CybuBorder", -- border of the window
+                },
+            },
+        },
+        keys = {
+            {
+                "H",
+                mode = { "n", "v" },
+                "<plug>(CybuLastusedPrev)",
+            },
+            {
+                "L",
+                mode = { "n", "v" },
+                "<plug>(CybuLastusedNext)",
+            },
+        },
+    },
 }
