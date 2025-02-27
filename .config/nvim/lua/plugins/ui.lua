@@ -47,6 +47,21 @@ return {
         },
     },
     {
+        "shortcuts/no-neck-pain.nvim",
+        version = "*",
+        lazy = false,
+        opts = {
+            width = 120,
+            autocmds = {
+                enableOnVimEnter = true,
+                skipEnteringNoNeckPainBuffer = true,
+            },
+            mappings = {
+                enabled = true,
+            },
+        },
+    },
+    {
         "ghillb/cybu.nvim",
         enabled = true,
         dependencies = {
