@@ -40,6 +40,7 @@ return {
             --    - Treesitter + textobjects: https://github.com/nvim-treesitter/nvim-treesitter-textobjects
         end,
     },
+    { "towolf/vim-helm", ft = "helm" },
     {
         "Wansmer/treesj",
         keys = {
