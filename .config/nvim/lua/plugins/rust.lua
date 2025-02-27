@@ -20,6 +20,9 @@ return {
                                 rebuildOnSave = true,
                             },
                         },
+                        rustfmt = {
+                            extraArgs = { "+nightly" },
+                        },
                         imports = {
                             granularity = {
                                 group = "module",
