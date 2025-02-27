@@ -171,6 +171,12 @@ return {
             matcher = {
                 frecency = true,
             },
+            formatters = {
+                file = {
+                    filename_first = true,
+                    truncate = 60,
+                },
+            },
             debug = {
                 scores = false,
             },
