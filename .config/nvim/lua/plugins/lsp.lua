@@ -24,6 +24,7 @@ return {
                         },
                     },
                 },
+                gopls = {},
                 basedpyright = {},
                 ts_ls = {
                     filetypes = { "javascript" },
