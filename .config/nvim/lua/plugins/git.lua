@@ -12,7 +12,7 @@ return {
                 end
 
                 -- Navigation
-                map("n", "<leader>hn", function()
+                map("n", "[h", function()
                     if vim.wo.diff then
                         vim.cmd.normal({ "]c", bang = true })
                     else
@@ -20,7 +20,7 @@ return {
                     end
                 end)
 
-                map("n", "<leader>hN", function()
+                map("n", "]h", function()
                     if vim.wo.diff then
                         vim.cmd.normal({ "[c", bang = true })
                     else
@@ -38,9 +38,9 @@ return {
                     gitsigns.reset_hunk({ vim.fn.line("."), vim.fn.line("v") })
                 end)
                 map("n", "<leader>hS", gitsigns.stage_buffer)
-                map("n", "<leader>hu", gitsigns.undo_stage_hunk)
                 map("n", "<leader>hR", gitsigns.reset_buffer)
                 map("n", "<leader>hp", gitsigns.preview_hunk)
+                map("n", "<leader>hi", gitsigns.preview_hunk_inline)
                 map("n", "<leader>hb", function()
                     gitsigns.blame_line({ full = true })
                 end)
@@ -49,7 +49,7 @@ return {
                 map("n", "<leader>hD", function()
                     gitsigns.diffthis("~")
                 end)
-                map("n", "<leader>td", gitsigns.toggle_deleted)
+                map("n", "<leader>tw", gitsigns.toggle_word_diff)
 
                 -- Text object
                 map({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<CR>")

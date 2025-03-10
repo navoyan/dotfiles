@@ -94,10 +94,6 @@ return {
                         vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({}))
                     end, "[C]ode Inlay [H]ints")
 
-                    -- Jump to the next or previous diagnostic in the current buffer
-                    map("<leader>dn", vim.diagnostic.goto_next, "[D]iagnostics: jump to [N]ext")
-                    map("<leader>dp", vim.diagnostic.goto_prev, "[D]iagnostics: jump to previous")
-
                     -- Opens a popup that displays documentation about the word under the cursor
                     map("K", vim.lsp.buf.hover, "Hover Documentation")
 
