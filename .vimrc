@@ -18,7 +18,7 @@ set nobackup
 set undodir=~/.nvim/undodir
 set undofile
 set incsearch
-set scrolloff=8
+set scrolloff=16
 " set noshowmode
 set termguicolors
 set signcolumn=yes
@@ -26,6 +26,7 @@ set isfname+=@-@
 set clipboard=
 " set ls=0
 set conceallevel=1
+set jumpoptions+=stack
 
 set textwidth=130
 
@@ -66,6 +67,11 @@ vnoremap <leader>cP "+P
 
 nnoremap <leader>p "0p
 vnoremap <leader>p "0p
+
+noremap <C-j> <C-d>
+noremap <C-k> <C-u>
+
+cnoremap <M-Bs> <C-w>
 
 nmap <leader>C <cmd>tab split<cr>
 nmap <leader>x <cmd>tabclose<cr>
