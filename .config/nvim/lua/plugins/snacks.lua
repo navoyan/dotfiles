@@ -196,6 +196,12 @@ return {
                 enabled = false,
             },
         },
+        dashboard = {
+            sections = {
+                { section = "header" },
+                { section = "startup" },
+            },
+        },
         lazygit = {
             config = {
                 os = {

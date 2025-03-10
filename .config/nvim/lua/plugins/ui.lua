@@ -59,6 +59,11 @@ return {
             mappings = {
                 enabled = true,
             },
+            integrations = {
+                dashboard = {
+                    enabled = true,
+                },
+            },
         },
     },
     {

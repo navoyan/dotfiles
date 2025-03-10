@@ -9,7 +9,7 @@ return {
             component_separators = { left = "", right = "" },
             section_separators = { left = "", right = "" },
             disabled_filetypes = { -- Filetypes to disable lualine for.
-                statusline = { "no-neck-pain" }, -- only ignores the ft for statusline.
+                statusline = { "no-neck-pain", "snacks_dashboard" }, -- only ignores the ft for statusline.
                 winbar = {}, -- only ignores the ft for winbar.
             },
         },
