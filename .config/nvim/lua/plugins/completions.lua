@@ -16,9 +16,14 @@ return {
             -- See the full "keymap" documentation for information on defining your own keymap.
             keymap = {
                 preset = "enter",
-                cmdline = {
+            },
+            cmdline = {
+                keymap = {
                     preset = "enter",
                     ["<Tab>"] = { "show", "select_next" },
+                },
+                completion = {
+                    ghost_text = { enabled = false },
                 },
             },
 
@@ -42,9 +47,7 @@ return {
                             },
                         },
                     },
-                    auto_show = function(ctx)
-                        return ctx.mode ~= "cmdline"
-                    end,
+                    auto_show = true,
                 },
                 list = {
                     selection = {
