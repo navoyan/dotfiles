@@ -33,7 +33,7 @@ return {
             "<leader>ff",
             function()
                 if vim.fn.getcwd() ~= vim.env.HOME .. "/dotfiles" then
-                    Snacks.picker.smart({ multi = { "files" } })
+                    Snacks.picker.files()
                 else
                     Snacks.picker.files({ hidden = true })
                 end
@@ -42,7 +42,7 @@ return {
         {
             "<leader>fo",
             function()
-                Snacks.picker.smart({ multi = { "buffers" } })
+                Snacks.picker.buffers()
             end,
         },
         {
