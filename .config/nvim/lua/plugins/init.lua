@@ -8,12 +8,6 @@ return {
         -- this is equalent to setup({}) function
     },
     {
-        "mbbill/undotree",
-        keys = {
-            { "<leader>u", vim.cmd.UndotreeToggle, desc = "[U]ndoTree" },
-        },
-    },
-    {
         "epwalsh/obsidian.nvim",
         version = "*",
         lazy = true,

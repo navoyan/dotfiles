@@ -89,6 +89,12 @@ return {
             end,
         },
         {
+            "<leader>su",
+            function()
+                Snacks.picker.undo()
+            end,
+        },
+        {
             "<leader>dd",
             function()
                 Snacks.picker.diagnostics_buffer({ layout = { preset = "vscode", preview = "main" } })
