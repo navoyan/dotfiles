@@ -32,6 +32,17 @@ return {
             ---@diagnostic disable-next-line: missing-fields
             require("nvim-treesitter.configs").setup(opts)
 
+            vim.filetype.add({
+                extension = {
+                    gotmpl = "gotmpl",
+                },
+                pattern = {
+                    [".*/templates/.*%.tpl"] = "helm",
+                    [".*/templates/.*%.ya?ml"] = "helm",
+                    ["helmfile.*%.ya?ml"] = "helm",
+                },
+            })
+
             -- There are additional nvim-treesitter modules that you can use to interact
             -- with nvim-treesitter. You should go explore a few and see what interests you:
             --
@@ -40,7 +51,6 @@ return {
             --    - Treesitter + textobjects: https://github.com/nvim-treesitter/nvim-treesitter-textobjects
         end,
     },
-    { "towolf/vim-helm", ft = "helm" },
     {
         "Wansmer/treesj",
         keys = {
