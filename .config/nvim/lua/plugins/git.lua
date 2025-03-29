@@ -58,4 +58,23 @@ return {
             },
         },
     },
+    {
+        "sindrets/diffview.nvim",
+        dependencies = {
+            "nvim-tree/nvim-web-devicons",
+        },
+        opts = {
+            keymaps = {
+                view = {
+                    ["q"] = "<Cmd>tabclose<Cr>",
+                },
+                file_panel = {
+                    ["q"] = "<Cmd>tabclose<Cr>",
+                },
+            },
+        },
+    },
+    {
+        "tpope/vim-fugitive",
+    },
 }
