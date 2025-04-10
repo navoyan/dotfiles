@@ -19,16 +19,16 @@ return { -- Collection of various small independent plugins/modules
         require("mini.move").setup({
             mappings = {
                 -- Move visual selection in Visual mode
-                left = "<C-h>",
-                right = "<C-l>",
-                down = "<C-j>",
-                up = "<C-k>",
+                left = "<C-S-h>",
+                right = "<C-S-l>",
+                down = "<C-S-j>",
+                up = "<C-S-k>",
 
                 -- Cove current line in Normal mode
-                line_left = "<Nop>",
-                line_right = "<Nop>",
-                line_down = "<Nop>",
-                line_up = "<Nop>",
+                line_left = "<C-S-h>",
+                line_right = "<C-S-l>",
+                line_down = "<C-S-j>",
+                line_up = "<C-S-k>",
             },
         })
 
