@@ -13,6 +13,7 @@ config.use_fancy_tab_bar = false
 config.tab_max_width = 32
 
 config.leader = { key = "Space", mods = "CTRL", timeout_milliseconds = 1500 }
+config.default_prog = { "/usr/bin/fish" }
 
 config.disable_default_key_bindings = true
 config.keys = {

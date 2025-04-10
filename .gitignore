@@ -2,5 +2,11 @@
 dotfiles.iml
 
 .custom-zsh/vpn.zsh
+
 .config/nvim/target
 .config/nvim/lua/current_theme.lua
+
+.config/fish/completions/**
+.config/fish/functions/**
+.config/fish/conf.d/**
+.config/fish/fish_variables
