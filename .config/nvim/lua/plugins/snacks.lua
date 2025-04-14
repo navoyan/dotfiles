@@ -187,10 +187,7 @@ return {
                 scores = false,
             },
         },
-        notifier = {
-            style = "minimal",
-            margin = { top = 0, right = 0, bottom = 0 },
-        },
+        image = {},
         words = {
             debounce = 10,
         },
