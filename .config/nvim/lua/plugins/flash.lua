@@ -5,7 +5,9 @@ return {
     opts = {
         modes = {
             char = {
-                enabled = false,
+                enabled = true,
+                multi_line = false,
+                highlight = { backdrop = false },
             },
             search = {
                 enabled = false,
