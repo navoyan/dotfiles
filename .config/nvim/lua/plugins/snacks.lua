@@ -107,9 +107,15 @@ return {
             end,
         },
         {
-            "<leader><BS>",
+            mode = "c",
+            "<C-r>",
             function()
-                Snacks.picker.command_history()
+                local esc = vim.api.nvim_replace_termcodes("<Esc>", true, false, true)
+                vim.api.nvim_feedkeys(esc, "c", true)
+
+                vim.defer_fn(function()
+                    Snacks.picker.command_history()
+                end, 1)
             end,
         },
         {
