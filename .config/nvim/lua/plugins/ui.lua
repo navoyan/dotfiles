@@ -53,11 +53,11 @@ return {
         opts = {
             width = 120,
             autocmds = {
-                enableOnVimEnter = true,
-                skipEnteringNoNeckPainBuffer = true,
+                enableOnVimEnter = false,
+                skipEnteringNoNeckPainBuffer = false,
             },
             mappings = {
-                enabled = true,
+                enabled = false,
             },
             integrations = {
                 dashboard = {
@@ -67,34 +67,21 @@ return {
         },
     },
     {
-        "ghillb/cybu.nvim",
-        enabled = true,
+        "cbochs/grapple.nvim",
         dependencies = {
-            "nvim-tree/nvim-web-devicons",
-            "nvim-lua/plenary.nvim",
+            { "nvim-tree/nvim-web-devicons" },
         },
         opts = {
-            display_time = 500,
-            style = {
-                highlights = { -- see highlights via :highlight
-                    current_buffer = "CybuFocus", -- current / selected buffer
-                    adjacent_buffers = "CybuBorder", -- buffers not in focus
-                    background = "CybuBorder", -- window background
-                    border = "CybuBorder", -- border of the window
-                },
-            },
+            scope = "git_branch",
+            icons = true,
+            quick_select = "123456789",
         },
         keys = {
-            {
-                "H",
-                mode = { "n", "v" },
-                "<plug>(CybuLastusedPrev)",
-            },
-            {
-                "L",
-                mode = { "n", "v" },
-                "<plug>(CybuLastusedNext)",
-            },
+            { ";", "<cmd>Grapple toggle_tags<cr>", desc = "Toggle tags menu" },
+
+            { "<c-s>", "<cmd>Grapple toggle<cr>", desc = "Toggle tag" },
+            -- { "H", "<cmd>Grapple cycle_tags next<cr>", desc = "Go to next tag" },
+            -- { "L", "<cmd>Grapple cycle_tags prev<cr>", desc = "Go to previous tag" },
         },
     },
 }
