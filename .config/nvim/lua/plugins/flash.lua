@@ -8,6 +8,16 @@ return {
                 enabled = true,
                 multi_line = false,
                 highlight = { backdrop = false },
+                char_actions = function(_)
+                    return {
+                        [";"] = "next",
+                        [","] = "prev",
+                        -- NOTE: disable `f`/`F`/`t`/`T` enhanced behaviour
+                        --
+                        -- [motion:lower()] = "next",
+                        -- [motion:upper()] = "prev",
+                    }
+                end,
             },
             search = {
                 enabled = false,
@@ -46,14 +56,6 @@ return {
                 require("flash").treesitter_search()
             end,
             desc = "Treesitter Search",
-        },
-        {
-            "<c-s>",
-            mode = { "c" },
-            function()
-                require("flash").toggle()
-            end,
-            desc = "Toggle Flash Search",
         },
     },
 }
