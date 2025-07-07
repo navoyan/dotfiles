@@ -19,6 +19,7 @@
   "lualine.nvim": { "branch": "master", "commit": "b8b60c7f1d0d95ad74ee215b2291280b30482476" },
   "mini.files": { "branch": "main", "commit": "01001e0cfc1e79f581d055ae3f70fbac96a2f378" },
   "mini.nvim": { "branch": "main", "commit": "0a9259e95dbfcd07d5d506c56afd615e018acc4e" },
+  "multicursor.nvim": { "branch": "1.0", "commit": "89de36660e0e5b5518f7803c4affb7a7be5eec55" },
   "neogit": { "branch": "master", "commit": "12f78aaabb37b4946254dd5e47cf7b552904937a" },
   "no-neck-pain.nvim": { "branch": "main", "commit": "53c8ef094c86e8897be2dcce0259d35914f6cdc0" },
   "noice.nvim": { "branch": "main", "commit": "0427460c2d7f673ad60eb02b35f5e9926cf67c59" },
