@@ -4,7 +4,12 @@ let maplocalleader = " "
 set smartindent
 set autowriteall
 set relativenumber
-set nohlsearch
+
+set ignorecase
+set smartcase
+set incsearch
+set inccommand=split
+
 set hidden!
 set noerrorbells
 set tabstop=4 softtabstop=4
@@ -18,21 +23,22 @@ set noswapfile
 set nobackup
 set undodir=~/.nvim/undodir
 set undofile
-set incsearch
 set scrolloff=16
 " set noshowmode
 set termguicolors
 set signcolumn=yes
 set isfname+=@-@
-set clipboard=
 " set ls=0
 set conceallevel=1
 set jumpoptions+=stack
 
-set textwidth=130
+if empty($SSH_TTY)
+  set clipboard=unnamedplus
+else
+  set clipboard=
+endif
 
-" Give more space for displaying messages.
-set cmdheight=1
+set textwidth=200
 
 " Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
 " delays and poor user experience.
@@ -69,10 +75,15 @@ vnoremap <leader>cP "+P
 nnoremap <leader>p "0p
 vnoremap <leader>p "0p
 
+nnoremap <Esc> <cmd>nohlsearch<cr>
+
+nnoremap gp `[v`]
+
 noremap <C-j> <C-d>
 noremap <C-k> <C-u>
 
 cnoremap <M-Bs> <C-w>
+cnoremap <C-Bs> <C-w>
 
 nmap <leader>C <cmd>tab split<cr>
 nmap <leader>x <cmd>tabclose<cr>

@@ -137,8 +137,6 @@ return {
             { "y", "<Plug>(YankyYank)", mode = { "n", "x" }, desc = "Yank Text" },
             { "p", "<Plug>(YankyPutAfter)", mode = { "n", "x" }, desc = "Put Text After Cursor" },
             { "P", "<Plug>(YankyPutBefore)", mode = { "n", "x" }, desc = "Put Text Before Cursor" },
-            { "gp", "<Plug>(YankyGPutAfter)", mode = { "n", "x" }, desc = "Put Text After Selection" },
-            { "gP", "<Plug>(YankyGPutBefore)", mode = { "n", "x" }, desc = "Put Text Before Selection" },
             { "<C-p>", "<Plug>(YankyPreviousEntry)", desc = "Put Text After Selection" },
             { "<C-n>", "<Plug>(YankyNextEntry)", desc = "Put Text After Selection" },
             { "]p", "<Plug>(YankyPutIndentAfterLinewise)", desc = "Put Indented After Cursor (Linewise)" },
