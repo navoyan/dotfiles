@@ -1,5 +1,34 @@
 return {
     {
+        "cbochs/grapple.nvim",
+        dependencies = {
+            "nvim-tree/nvim-web-devicons",
+        },
+        keys = {
+            { "m", "<cmd>Grapple toggle_tags<cr>", desc = "Toggle tags menu" },
+        },
+        config = function()
+            local Grapple = require("grapple")
+            local Settings = require("grapple.settings")
+
+            local default_settings = Settings:new()
+
+            Grapple.setup({
+                icons = true,
+                quick_select = "123456789",
+                tag_hook = function(window)
+                    window:map("n", "a", function()
+                        window:close()
+                        Grapple.toggle()
+                        Grapple.open_tags()
+                    end, { desc = "Toggle tag for current file" })
+
+                    default_settings.tag_hook(window)
+                end,
+            })
+        end,
+    },
+    {
         "mrjones2014/smart-splits.nvim",
         lazy = false,
         build = "./kitty/install-kittens.bash",
