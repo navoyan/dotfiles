@@ -14,7 +14,22 @@ return {
             },
         },
         sections = {
-            lualine_a = { "mode" },
+            lualine_a = {
+                {
+                    "mode",
+                    fmt = function(mode)
+                        local hydra = require("hydra.statusline")
+
+                        return hydra.is_active() and "HYDRA" or mode
+                    end,
+                    color = function()
+                        local hydra = require("hydra.statusline")
+                        local colors = require("tokyonight.colors").setup()
+
+                        return { bg = hydra.is_active() and colors.red or nil }
+                    end,
+                },
+            },
             lualine_b = { "branch", "diff" },
             lualine_c = {
                 {

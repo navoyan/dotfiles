@@ -125,9 +125,7 @@ return {
         config = function()
             local Hydra = require("hydra")
             Hydra.setup({
-                hint = {
-                    type = "statusline",
-                },
+                hint = false,
             })
 
             local gitsigns = require("gitsigns")
@@ -143,7 +141,8 @@ return {
                 if vim.wo.diff then
                     vim.cmd.normal({ bracket .. "c", bang = true })
                 else
-                    gitsigns.nav_hunk(gitsigns_direction)
+                    gitsigns.nav_hunk(gitsigns_direction, { wrap = true })
+                    vim.wait(5)
                 end
             end
 
@@ -164,13 +163,13 @@ return {
 
             local function forward(jump)
                 return function()
-                    jump("forward")
+                    return jump("forward")
                 end
             end
 
             local function backward(jump)
                 return function()
-                    jump("backward")
+                    return jump("backward")
                 end
             end
 
@@ -206,31 +205,34 @@ return {
                 })
             end
 
+            local lualine = require("lualine")
+
+            local function default_config()
+                return {
+                    color = "pink",
+                    on_enter = function()
+                        vim.bo.modifiable = false
+                        lualine.refresh()
+                    end,
+                    on_exit = function()
+                        lualine.refresh()
+                    end,
+                }
+            end
+
+            -- Forward
             Hydra({
-                -- string? only used in auto-generated hint
-                name = "Hydra (Forward)",
-
-                -- string | string[] modes where the hydra exists, same as `vim.keymap.set()` accepts
-                mode = "n",
-
-                -- string? key required to activate the hydra, when excluded, you can use
-                -- Hydra:activate()
                 body = "]",
-                -- these are explained below
+                mode = "n",
+                config = default_config(),
                 heads = forward_jumps,
             })
 
+            -- Backward
             Hydra({
-                -- string? only used in auto-generated hint
-                name = "Hydra (Backward)",
-
-                -- string | string[] modes where the hydra exists, same as `vim.keymap.set()` accepts
-                mode = "n",
-
-                -- string? key required to activate the hydra, when excluded, you can use
-                -- Hydra:activate()
                 body = "[",
-                -- these are explained below
+                mode = "n",
+                config = default_config(),
                 heads = backward_jumps,
             })
         end,
