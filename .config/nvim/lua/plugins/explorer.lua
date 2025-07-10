@@ -27,7 +27,7 @@ return {
                 go_in_plus = "<Enter>",
                 go_out = "h",
                 go_out_plus = "H",
-                reset = "<BS>",
+                reset = "=",
                 reveal_cwd = "@",
                 show_help = "g?",
                 synchronize = "Q",
