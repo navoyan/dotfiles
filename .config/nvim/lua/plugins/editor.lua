@@ -141,23 +141,17 @@ return {
                 if vim.wo.diff then
                     vim.cmd.normal({ bracket .. "c", bang = true })
                 else
-                    gitsigns.nav_hunk(gitsigns_direction, { wrap = true })
+                    gitsigns.nav_hunk(gitsigns_direction, { wrap = true, navigation_message = false })
                     vim.wait(5)
                 end
             end
 
             local jumps = {
-                b = MiniBracketed.buffer,
                 k = MiniBracketed.comment,
                 x = MiniBracketed.conflict,
                 d = MiniBracketed.diagnostic,
-                f = MiniBracketed.file,
-                i = MiniBracketed.indent,
                 j = MiniBracketed.jump,
-                l = MiniBracketed.location,
-                o = MiniBracketed.oldfile,
                 q = MiniBracketed.quickfix,
-                t = MiniBracketed.treesitter,
                 c = nav_hunk,
             }
 
@@ -173,21 +167,23 @@ return {
                 end
             end
 
-            local head_opts = {
-                desc = false,
-            }
+            local function head_opts()
+                return {
+                    desc = false,
+                }
+            end
 
             local forward_jumps = {}
             for key, jump in pairs(jumps) do
                 table.insert(forward_jumps, {
                     key,
                     forward(jump),
-                    vim.deepcopy(head_opts),
+                    head_opts(),
                 })
                 table.insert(forward_jumps, {
                     string.upper(key),
                     backward(jump),
-                    vim.deepcopy(head_opts),
+                    head_opts(),
                 })
             end
 
@@ -196,18 +192,18 @@ return {
                 table.insert(backward_jumps, {
                     key,
                     backward(jump),
-                    vim.deepcopy(head_opts),
+                    head_opts(),
                 })
                 table.insert(backward_jumps, {
                     string.upper(key),
                     forward(jump),
-                    vim.deepcopy(head_opts),
+                    head_opts(),
                 })
             end
 
             local lualine = require("lualine")
 
-            local function default_config()
+            local function hydra_config()
                 return {
                     color = "pink",
                     on_enter = function()
@@ -224,7 +220,7 @@ return {
             Hydra({
                 body = "]",
                 mode = "n",
-                config = default_config(),
+                config = hydra_config(),
                 heads = forward_jumps,
             })
 
@@ -232,13 +228,14 @@ return {
             Hydra({
                 body = "[",
                 mode = "n",
-                config = default_config(),
+                config = hydra_config(),
                 heads = backward_jumps,
             })
         end,
     },
     {
         "gbprod/yanky.nvim",
+        dependencies = { "folke/snacks.nvim" },
         opts = {
             highlight = { timer = 150, on_yank = false },
             preserve_cursor_position = {
