@@ -18,6 +18,7 @@ vim.opt.rtp:prepend(lazypath)
 require("lazy").setup({
     {
         "mikesmithgh/kitty-scrollback.nvim",
+        version = "*",
         lazy = true,
         cmd = {
             "KittyScrollbackGenerateKittens",
@@ -25,6 +26,7 @@ require("lazy").setup({
             "KittyScrollbackGenerateCommandLineEditing",
         },
         event = { "User KittyScrollbackLaunch" },
+        opts = {},
     },
     { import = "plugins.themes" },
     { import = "plugins.flash" },
@@ -33,3 +35,12 @@ require("lazy").setup({
 require("mappings")
 require("autocmds")
 require("current_theme")
+
+-- Explorer-specific configuration
+
+vim.opt.modifiable = false
+vim.opt.number = false
+vim.opt.relativenumber = false
+vim.opt.laststatus = 0
+
+vim.keymap.set("n", "q", "<cmd>quit!<cr>")
