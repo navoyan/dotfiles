@@ -45,7 +45,7 @@ return {
                         vim.keymap.set("n", keys, func, { buffer = event.buf, desc = "LSP: " .. desc })
                     end
 
-                    local function with_preview(picker_fn)
+                    local function with_inline_preview(picker_fn)
                         return function()
                             picker_fn({ layout = { preset = "vscode", preview = "main" } })
                         end
@@ -54,24 +54,24 @@ return {
                     local picker = Snacks.picker
 
                     -- Jump to the definition of the word under the cursor.
-                    map("gd", with_preview(picker.lsp_definitions), "[G]oto [D]efinition")
+                    map("gd", with_inline_preview(picker.lsp_definitions), "[G]oto [D]efinition")
 
                     -- Find references for the word under the cursor.
-                    map("gr", with_preview(picker.lsp_references), "[G]oto [R]eferences")
+                    map("gr", with_inline_preview(picker.lsp_references), "[G]oto [R]eferences")
 
                     -- Jump to the implementation of the word under the cursor.
                     --  Useful when your language has ways of declaring types without an actual implementation.
-                    map("gI", with_preview(picker.lsp_implementations), "[G]oto [I]mplementation")
+                    map("gI", with_inline_preview(picker.lsp_implementations), "[G]oto [I]mplementation")
 
                     -- Jump to the type of the symbol under the cursor.
-                    map("gy", with_preview(picker.lsp_type_definitions), "[G]oto T[y]pe Definition")
+                    map("gy", with_inline_preview(picker.lsp_type_definitions), "[G]oto T[y]pe Definition")
 
                     -- Fuzzy find all the symbols in your current document.
                     --  Symbols are things like variables, functions, types, etc.
-                    map("<leader>sd", with_preview(picker.lsp_symbols), "[S]ymbols in [D]ocument")
+                    map("<leader>sd", with_inline_preview(picker.lsp_symbols), "[S]ymbols in [D]ocument")
 
                     -- Fuzzy find all the symbols in your current workspace.
-                    map("<leader>sw", with_preview(picker.lsp_workspace_symbols), "[S]ymbols in [W]orkspace")
+                    map("<leader>sw", with_inline_preview(picker.lsp_workspace_symbols), "[S]ymbols in [W]orkspace")
 
                     -- Rename the variable under the cursor.
                     --  Most Language Servers support renaming across files, etc.

@@ -3,181 +3,99 @@ return {
     version = "*",
     priority = 1000,
     lazy = false,
-    keys = {
-        {
-            "<leader>gg",
-            function()
-                Snacks.lazygit()
-            end,
-        },
-        {
-            "<leader>go",
-            function()
-                Snacks.gitbrowse()
-            end,
-            mode = { "n", "v" },
-        },
-        {
-            "<leader>gb",
-            function()
-                Snacks.gitbrowse({ what = "branch" })
-            end,
-        },
-        {
-            "<leader>sp",
-            function()
-                Snacks.picker.resume()
-            end,
-        },
-        {
-            "<leader>ff",
-            function()
+    config = function(_, opts)
+        require("snacks").setup(opts)
+
+        local function show_hidden_for_dotfiles(picker_fn)
+            return function()
                 if vim.fn.getcwd() ~= vim.env.HOME .. "/dotfiles" then
-                    Snacks.picker.files()
+                    picker_fn()
                 else
-                    Snacks.picker.files({ hidden = true })
+                    picker_fn({ hidden = true })
                 end
-            end,
-        },
-        {
-            "<leader>fo",
-            function()
-                Snacks.picker.buffers()
-            end,
-        },
-        {
-            "<leader>fg",
-            function()
-                Snacks.picker.git_status()
-            end,
-        },
-        {
-            "<leader>fp",
-            function()
-                Snacks.picker.projects()
-            end,
-        },
-        {
-            "<leader>sf",
-            function()
-                Snacks.picker.grep()
-            end,
-        },
-        {
-            "<leader>so",
-            function()
-                Snacks.picker.grep_buffers()
-            end,
-        },
-        {
-            "<leader>sg",
-            function()
-                Snacks.picker.git_grep()
-            end,
-        },
-        {
-            "<leader>sc",
-            function()
-                Snacks.picker.grep_word()
-            end,
-            mode = { "n", "x" },
-        },
-        {
-            "<leader>ss",
-            function()
-                Snacks.picker.lines()
-            end,
-        },
-        {
-            "<leader>su",
-            function()
-                Snacks.picker.undo()
-            end,
-        },
-        {
-            "<leader>dd",
-            function()
-                Snacks.picker.diagnostics_buffer({ layout = { preset = "vscode", preview = "main" } })
-            end,
-        },
-        {
-            "<leader>dw",
-            function()
-                Snacks.picker.diagnostics({ layout = { preset = "vscode", preview = "main" } })
-            end,
-        },
-        {
-            mode = "c",
-            "<C-r>",
-            function()
-                local esc = vim.api.nvim_replace_termcodes("<Esc>", true, false, true)
-                vim.api.nvim_feedkeys(esc, "c", true)
+            end
+        end
 
-                vim.defer_fn(function()
-                    Snacks.picker.command_history()
-                end, 1)
-            end,
-        },
-        {
-            "<leader>sq",
-            function()
-                Snacks.picker.qflist()
-            end,
-        },
-        {
-            "<leader>sH",
-            function()
-                Snacks.picker.help()
-            end,
-        },
-        {
-            "<leader>sC",
-            function()
-                Snacks.picker.commands()
-            end,
-        },
-        {
-            "<leader>sK",
-            function()
-                Snacks.picker.keymaps()
-            end,
-        },
-        {
-            "<leader>sM",
-            function()
-                Snacks.picker.man()
-            end,
-        },
-        {
-            "<leader>sT",
-            function()
-                Snacks.picker.colorschemes({
-                    confirm = function(picker, item)
-                        picker:close()
-                        if item then
-                            picker.preview.state.colorscheme = nil
-                            vim.schedule(function()
-                                local theme = item.text
-                                vim.cmd.colorscheme(theme)
+        local function with_inline_preview(picker_fn)
+            return function()
+                picker_fn({ layout = { preset = "vscode", preview = "main" } })
+            end
+        end
 
-                                local current_theme_path = vim.fn.stdpath("config") .. "/lua/current_theme.lua"
-                                vim.uv.fs_open(current_theme_path, "w", 432, function(err, fd)
-                                    if err then
-                                        Snacks.notify.error("Failed to open `" .. theme .. "`:\n- " .. err)
-                                        return
-                                    end
+        local map = vim.keymap.set
 
-                                    vim.loop.fs_write(fd, 'vim.cmd.colorscheme("' .. theme .. '")', nil, function()
-                                        vim.loop.fs_close(fd)
-                                    end)
+        map("n", "<leader>gg", Snacks.lazygit.open)
+
+        map({ "n", "v" }, "<leader>go", Snacks.gitbrowse.open)
+        map("n", "<leader>gb", function()
+            Snacks.gitbrowse.open({ what = "branch" })
+        end)
+
+        map("n", "<leader>sp", Snacks.picker.resume)
+
+        map("n", "<leader>ff", show_hidden_for_dotfiles(Snacks.picker.files))
+        map("n", "<leader>fo", Snacks.picker.buffers)
+        map("n", "<leader>fg", Snacks.picker.git_status)
+        map("n", "<leader>fp", Snacks.picker.projects)
+
+        map("n", "<leader>sf", show_hidden_for_dotfiles(Snacks.picker.grep))
+        map("n", "<leader>so", Snacks.picker.grep_buffers)
+        map("n", "<leader>sg", Snacks.picker.git_grep)
+        map({ "n", "x" }, "<leader>sc", show_hidden_for_dotfiles(Snacks.picker.grep_word))
+
+        map("n", "<leader>ss", Snacks.picker.lines)
+
+        map("n", "<leader>dd", with_inline_preview(Snacks.picker.diagnostics_buffer))
+        map("n", "<leader>dw", with_inline_preview(Snacks.picker.diagnostics))
+
+        map("n", "<leader>su", Snacks.picker.undo)
+        map("n", "<leader>sq", Snacks.picker.qflist)
+
+        map("n", "<leader>sH", Snacks.picker.help)
+        map("n", "<leader>sC", Snacks.picker.commands)
+        map("n", "<leader>sK", Snacks.picker.keymaps)
+        map("n", "<leader>sM", Snacks.picker.man)
+
+        local function command_history()
+            local esc = vim.api.nvim_replace_termcodes("<Esc>", true, false, true)
+            vim.api.nvim_feedkeys(esc, "c", true)
+
+            vim.defer_fn(function()
+                Snacks.picker.command_history()
+            end, 1)
+        end
+
+        map("c", "<C-r>", command_history)
+
+        local function pick_colorschemes()
+            Snacks.picker.colorschemes({
+                confirm = function(picker, item)
+                    picker:close()
+                    if item then
+                        picker.preview.state.colorscheme = nil
+                        vim.schedule(function()
+                            local theme = item.text
+                            vim.cmd.colorscheme(theme)
+
+                            local current_theme_path = vim.fn.stdpath("config") .. "/lua/current_theme.lua"
+                            vim.uv.fs_open(current_theme_path, "w", 432, function(err, fd)
+                                if err then
+                                    Snacks.notify.error("Failed to open `" .. theme .. "`:\n- " .. err)
+                                    return
+                                end
+
+                                vim.loop.fs_write(fd, 'vim.cmd.colorscheme("' .. theme .. '")', nil, function()
+                                    vim.loop.fs_close(fd)
                                 end)
                             end)
-                        end
-                    end,
-                })
-            end,
-        },
-    },
+                        end)
+                    end
+                end,
+            })
+        end
+
+        map("n", "<leader>sT", pick_colorschemes)
+    end,
     opts = {
         picker = {
             matcher = {
@@ -277,8 +195,8 @@ return {
                             win = {
                                 input = {
                                     keys = {
-                                        ["<a-s>"] = { "flash", mode = { "n", "i" } },
-                                        ["s"] = { "flash" },
+                                        ["<C-Bs>"] = { "flash", mode = { "n", "i" } },
+                                        ["<Bs>"] = { "flash" },
                                     },
                                 },
                             },
