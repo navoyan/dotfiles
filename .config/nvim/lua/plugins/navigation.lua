@@ -1,9 +1,7 @@
 return {
     {
         "cbochs/grapple.nvim",
-        dependencies = {
-            "nvim-tree/nvim-web-devicons",
-        },
+        dependencies = { "echasnovski/mini.icons" },
         keys = {
             { "m", "<cmd>Grapple toggle_tags<cr>", desc = "Toggle tags menu" },
         },
