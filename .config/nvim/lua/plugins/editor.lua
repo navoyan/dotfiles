@@ -234,8 +234,30 @@ return {
         end,
     },
     {
+        "gbprod/substitute.nvim",
+        dependencies = { "gbprod/yanky.nvim" },
+        lazy = true,
+        keys = { "x", "X" },
+        config = function()
+            local substitute = require("substitute")
+
+            substitute.setup({
+                on_substitute = require("yanky.integration").substitute(),
+                highlight_substituted_text = {
+                    timer = 150,
+                },
+            })
+
+            vim.keymap.set("n", "x", substitute.operator, { noremap = true })
+            vim.keymap.set("n", "xx", substitute.line, { noremap = true })
+            vim.keymap.set("n", "X", substitute.eol, { noremap = true })
+            vim.keymap.set("x", "x", substitute.visual, { noremap = true })
+        end,
+    },
+    {
         "gbprod/yanky.nvim",
         dependencies = { "folke/snacks.nvim" },
+        lazy = true,
         opts = {
             highlight = { timer = 150, on_yank = false },
             preserve_cursor_position = {
