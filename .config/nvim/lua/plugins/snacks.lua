@@ -6,19 +6,19 @@ return {
     config = function(_, opts)
         require("snacks").setup(opts)
 
-        local function show_hidden_for_dotfiles(picker_fn)
-            return function()
-                if vim.fn.getcwd() ~= vim.env.HOME .. "/dotfiles" then
-                    picker_fn()
-                else
-                    picker_fn({ hidden = true })
-                end
-            end
-        end
+        local is_cwd_dotfiles = vim.fn.getcwd() == vim.env.HOME .. "/dotfiles"
+        local show_hidden_for_dotfiles = is_cwd_dotfiles and { hidden = true } or {}
 
-        local function with_inline_preview(picker_fn)
+        local inline_preview = { layout = { preset = "vscode", preview = "main" } }
+
+        local function conf(picker_fn, ...)
+            local result_config = {}
+            for _, config in ipairs({ ... }) do
+                result_config = vim.tbl_deep_extend("error", result_config, config)
+            end
+
             return function()
-                picker_fn({ layout = { preset = "vscode", preview = "main" } })
+                picker_fn(result_config)
             end
         end
 
@@ -33,20 +33,27 @@ return {
 
         map("n", "<leader>sp", Snacks.picker.resume)
 
-        map("n", "<leader>ff", show_hidden_for_dotfiles(Snacks.picker.files))
+        map("n", "<leader>ff", conf(Snacks.picker.files, show_hidden_for_dotfiles))
         map("n", "<leader>fo", Snacks.picker.buffers)
         map("n", "<leader>fg", Snacks.picker.git_status)
         map("n", "<leader>fp", Snacks.picker.projects)
 
-        map("n", "<leader>sf", show_hidden_for_dotfiles(Snacks.picker.grep))
+        map("n", "<leader>sf", conf(Snacks.picker.grep, show_hidden_for_dotfiles))
         map("n", "<leader>so", Snacks.picker.grep_buffers)
         map("n", "<leader>sg", Snacks.picker.git_grep)
-        map({ "n", "x" }, "<leader>sc", show_hidden_for_dotfiles(Snacks.picker.grep_word))
+        map({ "n", "x" }, "<leader>sc", conf(Snacks.picker.grep_word, show_hidden_for_dotfiles))
 
         map("n", "<leader>ss", Snacks.picker.lines)
 
-        map("n", "<leader>dd", with_inline_preview(Snacks.picker.diagnostics_buffer))
-        map("n", "<leader>dw", with_inline_preview(Snacks.picker.diagnostics))
+        local vim_severity = vim.diagnostic.severity
+        local function severity(picker_severity)
+            return { severity = picker_severity }
+        end
+
+        map("n", "<leader>dd", conf(Snacks.picker.diagnostics_buffer, inline_preview))
+        map("n", "<leader>dD", conf(Snacks.picker.diagnostics_buffer, inline_preview, severity(vim_severity.ERROR)))
+        map("n", "<leader>dw", conf(Snacks.picker.diagnostics, inline_preview))
+        map("n", "<leader>dW", conf(Snacks.picker.diagnostics, inline_preview, severity(vim_severity.ERROR)))
 
         map("n", "<leader>su", Snacks.picker.undo)
         map("n", "<leader>sq", Snacks.picker.qflist)
@@ -67,30 +74,34 @@ return {
 
         map("c", "<C-r>", command_history)
 
+        local function confirm_colorscheme(picker, item)
+            picker:close()
+            if not item then
+                return
+            end
+
+            picker.preview.state.colorscheme = nil
+            vim.schedule(function()
+                local theme = item.text
+                vim.cmd.colorscheme(theme)
+
+                local current_theme_path = vim.fn.stdpath("config") .. "/lua/current_theme.lua"
+                vim.uv.fs_open(current_theme_path, "w", 432, function(err, fd)
+                    if err then
+                        Snacks.notify.error("Failed to open `" .. theme .. "`:\n- " .. err)
+                        return
+                    end
+
+                    vim.loop.fs_write(fd, 'vim.cmd.colorscheme("' .. theme .. '")', nil, function()
+                        vim.loop.fs_close(fd)
+                    end)
+                end)
+            end)
+        end
+
         local function pick_colorschemes()
             Snacks.picker.colorschemes({
-                confirm = function(picker, item)
-                    picker:close()
-                    if item then
-                        picker.preview.state.colorscheme = nil
-                        vim.schedule(function()
-                            local theme = item.text
-                            vim.cmd.colorscheme(theme)
-
-                            local current_theme_path = vim.fn.stdpath("config") .. "/lua/current_theme.lua"
-                            vim.uv.fs_open(current_theme_path, "w", 432, function(err, fd)
-                                if err then
-                                    Snacks.notify.error("Failed to open `" .. theme .. "`:\n- " .. err)
-                                    return
-                                end
-
-                                vim.loop.fs_write(fd, 'vim.cmd.colorscheme("' .. theme .. '")', nil, function()
-                                    vim.loop.fs_close(fd)
-                                end)
-                            end)
-                        end)
-                    end
-                end,
+                confirm = confirm_colorscheme,
             })
         end
 
