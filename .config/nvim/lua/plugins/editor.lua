@@ -208,10 +208,10 @@ return {
                     color = "pink",
                     on_enter = function()
                         vim.bo.modifiable = false
-                        lualine.refresh()
+                        lualine.refresh({ place = { "statusline" } })
                     end,
                     on_exit = function()
-                        lualine.refresh()
+                        lualine.refresh({ place = { "statusline" } })
                     end,
                 }
             end

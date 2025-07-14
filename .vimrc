@@ -85,6 +85,8 @@ noremap <C-k> <C-u>
 cnoremap <M-Bs> <C-w>
 cnoremap <C-Bs> <C-w>
 
+nnoremap sl "_dl
+
 nmap <leader>C <cmd>tab split<cr>
 nmap <leader>x <cmd>tabclose<cr>
 for i in range(1, 10)
