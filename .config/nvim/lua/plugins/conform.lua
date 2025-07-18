@@ -18,7 +18,7 @@ return {
                 lua = { "stylua" },
                 python = { "ruff_format" },
                 bzl = { "buildifier" },
-                json = { "" },
+                json = {},
             },
         },
     },

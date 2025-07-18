@@ -5,7 +5,6 @@ return {
         event = "InsertEnter",
         dependencies = {
             { "L3MON4D3/LuaSnip", version = "v2.*" },
-            "xzbdmw/colorful-menu.nvim",
         },
         ---@module 'blink.cmp'
         ---@type blink.cmp.Config
@@ -20,11 +19,18 @@ return {
             },
             cmdline = {
                 keymap = {
-                    preset = "enter",
-                    ["<Tab>"] = { "show", "select_next" },
+                    ["<Down>"] = { "select_next", "fallback" },
+                    ["<Up>"] = { "select_prev", "fallback" },
+                    ["<Esc>"] = { "cancel", "fallback" },
                 },
                 completion = {
+                    menu = { auto_show = true },
                     ghost_text = { enabled = false },
+                    list = {
+                        selection = {
+                            preselect = false,
+                        },
+                    },
                 },
             },
 
@@ -36,17 +42,7 @@ return {
                 },
                 menu = {
                     draw = {
-                        columns = { { "kind_icon" }, { "label", gap = 1 } },
-                        components = {
-                            label = {
-                                text = function(ctx)
-                                    return require("colorful-menu").blink_components_text(ctx)
-                                end,
-                                highlight = function(ctx)
-                                    return require("colorful-menu").blink_components_highlight(ctx)
-                                end,
-                            },
-                        },
+                        treesitter = { "lsp" },
                     },
                     auto_show = true,
                 },
