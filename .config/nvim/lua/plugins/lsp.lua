@@ -73,12 +73,6 @@ return {
                     -- Fuzzy find all the symbols in your current workspace.
                     map("<leader>sw", with_inline_preview(picker.lsp_workspace_symbols), "[S]ymbols in [W]orkspace")
 
-                    -- Rename the variable under the cursor.
-                    --  Most Language Servers support renaming across files, etc.
-                    vim.keymap.set("n", "<leader>rn", function()
-                        return ":IncRename " .. vim.fn.expand("<cword>")
-                    end, { expr = true, buffer = event.buf, desc = "LSP: [R]e[n]ame" })
-
                     -- Execute a code action aviailable for the current symbol or line
                     vim.keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, {
                         desc = "LSP: [C]ode [A]ction",
@@ -110,6 +104,31 @@ return {
                 config.capabilities = blink_cmp.get_lsp_capabilities(config.capabilities)
                 lspconfig[server].setup(config)
             end
+        end,
+    },
+    {
+        "saecki/live-rename.nvim",
+        event = "LspAttach",
+        config = function()
+            local live_rename = require("live-rename")
+
+            local function rename_fn(opts)
+                return function()
+                    live_rename.rename(opts)
+
+                    -- NOTE: needed to disable completions
+                    vim.bo.filetype = "liverename"
+                end
+            end
+
+            local map = vim.keymap.set
+
+            map("n", "<leader>rn", rename_fn(), {
+                desc = "LSP: [R]ename (in [N]ormal mode)",
+            })
+            map("n", "<leader>ri", rename_fn({ text = "", insert = true }), {
+                desc = "LSP: [R]ename (in [I]nsert mode)",
+            })
         end,
     },
     {

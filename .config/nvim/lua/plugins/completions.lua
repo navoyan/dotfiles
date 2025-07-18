@@ -68,6 +68,12 @@ return {
             -- elsewhere in your config, without redefining it, due to `opts_extend`
             sources = {
                 default = { "lazydev", "lsp", "snippets", "path", "buffer" },
+
+                per_filetype = {
+                    -- NOTE: disables completions when using `live-rename.nvim`
+                    liverename = {},
+                },
+
                 providers = {
                     lazydev = {
                         name = "LazyDev",

@@ -5,6 +5,10 @@ return {
         priority = 1000,
         opts = {
             transparent = true,
+            on_highlights = function(highlights, colors)
+                -- NOTE: fixes `live-rename.nvim` highlighting
+                highlights.Normal = { fg = colors.fg, bg = colors.bg }
+            end,
         },
     },
     {
