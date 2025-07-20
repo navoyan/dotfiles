@@ -234,6 +234,17 @@ return {
         end,
     },
     {
+        "chrisgrieser/nvim-spider",
+        lazy = true,
+        keys = {
+            { "<C-Bs>", mode = { "i" } },
+        },
+        config = function()
+            local b = "<cmd>lua require('spider').motion('b')<CR>"
+            vim.keymap.set("i", "<C-Bs>", "<Esc>cv" .. b, { remap = true })
+        end,
+    },
+    {
         "gbprod/substitute.nvim",
         dependencies = { "gbprod/yanky.nvim" },
         lazy = true,
