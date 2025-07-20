@@ -105,6 +105,9 @@ return {
             "nvimtools/hydra.nvim",
         },
         config = function()
+            local lualine_require = require("lualine_require")
+            lualine_require.require = require
+
             local lualine = require("lualine")
             local colors = require("tokyonight.colors").setup()
             local hydra = require("hydra.statusline")
@@ -125,6 +128,23 @@ return {
                     disabled_filetypes = { -- Filetypes to disable lualine for.
                         statusline = { "no-neck-pain", "snacks_dashboard" }, -- only ignores the ft for statusline.
                         winbar = {}, -- only ignores the ft for winbar.
+                    },
+                    refresh = {
+                        events = {
+                            "WinEnter",
+                            "BufEnter",
+                            "BufWritePost",
+                            "SessionLoadPost",
+                            "FileChangedShellPost",
+                            "VimResized",
+                            "Filetype",
+                            "CursorMoved",
+                            "CursorMovedI",
+                            "ModeChanged",
+                            -- NOTE: differs from default events:
+                            "RecordingEnter",
+                            "RecordingLeave",
+                        },
                     },
                 },
                 sections = {
@@ -167,6 +187,15 @@ return {
                         },
                     },
                     lualine_x = {
+                        ---@class NoiceStatus
+                        ---@field get fun(): string
+                        ---@field has fun(): boolean
+                        -- stylua: ignore
+                        {
+                            function() return require("noice").api.status.mode.get() end,
+                            cond = function() return package.loaded["noice"] and require("noice").api.status.mode.has() end,
+                            color = function() return { fg = Snacks.util.color("Constant") } end,
+                        },
                         "diagnostics",
                         {
                             "diff",
