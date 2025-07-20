@@ -3,7 +3,7 @@ return {
     event = "VeryLazy",
     keys = {
         { "<Bs>", mode = { "n", "x", "o" } },
-        { "Q", mode = { "n", "x", "o" } },
+        { "<Cr>", mode = { "n", "x", "o" } },
         { "r", mode = "o" },
         { "R", mode = { "o", "x" } },
     },
@@ -15,7 +15,7 @@ return {
         flash.setup(opts)
 
         map({ "n", "x", "o" }, "<Bs>", flash.jump)
-        map({ "n", "x", "o" }, "Q", flash.treesitter)
+        map({ "n", "x", "o" }, "<Cr>", flash.treesitter)
         map("o", "r", flash.remote)
         map({ "o", "x" }, "R", flash.treesitter_search)
     end,
