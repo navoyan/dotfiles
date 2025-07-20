@@ -25,10 +25,18 @@ return {
             char = {
                 enabled = true,
                 multi_line = false,
+                keys = {
+                    "f",
+                    "F",
+                    "t",
+                    "T",
+                    [";"] = "m",
+                    ",",
+                },
                 highlight = { backdrop = false },
                 char_actions = function(_)
                     return {
-                        [";"] = "next",
+                        ["m"] = "next",
                         [","] = "prev",
                         -- NOTE: disable `f`/`F`/`t`/`T` enhanced behaviour
                         --

@@ -3,7 +3,7 @@ return {
         "cbochs/grapple.nvim",
         dependencies = { "echasnovski/mini.icons" },
         keys = {
-            { "m", "<cmd>Grapple toggle_tags<cr>", desc = "Toggle tags menu" },
+            { ";", "<cmd>Grapple toggle_tags<cr>", desc = "Toggle tags menu" },
         },
         config = function()
             local Grapple = require("grapple")

@@ -47,9 +47,6 @@ set updatetime=50
 " Don't pass messages to |ins-completion-menu|.
 set shortmess+=c
 
-
-inoremap <C-c> <esc>
-
 nnoremap x "_x
 vnoremap x "_x
 
@@ -58,22 +55,6 @@ vnoremap v "_v
 
 nnoremap V "_V
 vnoremap V "_V
-
-
-" " Copy to clipboard
-vnoremap  <leader>cy  "+y
-nnoremap  <leader>cY  "+yg_
-nnoremap  <leader>cy  "+y
-nnoremap  <leader>cyy  "+yy
-
-" " Paste from clipboard
-nnoremap <leader>cp "+p
-nnoremap <leader>cP "+P
-vnoremap <leader>cp "+p
-vnoremap <leader>cP "+P
-
-nnoremap <leader>p "0p
-vnoremap <leader>p "0p
 
 nnoremap <Esc> <cmd>nohlsearch<cr>
 
@@ -84,6 +65,11 @@ noremap <C-k> <C-u>
 
 cnoremap <M-Bs> <C-w>
 cnoremap <C-Bs> <C-w>
+
+inoremap <C-Bs> <C-w>
+
+nnoremap m ;
+nnoremap ; m
 
 nnoremap sl "_dl
 
