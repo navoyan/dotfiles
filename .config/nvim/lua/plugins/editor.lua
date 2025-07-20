@@ -136,7 +136,7 @@ return {
                     backward = { "prev", "[" },
                 }
 
-                local gitsigns_direction, bracket = unpack(mapping[direction])
+                local gitsigns_direction, bracket = mapping[direction][1], mapping[direction][2]
 
                 if vim.wo.diff then
                     vim.cmd.normal({ bracket .. "c", bang = true })
