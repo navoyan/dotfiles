@@ -6,6 +6,10 @@ return {
         dependencies = {
             { "L3MON4D3/LuaSnip", version = "v2.*" },
         },
+        keys = {
+            -- NOTE: fixes auto-accept behaviour
+            { "<Esc>", "<C-c>", mode = { "c" } },
+        },
         ---@module 'blink.cmp'
         ---@type blink.cmp.Config
         opts = {
@@ -19,8 +23,8 @@ return {
             },
             cmdline = {
                 keymap = {
-                    ["<Down>"] = { "select_next", "fallback" },
-                    ["<Up>"] = { "select_prev", "fallback" },
+                    ["<Left>"] = {},
+                    ["<Right>"] = {},
                     ["<Esc>"] = { "cancel", "fallback" },
                 },
                 completion = {

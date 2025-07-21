@@ -16,9 +16,27 @@ return {
             flash.setup(opts)
 
             map({ "n", "x", "o" }, "<Bs>", flash.jump)
-            map({ "n", "x", "o" }, "<Cr>", flash.treesitter)
             map("o", "r", flash.remote)
             map({ "o", "x" }, "R", flash.treesitter_search)
+
+            local enter = vim.api.nvim_replace_termcodes("<Enter>", true, true, true)
+
+            local excluded_bt = {
+                "quickfix",
+                "nofile",
+                "help",
+                "prompt",
+                "terminal",
+            }
+
+            map({ "n", "x", "o" }, "<Enter>", function()
+                if vim.tbl_contains(excluded_bt, vim.bo.buftype) then
+                    vim.cmd("normal! " .. enter)
+                    return
+                end
+
+                flash.treesitter()
+            end)
         end,
         ---@type Flash.Config
         opts = {
