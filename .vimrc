@@ -1,7 +1,6 @@
 let mapleader = " "
 let maplocalleader = " "
 
-set smartindent
 set autowriteall
 set relativenumber
 
@@ -10,11 +9,15 @@ set smartcase
 set incsearch
 set inccommand=split
 
-set hidden!
-set noerrorbells
+set smartindent
+
+" Overwritten by `guess-indent.nvim` in Neovim:
 set tabstop=4 softtabstop=4
 set shiftwidth=4
 set expandtab
+
+set hidden!
+set noerrorbells
 set noshowmode
 set showcmd!
 set nu
