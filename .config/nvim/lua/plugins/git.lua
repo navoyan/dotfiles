@@ -42,19 +42,31 @@ return {
         },
     },
     {
-        "NeogitOrg/neogit",
-        dependencies = {
-            "nvim-lua/plenary.nvim",
-            "sindrets/diffview.nvim", -- Diff integration
-        },
-        config = true,
+        "folke/snacks.nvim",
+        version = "*",
+        lazy = false,
         keys = {
             {
-                "<leader>G",
+                "<leader>gg",
                 function()
-                    require("neogit").open()
+                    Snacks.lazygit.open()
                 end,
-                desc = "Open Neogit",
+            },
+        },
+        opts = {
+            lazygit = {
+                config = {
+                    os = {
+                        edit = 'nvim --server "$NVIM" --remote-send "q"'
+                            .. '&& nvim --server "$NVIM" --remote {{filename}}',
+                        editAtLine = 'nvim --server "$NVIM" --remote-send "q"'
+                            .. '&& nvim --server "$NVIM" --remote {{filename}};'
+                            .. '&& nvim --server "$NVIM" --remote-send ":{{line}}<CR>"',
+                        editAtLineAndWait = "nvim +{{line}} {{filename}}",
+                        openDirInEditor = 'nvim --server "$NVIM" --remote-send "q"'
+                            .. '&& nvim --server "$NVIM" --remote {{dir}})',
+                    },
+                },
             },
         },
     },
@@ -69,6 +81,85 @@ return {
                 file_panel = {
                     ["q"] = "<Cmd>tabclose<Cr>",
                 },
+            },
+        },
+    },
+    {
+        "folke/snacks.nvim",
+        version = "*",
+        lazy = false,
+        keys = {
+            {
+                "<leader>go",
+                function()
+                    Snacks.gitbrowse.open()
+                end,
+            },
+            {
+                "<leader>gb",
+                function()
+                    Snacks.gitbrowse.open({ what = "branch" })
+                end,
+            },
+        },
+        opts = {
+            gitbrowse = {
+                remote_patterns = {
+                    { "^ssh://git@git%.(.+):(.+)/main/(.+)%.git$", "https://space.%1:%2/p/main/repositories/%3" },
+                    { "^(https?://.*)%.git$", "%1" },
+                    { "^git@(.+):(.+)%.git$", "https://%1/%2" },
+                    { "^git@(.+):(.+)$", "https://%1/%2" },
+                    { "^git@(.+)/(.+)$", "https://%1/%2" },
+                    { "^ssh://git@(.*)$", "https://%1" },
+                    { "^ssh://([^:/]+)(:%d+)/(.*)$", "https://%1/%3" },
+                    { "^ssh://([^/]+)/(.*)$", "https://%1/%2" },
+                    { "ssh%.dev%.azure%.com/v3/(.*)/(.*)$", "dev.azure.com/%1/_git/%2" },
+                    { "^https://%w*@(.*)", "https://%1" },
+                    { "^git@(.*)", "https://%1" },
+                    { ":%d+", "" },
+                    { "%.git$", "" },
+                },
+                url_patterns = {
+                    ["space%.(.+)"] = {
+                        branch = "/commits?query=head:refs/heads/{branch}&tab=changes",
+                        file = function(fields)
+                            return "/files/dev/"
+                                .. fields.file
+                                .. "?tab=source&line="
+                                .. fields.line_start
+                                .. "&lines-count="
+                                .. fields.line_end - fields.line_start + 1
+                        end,
+                        commit = "/revision/{commit}",
+                    },
+                    ["github%.com"] = {
+                        branch = "/tree/{branch}",
+                        file = "/blob/{branch}/{file}#L{line_start}-L{line_end}",
+                        commit = "/commit/{commit}",
+                    },
+                    ["gitlab%.com"] = {
+                        branch = "/-/tree/{branch}",
+                        file = "/-/blob/{branch}/{file}#L{line_start}-L{line_end}",
+                        commit = "/-/commit/{commit}",
+                    },
+                },
+            },
+        },
+    },
+    {
+        "NeogitOrg/neogit",
+        dependencies = {
+            "nvim-lua/plenary.nvim",
+            "sindrets/diffview.nvim", -- Diff integration
+        },
+        config = true,
+        keys = {
+            {
+                "<leader>G",
+                function()
+                    require("neogit").open()
+                end,
+                desc = "Open Neogit",
             },
         },
     },

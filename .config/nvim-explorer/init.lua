@@ -29,7 +29,7 @@ require("lazy").setup({
         opts = {},
     },
     { import = "plugins.themes" },
-    { import = "plugins.flash" },
+    { import = "plugins.editor_navigation" },
 })
 
 require("mappings")

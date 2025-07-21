@@ -140,7 +140,8 @@ return {
                 { path = "${3rd}/luv/library", words = { "vim%.uv" } },
 
                 { path = "snacks.nvim", words = { "Snacks" } },
-                { path = "mini.nvim", words = { "MiniBracketed" } },
+                { path = "mini.bracketed", words = { "MiniBracketed" } },
+                { path = "mini.files", words = { "MiniFiles" } },
             },
         },
     },

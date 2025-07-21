@@ -1,5 +1,119 @@
 return {
     {
+        -- Better Around/Inside textobjects
+        "echasnovski/mini.ai",
+        lazy = true,
+        keys = {
+            { "i", mode = { "o", "x" } },
+            { "a", mode = { "o", "x" } },
+            { "g[", mode = { "n", "o", "x" } },
+            { "g]", mode = { "n", "o", "x" } },
+        },
+        opts = {},
+    },
+    {
+        -- Add/delete/replace surroundings (brackets, quotes, etc.)
+        "echasnovski/mini.surround",
+        lazy = true,
+        keys = {
+            { "s", mode = { "x", "n" } },
+        },
+        opts = {},
+    },
+    {
+        "echasnovski/mini.move",
+        lazy = true,
+        keys = {
+            { "<C-S-h>", mode = { "x", "n" } },
+            { "<C-S-l>", mode = { "x", "n" } },
+            { "<C-S-j>", mode = { "x", "n" } },
+            { "<C-S-k>", mode = { "x", "n" } },
+        },
+        opts = {
+            mappings = {
+                -- Move visual selection in Visual mode
+                left = "<C-S-h>",
+                right = "<C-S-l>",
+                down = "<C-S-j>",
+                up = "<C-S-k>",
+
+                -- Cove current line in Normal mode
+                line_left = "<C-S-h>",
+                line_right = "<C-S-l>",
+                line_down = "<C-S-j>",
+                line_up = "<C-S-k>",
+            },
+        },
+    },
+    {
+        "windwp/nvim-autopairs",
+        event = "InsertEnter",
+        config = true,
+    },
+    {
+        "gbprod/substitute.nvim",
+        dependencies = { "gbprod/yanky.nvim" },
+        lazy = true,
+        keys = { "x", "X" },
+        opts = function()
+            local substitute = require("substitute")
+
+            substitute.setup({
+                on_substitute = require("yanky.integration").substitute(),
+                highlight_substituted_text = {
+                    timer = 150,
+                },
+            })
+
+            vim.keymap.set("n", "x", substitute.operator, { noremap = true })
+            vim.keymap.set("n", "xx", substitute.line, { noremap = true })
+            vim.keymap.set("n", "X", substitute.eol, { noremap = true })
+            vim.keymap.set("x", "x", substitute.visual, { noremap = true })
+        end,
+    },
+    {
+        "gbprod/yanky.nvim",
+        dependencies = { "folke/snacks.nvim" },
+        lazy = true,
+        opts = {
+            highlight = { timer = 150, on_yank = false },
+            preserve_cursor_position = {
+                enabled = true,
+            },
+        },
+        keys = {
+            {
+                "<leader>p",
+                "<cmd>YankyRingHistory<cr>",
+                mode = { "n", "x" },
+                desc = "Open Yank History",
+            },
+            { "y", "<Plug>(YankyYank)", mode = { "n", "x" }, desc = "Yank Text" },
+            { "p", "<Plug>(YankyPutAfter)", mode = { "n", "x" }, desc = "Put Text After Cursor" },
+            { "P", "<Plug>(YankyPutBefore)", mode = { "n", "x" }, desc = "Put Text Before Cursor" },
+            { "<C-p>", "<Plug>(YankyPreviousEntry)", desc = "Put Text After Selection" },
+            { "<C-n>", "<Plug>(YankyNextEntry)", desc = "Put Text After Selection" },
+            { "]p", "<Plug>(YankyPutIndentAfterLinewise)", desc = "Put Indented After Cursor (Linewise)" },
+            { "[p", "<Plug>(YankyPutIndentBeforeLinewise)", desc = "Put Indented Before Cursor (Linewise)" },
+            { "]P", "<Plug>(YankyPutIndentAfterLinewise)", desc = "Put Indented After Cursor (Linewise)" },
+            { "[P", "<Plug>(YankyPutIndentBeforeLinewise)", desc = "Put Indented Before Cursor (Linewise)" },
+            { ">p", "<Plug>(YankyPutIndentAfterShiftRight)", desc = "Put and Indent Right" },
+            { "<p", "<Plug>(YankyPutIndentAfterShiftLeft)", desc = "Put and Indent Left" },
+            { ">P", "<Plug>(YankyPutIndentBeforeShiftRight)", desc = "Put Before and Indent Right" },
+            { "<P", "<Plug>(YankyPutIndentBeforeShiftLeft)", desc = "Put Before and Indent Left" },
+            { "=p", "<Plug>(YankyPutAfterFilter)", desc = "Put After Applying a Filter" },
+            { "=P", "<Plug>(YankyPutBeforeFilter)", desc = "Put Before Applying a Filter" },
+        },
+    },
+    {
+        "chrisgrieser/nvim-spider",
+        lazy = false,
+        config = function()
+            local b = "<cmd>lua require('spider').motion('b')<CR>"
+            vim.keymap.set("i", "<C-Bs>", "<Esc>cv" .. b, { remap = true })
+        end,
+    },
+    {
         "jake-stewart/multicursor.nvim",
         branch = "1.0",
         config = function()
@@ -114,189 +228,5 @@ return {
             hl(0, "MultiCursorDisabledVisual", { link = "Visual" })
             hl(0, "MultiCursorDisabledSign", { link = "SignColumn" })
         end,
-    },
-    {
-        "nvimtools/hydra.nvim",
-        dependencies = {
-            "lewis6991/gitsigns.nvim",
-            "echasnovski/mini.nvim",
-        },
-        lazy = false,
-        config = function()
-            local Hydra = require("hydra")
-            Hydra.setup({
-                hint = false,
-            })
-
-            local gitsigns = require("gitsigns")
-
-            local function nav_hunk(direction)
-                local mapping = {
-                    forward = { "next", "]" },
-                    backward = { "prev", "[" },
-                }
-
-                local gitsigns_direction, bracket = mapping[direction][1], mapping[direction][2]
-
-                if vim.wo.diff then
-                    vim.cmd.normal({ bracket .. "c", bang = true })
-                else
-                    gitsigns.nav_hunk(gitsigns_direction, { wrap = true, navigation_message = false })
-                    vim.wait(5)
-                end
-            end
-
-            local jumps = {
-                k = MiniBracketed.comment,
-                x = MiniBracketed.conflict,
-                d = MiniBracketed.diagnostic,
-                j = MiniBracketed.jump,
-                q = MiniBracketed.quickfix,
-                c = nav_hunk,
-            }
-
-            local function forward(jump)
-                return function()
-                    return jump("forward")
-                end
-            end
-
-            local function backward(jump)
-                return function()
-                    return jump("backward")
-                end
-            end
-
-            local function head_opts()
-                return {
-                    desc = false,
-                }
-            end
-
-            local forward_jumps = {}
-            for key, jump in pairs(jumps) do
-                table.insert(forward_jumps, {
-                    key,
-                    forward(jump),
-                    head_opts(),
-                })
-                table.insert(forward_jumps, {
-                    string.upper(key),
-                    backward(jump),
-                    head_opts(),
-                })
-            end
-
-            local backward_jumps = {}
-            for key, jump in pairs(jumps) do
-                table.insert(backward_jumps, {
-                    key,
-                    backward(jump),
-                    head_opts(),
-                })
-                table.insert(backward_jumps, {
-                    string.upper(key),
-                    forward(jump),
-                    head_opts(),
-                })
-            end
-
-            local lualine = require("lualine")
-
-            local function hydra_config()
-                return {
-                    color = "pink",
-                    on_enter = function()
-                        vim.bo.modifiable = false
-                        lualine.refresh({ place = { "statusline" } })
-                    end,
-                    on_exit = function()
-                        lualine.refresh({ place = { "statusline" } })
-                    end,
-                }
-            end
-
-            -- Forward
-            Hydra({
-                body = "]",
-                mode = "n",
-                config = hydra_config(),
-                heads = forward_jumps,
-            })
-
-            -- Backward
-            Hydra({
-                body = "[",
-                mode = "n",
-                config = hydra_config(),
-                heads = backward_jumps,
-            })
-        end,
-    },
-    {
-        "chrisgrieser/nvim-spider",
-        lazy = true,
-        keys = {
-            { "<C-Bs>", mode = { "i" } },
-        },
-        config = function()
-            local b = "<cmd>lua require('spider').motion('b')<CR>"
-            vim.keymap.set("i", "<C-Bs>", "<Esc>cv" .. b, { remap = true })
-        end,
-    },
-    {
-        "gbprod/substitute.nvim",
-        dependencies = { "gbprod/yanky.nvim" },
-        lazy = true,
-        keys = { "x", "X" },
-        config = function()
-            local substitute = require("substitute")
-
-            substitute.setup({
-                on_substitute = require("yanky.integration").substitute(),
-                highlight_substituted_text = {
-                    timer = 150,
-                },
-            })
-
-            vim.keymap.set("n", "x", substitute.operator, { noremap = true })
-            vim.keymap.set("n", "xx", substitute.line, { noremap = true })
-            vim.keymap.set("n", "X", substitute.eol, { noremap = true })
-            vim.keymap.set("x", "x", substitute.visual, { noremap = true })
-        end,
-    },
-    {
-        "gbprod/yanky.nvim",
-        dependencies = { "folke/snacks.nvim" },
-        lazy = true,
-        opts = {
-            highlight = { timer = 150, on_yank = false },
-            preserve_cursor_position = {
-                enabled = true,
-            },
-        },
-        keys = {
-            {
-                "<leader>p",
-                "<cmd>YankyRingHistory<cr>",
-                mode = { "n", "x" },
-                desc = "Open Yank History",
-            },
-            { "y", "<Plug>(YankyYank)", mode = { "n", "x" }, desc = "Yank Text" },
-            { "p", "<Plug>(YankyPutAfter)", mode = { "n", "x" }, desc = "Put Text After Cursor" },
-            { "P", "<Plug>(YankyPutBefore)", mode = { "n", "x" }, desc = "Put Text Before Cursor" },
-            { "<C-p>", "<Plug>(YankyPreviousEntry)", desc = "Put Text After Selection" },
-            { "<C-n>", "<Plug>(YankyNextEntry)", desc = "Put Text After Selection" },
-            { "]p", "<Plug>(YankyPutIndentAfterLinewise)", desc = "Put Indented After Cursor (Linewise)" },
-            { "[p", "<Plug>(YankyPutIndentBeforeLinewise)", desc = "Put Indented Before Cursor (Linewise)" },
-            { "]P", "<Plug>(YankyPutIndentAfterLinewise)", desc = "Put Indented After Cursor (Linewise)" },
-            { "[P", "<Plug>(YankyPutIndentBeforeLinewise)", desc = "Put Indented Before Cursor (Linewise)" },
-            { ">p", "<Plug>(YankyPutIndentAfterShiftRight)", desc = "Put and Indent Right" },
-            { "<p", "<Plug>(YankyPutIndentAfterShiftLeft)", desc = "Put and Indent Left" },
-            { ">P", "<Plug>(YankyPutIndentBeforeShiftRight)", desc = "Put Before and Indent Right" },
-            { "<P", "<Plug>(YankyPutIndentBeforeShiftLeft)", desc = "Put Before and Indent Left" },
-            { "=p", "<Plug>(YankyPutAfterFilter)", desc = "Put After Applying a Filter" },
-            { "=P", "<Plug>(YankyPutBeforeFilter)", desc = "Put Before Applying a Filter" },
-        },
     },
 }

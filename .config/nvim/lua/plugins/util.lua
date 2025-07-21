@@ -1,11 +1,13 @@
 return {
-    "tpope/vim-sleuth", -- Detect tabstop and shiftwidth automatically
     {
-        "windwp/nvim-autopairs",
-        event = "InsertEnter",
-        config = true,
-        -- use opts = {} for passing setup options
-        -- this is equalent to setup({}) function
+        "folke/snacks.nvim",
+        version = "*",
+        lazy = false,
+        priority = 1000,
+        opts = {
+            bigfile = {},
+            quickfile = {},
+        },
     },
     {
         "epwalsh/obsidian.nvim",

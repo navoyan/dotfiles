@@ -1,5 +1,6 @@
 return {
-    { -- Autoformat
+    "tpope/vim-sleuth", -- Detect tabstop and shiftwidth automatically
+    {
         "stevearc/conform.nvim",
         opts = {
             notify_on_error = true,
@@ -18,7 +19,14 @@ return {
                 lua = { "stylua" },
                 python = { "ruff_format" },
                 bzl = { "buildifier" },
-                json = {},
+                json = { "prettier" },
+            },
+            formatters = {
+                prettier = {
+                    condition = function(_, ctx)
+                        return vim.fs.basename(ctx.filename) ~= "lazy-lock.json"
+                    end,
+                },
             },
         },
     },

@@ -1,5 +1,53 @@
 return {
     {
+        "echasnovski/mini.files",
+        lazy = true,
+        keys = {
+            {
+                "<leader>e",
+                function()
+                    local current_buf = vim.api.nvim_buf_get_name(0)
+                    MiniFiles.open(current_buf)
+                    MiniFiles.reveal_cwd()
+                end,
+                desc = "[E]xplore MiniFiles",
+            },
+        },
+        opts = {
+            options = {
+                -- Whether to delete permanently or move into module-specific trash
+                permanent_delete = false,
+                -- Whether to use for editing directories
+                use_as_default_explorer = true,
+            },
+            mappings = {
+                close = "q",
+                go_in = "l",
+                go_in_plus = "<Enter>",
+                go_out = "h",
+                go_out_plus = "H",
+                reset = "=",
+                reveal_cwd = "@",
+                show_help = "g?",
+                synchronize = "Q",
+                trim_left = "<",
+                trim_right = ">",
+            },
+            windows = {
+                -- Maximum number of windows to show side by side
+                max_number = math.huge,
+                -- Whether to show preview of file/directory under cursor
+                preview = true,
+                -- Width of focused window
+                width_focus = 50,
+                -- Width of non-focused window
+                width_nofocus = 15,
+                -- Width of preview window
+                width_preview = 25,
+            },
+        },
+    },
+    {
         "cbochs/grapple.nvim",
         dependencies = { "echasnovski/mini.icons" },
         keys = {
@@ -48,6 +96,124 @@ return {
             vim.keymap.set("n", "<M-S-j>", splits.resize_down)
             vim.keymap.set("n", "<M-S-k>", splits.resize_up)
             vim.keymap.set("n", "<M-S-l>", splits.resize_right)
+        end,
+    },
+    {
+        "nvimtools/hydra.nvim",
+        dependencies = {
+            "lewis6991/gitsigns.nvim",
+            "echasnovski/mini.bracketed",
+        },
+        lazy = false,
+        config = function()
+            local Hydra = require("hydra")
+            Hydra.setup({
+                hint = false,
+            })
+
+            local gitsigns = require("gitsigns")
+
+            local function nav_hunk(direction)
+                local mapping = {
+                    forward = { "next", "]" },
+                    backward = { "prev", "[" },
+                }
+
+                local gitsigns_direction, bracket = mapping[direction][1], mapping[direction][2]
+
+                if vim.wo.diff then
+                    vim.cmd.normal({ bracket .. "c", bang = true })
+                else
+                    gitsigns.nav_hunk(gitsigns_direction, { wrap = true, navigation_message = false })
+                    vim.wait(5)
+                end
+            end
+
+            local jumps = {
+                k = MiniBracketed.comment,
+                x = MiniBracketed.conflict,
+                d = MiniBracketed.diagnostic,
+                j = MiniBracketed.jump,
+                q = MiniBracketed.quickfix,
+                c = nav_hunk,
+            }
+
+            local function forward(jump)
+                return function()
+                    return jump("forward")
+                end
+            end
+
+            local function backward(jump)
+                return function()
+                    return jump("backward")
+                end
+            end
+
+            local function head_opts()
+                return {
+                    desc = false,
+                }
+            end
+
+            local forward_jumps = {}
+            for key, jump in pairs(jumps) do
+                table.insert(forward_jumps, {
+                    key,
+                    forward(jump),
+                    head_opts(),
+                })
+                table.insert(forward_jumps, {
+                    string.upper(key),
+                    backward(jump),
+                    head_opts(),
+                })
+            end
+
+            local backward_jumps = {}
+            for key, jump in pairs(jumps) do
+                table.insert(backward_jumps, {
+                    key,
+                    backward(jump),
+                    head_opts(),
+                })
+                table.insert(backward_jumps, {
+                    string.upper(key),
+                    forward(jump),
+                    head_opts(),
+                })
+            end
+
+            local lualine = require("lualine")
+
+            local function hydra_config()
+                return {
+                    color = "pink",
+                    on_enter = function()
+                        vim.bo.modifiable = false
+                        lualine.refresh({ place = { "statusline" } })
+                    end,
+                    on_exit = function()
+                        lualine.refresh({ place = { "statusline" } })
+                    end,
+                }
+            end
+
+            -- Forward
+            Hydra({
+                body = "]",
+                mode = "n",
+                config = hydra_config(),
+                heads = forward_jumps,
+            })
+
+            -- Backward
+            Hydra({
+                body = "[",
+                mode = "n",
+                config = hydra_config(),
+                heads = backward_jumps,
+            })
         end,
     },
     {

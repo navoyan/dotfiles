@@ -39,6 +39,37 @@ return {
             },
         },
     },
+    {
+        "folke/snacks.nvim",
+        version = "*",
+        lazy = false,
+        opts = {
+            words = {
+                debounce = 10,
+            },
+            indent = {
+                animate = {
+                    enabled = false,
+                },
+                scope = {
+                    enabled = false,
+                },
+            },
+            image = {},
+            dashboard = {
+                sections = {
+                    { section = "header" },
+                    { section = "startup" },
+                },
+            },
+        },
+    },
+    {
+        "folke/todo-comments.nvim",
+        event = "VimEnter",
+        dependencies = { "nvim-lua/plenary.nvim" },
+        opts = { signs = false },
+    },
     -- Useful status updates for LSP.
     {
         "j-hui/fidget.nvim",
