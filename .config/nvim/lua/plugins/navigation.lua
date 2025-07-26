@@ -2,6 +2,7 @@ return {
     {
         "echasnovski/mini.files",
         lazy = true,
+        dependencies = { "echasnovski/mini.icons" },
         keys = {
             {
                 "<leader>e",
@@ -37,15 +38,25 @@ return {
                 -- Maximum number of windows to show side by side
                 max_number = math.huge,
                 -- Whether to show preview of file/directory under cursor
-                preview = true,
+                preview = false,
                 -- Width of focused window
                 width_focus = 50,
                 -- Width of non-focused window
-                width_nofocus = 15,
-                -- Width of preview window
-                width_preview = 25,
+                width_nofocus = 20,
             },
         },
+        config = function(_, opts)
+            require("mini.files").setup(opts)
+
+            vim.api.nvim_create_autocmd("User", {
+                pattern = "MiniFilesWindowOpen",
+                callback = function(args)
+                    local win_id = args.data.win_id
+
+                    vim.wo[win_id].cursorlineopt = "line"
+                end,
+            })
+        end,
     },
     {
         "cbochs/grapple.nvim",

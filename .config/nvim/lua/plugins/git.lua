@@ -54,6 +54,7 @@ return {
             },
         },
         opts = {
+            ---@type snacks.lazygit.Config
             lazygit = {
                 config = {
                     os = {
@@ -65,6 +66,19 @@ return {
                         editAtLineAndWait = "nvim +{{line}} {{filename}}",
                         openDirInEditor = 'nvim --server "$NVIM" --remote-send "q"'
                             .. '&& nvim --server "$NVIM" --remote {{dir}})',
+                    },
+                },
+                ---@type snacks.win.Config
+                win = {
+                    width = 0,
+                    height = 0,
+                    wo = {
+                        winhighlight = "Normal:SnacksNormal"
+                            .. ",NormalNC:SnacksNormalNC"
+                            .. ",WinBar:SnacksWinBar"
+                            .. ",WinBarNC:SnacksWinBarNC"
+                            -- custom hl
+                            .. ",NormalFloat:SnacksLazygitNormal",
                     },
                 },
             },

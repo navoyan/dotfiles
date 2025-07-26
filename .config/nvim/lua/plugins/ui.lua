@@ -25,6 +25,11 @@ return {
                     reverse = false,
                     timeout = 5000,
                 },
+                cmdline_popup = {
+                    border = {
+                        style = "single",
+                    },
+                },
             },
         },
         dependencies = {
@@ -44,6 +49,11 @@ return {
         version = "*",
         lazy = false,
         opts = {
+            -- ISSUE: https://github.com/neovim/neovim/issues/33067
+            -- statuscolumn = {
+            --     left = { "sign" },
+            --     right = { "git" },
+            -- },
             words = {
                 debounce = 10,
             },

@@ -4,6 +4,7 @@ return {
         version = "*",
         lazy = false,
         opts = {
+            ---@type snacks.picker.Config
             picker = {
                 matcher = {
                     frecency = true,
@@ -17,6 +18,98 @@ return {
                 debug = {
                     scores = false,
                 },
+                layouts = {
+                    default = {
+                        layout = {
+                            box = "horizontal",
+                            width = 0.8,
+                            min_width = 120,
+                            height = 0.8,
+                            {
+                                box = "vertical",
+                                width = 0.45,
+                                {
+                                    win = "input",
+                                    height = 1,
+                                    title = "{title} {live} {flags}",
+                                    border = "single",
+                                },
+                                { win = "list", border = "none" },
+                            },
+                            {
+                                win = "preview",
+                                -- there is no statuscolumn gap in minimal style
+                                style = "minimal",
+                                title = "{preview}",
+                                border = "single",
+                                width = 0.55,
+                            },
+                        },
+                    },
+                    inline_preview = {
+                        preview = "main",
+                        layout = {
+                            backdrop = false,
+                            row = 1,
+                            width = 0.4,
+                            min_width = 80,
+                            height = 0.4,
+                            border = "none",
+                            box = "vertical",
+                            {
+                                win = "input",
+                                height = 1,
+                                border = "single",
+                                title = "{title} {live} {flags}",
+                                title_pos = "center",
+                            },
+                            { win = "list", border = "hpad" },
+                            { win = "preview", title = "{preview}", border = "single" },
+                        },
+                    },
+                    select = {
+                        layout = {
+                            backdrop = false,
+                            width = 0.4,
+                            min_width = 80,
+                            height = 0.4,
+                            min_height = 3,
+                            box = "vertical",
+                            border = "single",
+                            title = "{title}",
+                            title_pos = "center",
+                            { win = "input", height = 1, border = "bottom" },
+                            { win = "list", border = "none" },
+                            { win = "preview", title = "{preview}", height = 0.4, border = "top" },
+                        },
+                    },
+                    vertical = {
+                        layout = {
+                            backdrop = false,
+                            width = 0.5,
+                            min_width = 80,
+                            height = 0.8,
+                            min_height = 30,
+                            box = "vertical",
+                            border = "single",
+                            title = "{title} {live} {flags}",
+                            title_pos = "center",
+                            { win = "input", height = 1, border = "bottom" },
+                            { win = "list", border = "none" },
+                            { win = "preview", style = "minimal", title = "{preview}", height = 0.4, border = "top" },
+                        },
+                    },
+                },
+                sources = {
+                    diagnostics_buffer = { layout = "inline_preview" },
+                    diagnostics = { layout = "inline_preview" },
+                    lsp_definitions = { layout = "inline_preview" },
+                    lsp_references = { layout = "inline_preview" },
+                    lsp_implementations = { layout = "inline_preview" },
+                    lsp_type_definitions = { layout = "inline_preview" },
+                    lsp_symbols = { layout = "inline_preview" },
+                    lsp_workspace_symbols = { layout = "inline_preview" },
+                },
             },
         },
         config = function(_, opts)
@@ -24,8 +117,6 @@ return {
 
             local is_cwd_dotfiles = vim.fn.getcwd() == vim.env.HOME .. "/dotfiles"
             local show_hidden_for_dotfiles = is_cwd_dotfiles and { hidden = true } or {}
-
-            local inline_preview = { layout = { preset = "vscode", preview = "main" } }
 
             local function conf(picker_fn, ...)
                 local result_config = {}
@@ -59,10 +150,10 @@ return {
                 return { severity = picker_severity }
             end
 
-            map("n", "<leader>dd", conf(Snacks.picker.diagnostics_buffer, inline_preview))
-            map("n", "<leader>dD", conf(Snacks.picker.diagnostics_buffer, inline_preview, severity(vim_severity.ERROR)))
-            map("n", "<leader>dw", conf(Snacks.picker.diagnostics, inline_preview))
-            map("n", "<leader>dW", conf(Snacks.picker.diagnostics, inline_preview, severity(vim_severity.ERROR)))
+            map("n", "<leader>dd", Snacks.picker.diagnostics_buffer)
+            map("n", "<leader>dD", conf(Snacks.picker.diagnostics_buffer, severity(vim_severity.ERROR)))
+            map("n", "<leader>dw", Snacks.picker.diagnostics)
+            map("n", "<leader>dW", conf(Snacks.picker.diagnostics, severity(vim_severity.ERROR)))
 
             map("n", "<leader>su", Snacks.picker.undo)
             map("n", "<leader>sq", Snacks.picker.qflist)
