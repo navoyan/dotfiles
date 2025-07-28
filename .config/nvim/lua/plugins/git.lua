@@ -57,16 +57,7 @@ return {
             ---@type snacks.lazygit.Config
             lazygit = {
                 config = {
-                    os = {
-                        edit = 'nvim --server "$NVIM" --remote-send "q"'
-                            .. '&& nvim --server "$NVIM" --remote {{filename}}',
-                        editAtLine = 'nvim --server "$NVIM" --remote-send "q"'
-                            .. '&& nvim --server "$NVIM" --remote {{filename}};'
-                            .. '&& nvim --server "$NVIM" --remote-send ":{{line}}<CR>"',
-                        editAtLineAndWait = "nvim +{{line}} {{filename}}",
-                        openDirInEditor = 'nvim --server "$NVIM" --remote-send "q"'
-                            .. '&& nvim --server "$NVIM" --remote {{dir}})',
-                    },
+                    os = nil,
                 },
                 ---@type snacks.win.Config
                 win = {
@@ -87,16 +78,41 @@ return {
     {
         "sindrets/diffview.nvim",
         dependencies = { "echasnovski/mini.icons" },
-        opts = {
-            keymaps = {
-                view = {
-                    ["q"] = "<Cmd>tabclose<Cr>",
+        lazy = true,
+        cmd = { "DiffviewOpen", "DiffviewFileHistory", "DiffviewLog" },
+        config = function()
+            local function close_even_last_tab()
+                local success = pcall(vim.cmd.tabclose)
+                if not success then
+                    vim.cmd.quitall()
+                end
+            end
+
+            require("diffview").setup({
+                keymaps = {
+                    view = {
+                        ["q"] = close_even_last_tab,
+                    },
+                    file_panel = {
+                        ["q"] = close_even_last_tab,
+                    },
+                    file_history_panel = {
+                        ["q"] = close_even_last_tab,
+                    },
                 },
-                file_panel = {
-                    ["q"] = "<Cmd>tabclose<Cr>",
+                hooks = {
+                    view_opened = function(view)
+                        if view.commit_log_panel then
+                            local opts = { desc = "Close commit log panel", buffer = view.commit_log_panel.bufid }
+
+                            vim.keymap.set("n", "q", function()
+                                view.commit_log_panel:close()
+                            end, opts)
+                        end
+                    end,
                 },
-            },
-        },
+            })
+        end,
     },
     {
         "folke/snacks.nvim",

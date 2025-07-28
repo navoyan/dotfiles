@@ -7,7 +7,6 @@ set relativenumber
 set ignorecase
 set smartcase
 set incsearch
-set inccommand=split
 
 set smartindent
 

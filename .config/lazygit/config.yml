@@ -1,0 +1,109 @@
+gui:
+  border: single
+  showNumstatInFilesView: true
+  scrollHeight: 15
+  expandFocusedSidePanel: true
+  expandedSidePanelWeight: 3
+  statusPanelView: allBranchesLog
+
+promptToReturnFromSubprocess: false
+
+update:
+  method: never
+
+git:
+  paging:
+    colorArg: always
+    pager: delta --paging=never
+
+keybinding:
+  universal:
+    prevItem: k
+    nextItem: j
+    scrollUpMain-alt1: <Up>
+    scrollDownMain-alt1: <Down>
+  files:
+    commitChanges: C
+    commitChangesWithEditor: c
+  commits:
+    renameCommitWithEditor: r
+    renameCommit: R
+
+customCommands:
+  - key: <C-t>
+    context: files
+    output: log
+    command: |-
+      _nvim_diffview file {{ .SelectedPath }}
+  - key: <C-t>
+    context: commitFiles
+    output: log
+    command: |-
+      _nvim_diffview commit_file {{ .SelectedCommit.Hash }} {{ .SelectedPath }}
+  - key: <C-t>
+    context: stash
+    output: log
+    command: |-
+      _nvim_diffview stash_entry {{ .SelectedStashEntry.Index }}
+  - key: <C-t>
+    context: commits
+    output: log
+    command: |-
+      _nvim_diffview commits {{ .SelectedCommitRange.From }} {{ .SelectedCommitRange.To }}
+  - key: <C-t>
+    context: subCommits
+    output: log
+    command: |-
+      _nvim_diffview commits {{ .SelectedCommitRange.From }} {{ .SelectedCommitRange.To }}
+  - key: <C-t>
+    context: reflogCommits
+    output: log
+    command: |-
+      _nvim_diffview commits {{ .SelectedCommitRange.From }} {{ .SelectedCommitRange.To }}
+  - key: <C-t>
+    context: localBranches
+    output: log
+    command: |-
+      _nvim_diffview local_branch {{ .SelectedLocalBranch.Name }}
+  - key: <C-t>
+    context: remoteBranches
+    output: log
+    command: |-
+      _nvim_diffview remote_branch {{ .SelectedRemoteBranch.RemoteName }} {{ .SelectedRemoteBranch.Name }}
+
+os:
+  edit: |-
+    begin
+      if test -z "$NVIM"
+        nvim -- {{filename}}
+      else
+        nvim --server "$NVIM" --remote-send "q"
+        nvim --server "$NVIM" --remote {{filename}}
+      end
+    end
+
+  # FIXME: jump to {{line}} does not work properly
+  editAtLine: |-
+    begin
+      if test -z "$NVIM"
+        nvim +{{line}} -- {{filename}}
+      else
+        nvim --server "$NVIM" --remote-send "q"
+        nvim --server "$NVIM" --remote {{filename}}
+        nvim --server "$NVIM" --remote-send ":{{line}}<CR>"
+      end
+    end
+
+  # ISSUE: No remote-wait support yet. See https://github.com/neovim/neovim/pull/17856
+  editAtLineAndWait: |-
+    nvim +{{line}} {{filename}}
+
+  openDirInEditor: |-
+    begin
+      if test -z "$NVIM"
+        nvim -- {{dir}}
+      else
+        nvim --server "$NVIM" --remote-send "q"
+        nvim --server "$NVIM" --remote {{dir}}
+      end
+    end

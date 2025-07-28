@@ -1,3 +1,5 @@
+set -gx SHELL $(which fish)
+
 set -gx XDG_CONFIG_HOME "$HOME/.config"
 set -gx XDG_CACHE_HOME "$HOME/.cache"
 set -gx XDG_DATA_HOME "$HOME/.local/share"
@@ -6,7 +8,10 @@ set -gx XDG_STATE_HOME "$HOME/.local/state"
 set -gx EDITOR nvim
 set -gx SUDOEDITOR nvim
 
+set -gx LESSKEYIN "$XDG_CONFIG_HOME/lesskey/config"
 set -gx MANPAGER "bash -c 'NVIM_APPNAME=nvim-explorer nvim +Man!'"
+
+set fish_function_path "$__fish_config_dir/user_functions" $fish_function_path
 
 abbr v nvim
 
