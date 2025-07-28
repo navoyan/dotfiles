@@ -44,13 +44,20 @@ return {
                 char = {
                     enabled = true,
                     multi_line = false,
-                    keys = { "f", "f", "t", "t", [";"] = "m", "," },
+                    keys = {
+                        "f",
+                        "F",
+                        "t",
+                        "T",
+                        [";"] = "m",
+                        ",",
+                    },
                     highlight = { backdrop = false },
                     char_actions = function(_)
                         return {
                             ["m"] = "next",
                             [","] = "prev",
-                            -- note: disable `f`/`f`/`t`/`t` enhanced behaviour
+                            -- NOTE: overwriting actions disables `f`/`F`/`t`/`T` enhanced behaviour:
                             --
                             -- [motion:lower()] = "next",
                             -- [motion:upper()] = "prev",

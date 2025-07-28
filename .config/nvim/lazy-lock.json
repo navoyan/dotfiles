@@ -37,6 +37,7 @@
   "smart-splits.nvim": { "branch": "master", "commit": "c088d64c6e0e3221d24ef1f9337b5fe15557ddcc" },
   "snacks.nvim": { "branch": "main", "commit": "5eac729fa290248acfe10916d92a5ed5e5c0f9ed" },
   "substitute.nvim": { "branch": "main", "commit": "9db749a880e3dd3b0eb57f698aa8f1e1630e1f25" },
+  "tiny-code-action.nvim": { "branch": "main", "commit": "6cc625667294b956ac044dc4e95cdd8b451a3f8f" },
   "todo-comments.nvim": { "branch": "main", "commit": "304a8d204ee787d2544d8bc23cd38d2f929e7cc5" },
   "tokyonight.nvim": { "branch": "main", "commit": "057ef5d260c1931f1dffd0f052c685dcd14100a3" },
   "treesj": { "branch": "main", "commit": "3b4a2bc42738a63de17e7485d4cc5e49970ddbcc" },

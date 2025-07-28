@@ -67,11 +67,6 @@ return {
                     -- Fuzzy find all the symbols in your current workspace.
                     map("<leader>sw", picker.lsp_workspace_symbols, "[S]ymbols in [W]orkspace")
 
-                    -- Execute a code action aviailable for the current symbol or line
-                    vim.keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, {
-                        desc = "LSP: [C]ode [A]ction",
-                    })
-
                     -- Show diagnostics for the current line in a floating window
                     map("<leader>cd", function()
                         vim.diagnostic.open_float({ scope = "line" })
@@ -123,6 +118,35 @@ return {
             map("n", "<leader>ri", rename_fn({ text = "", insert = true }), {
                 desc = "LSP: [R]ename (in [I]nsert mode)",
             })
+        end,
+    },
+    {
+        "rachartier/tiny-code-action.nvim",
+        dependencies = {
+            "nvim-lua/plenary.nvim",
+            {
+                "folke/snacks.nvim",
+                opts = {
+                    terminal = {},
+                },
+            },
+        },
+        event = "LspAttach",
+        opts = {
+            backend = "difftastic",
+            picker = "snacks",
+            picker_config = {
+                layout = "code_action",
+            },
+        },
+        config = function(_, opts)
+            local tiny_code_action = require("tiny-code-action")
+
+            tiny_code_action.picker_config[opts.picker] = opts.picker_config
+
+            tiny_code_action.setup(opts)
+
+            vim.keymap.set({ "n", "x" }, "<leader>ca", tiny_code_action.code_action)
         end,
     },
     {

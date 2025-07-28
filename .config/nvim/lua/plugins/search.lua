@@ -99,6 +99,22 @@ return {
                             { win = "preview", style = "minimal", title = "{preview}", height = 0.4, border = "top" },
                         },
                     },
+                    code_action = {
+                        layout = {
+                            backdrop = false,
+                            width = 0.6,
+                            min_width = 80,
+                            height = 0.6,
+                            min_height = 30,
+                            box = "vertical",
+                            border = "single",
+                            title = "{title}",
+                            title_pos = "center",
+                            { win = "input", height = 1, border = "bottom" },
+                            { win = "list", height = 0.2, border = "none" },
+                            { win = "preview", title = "{preview}", border = "top" },
+                        },
+                    },
                 },
                 sources = {
                     diagnostics_buffer = { layout = "inline_preview" },
