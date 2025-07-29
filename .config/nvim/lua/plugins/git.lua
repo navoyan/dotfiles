@@ -12,6 +12,13 @@ return {
                 end
 
                 -- Navigation
+                map("n", "]c", function()
+                    gitsigns.nav_hunk("next")
+                end)
+
+                map("n", "[c", function()
+                    gitsigns.nav_hunk("prev")
+                end)
 
                 -- Actions
                 map("n", "<leader>hs", gitsigns.stage_hunk)

@@ -141,12 +141,12 @@ return {
             end
 
             local jumps = {
-                k = MiniBracketed.comment,
-                x = MiniBracketed.conflict,
-                d = MiniBracketed.diagnostic,
-                j = MiniBracketed.jump,
-                q = MiniBracketed.quickfix,
-                c = nav_hunk,
+                K = MiniBracketed.comment,
+                X = MiniBracketed.conflict,
+                D = MiniBracketed.diagnostic,
+                J = MiniBracketed.jump,
+                Q = MiniBracketed.quickfix,
+                C = nav_hunk,
             }
 
             local function forward(jump)
@@ -161,39 +161,23 @@ return {
                 end
             end
 
-            local function head_opts()
-                return {
-                    desc = false,
-                }
-            end
+            local forward_jumps = vim.iter(jumps)
+                :map(function(key, jump)
+                    return {
+                        key,
+                        forward(jump),
+                    }
+                end)
+                :totable()
 
-            local forward_jumps = {}
-            for key, jump in pairs(jumps) do
-                table.insert(forward_jumps, {
-                    key,
-                    forward(jump),
-                    head_opts(),
-                })
-                table.insert(forward_jumps, {
-                    string.upper(key),
-                    backward(jump),
-                    head_opts(),
-                })
-            end
-
-            local backward_jumps = {}
-            for key, jump in pairs(jumps) do
-                table.insert(backward_jumps, {
-                    key,
-                    backward(jump),
-                    head_opts(),
-                })
-                table.insert(backward_jumps, {
-                    string.upper(key),
-                    forward(jump),
-                    head_opts(),
-                })
-            end
+            local backward_jumps = vim.iter(jumps)
+                :map(function(key, jump)
+                    return {
+                        key,
+                        backward(jump),
+                    }
+                end)
+                :totable()
 
             local lualine = require("lualine")
 
