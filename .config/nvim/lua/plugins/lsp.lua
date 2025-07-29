@@ -132,22 +132,36 @@ return {
             },
         },
         event = "LspAttach",
-        opts = {
-            backend = "difftastic",
-            picker = "snacks",
-            picker_config = {
-                layout = "code_action",
+        keys = {
+            {
+                "<leader>ca",
+                function()
+                    require("tiny-code-action").code_action({})
+                end,
+                mode = { "n", "x" },
             },
         },
-        config = function(_, opts)
-            local tiny_code_action = require("tiny-code-action")
+        opts = {
+            picker = {
+                "snacks",
+                opts = {
+                    layout = "code_action",
+                },
+            },
+            backend = "difftastic",
+            backend_opts = {
+                difftastic = {
+                    header_lines_to_remove = 1,
 
-            tiny_code_action.picker_config[opts.picker] = opts.picker_config
-
-            tiny_code_action.setup(opts)
-
-            vim.keymap.set({ "n", "x" }, "<leader>ca", tiny_code_action.code_action)
-        end,
+                    args = {
+                        "--color=always",
+                        "--syntax-highlight=on",
+                        "--display=inline",
+                        "--width=105",
+                    },
+                },
+            },
+        },
     },
     {
         "folke/lazydev.nvim",
