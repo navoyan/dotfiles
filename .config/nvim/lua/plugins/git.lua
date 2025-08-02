@@ -71,12 +71,14 @@ return {
                     width = 0,
                     height = 0,
                     wo = {
-                        winhighlight = "Normal:SnacksNormal"
-                            .. ",NormalNC:SnacksNormalNC"
-                            .. ",WinBar:SnacksWinBar"
-                            .. ",WinBarNC:SnacksWinBarNC"
+                        winhighlight = table.concat({
+                            "Normal:SnacksNormal",
+                            "NormalNC:SnacksNormalNC",
+                            "WinBar:SnacksWinBar",
+                            "WinBarNC:SnacksWinBarNC",
                             -- custom hl
-                            .. ",NormalFloat:SnacksLazygitNormal",
+                            "NormalFloat:SnacksLazygitNormal",
+                        }, ","),
                     },
                 },
             },
@@ -109,12 +111,39 @@ return {
                 },
                 hooks = {
                     view_opened = function(view)
-                        if view.commit_log_panel then
-                            local opts = { desc = "Close commit log panel", buffer = view.commit_log_panel.bufid }
+                        local map = vim.keymap.set
 
-                            vim.keymap.set("n", "q", function()
-                                view.commit_log_panel:close()
-                            end, opts)
+                        ---@type CommitLogPanel
+                        local commit_log_panel = view.commit_log_panel
+
+                        commit_log_panel:on_autocmd("BufWinEnter", {
+                            callback = function(args)
+                                local opts = { buffer = args.buf }
+                                local close = function()
+                                    commit_log_panel:close()
+                                end
+
+                                map("n", "q", close, opts)
+                                map("n", "<Esc>", close, opts)
+                            end,
+                        })
+                    end,
+                    diff_buf_win_enter = function(_, _, ctx)
+                        -- Highlight 'DiffChange' as 'DiffDelete' on the left,
+                        -- and 'DiffAdd' on the right.
+                        if ctx.layout_name:match("^diff2") then
+                            if ctx.symbol == "a" then
+                                vim.opt_local.winhl = table.concat({
+                                    "DiffAdd:DiffDelete",
+                                    "DiffChange:DiffDelete",
+                                    "DiffText:DiffDeleteText",
+                                }, ",")
+                            elseif ctx.symbol == "b" then
+                                vim.opt_local.winhl = table.concat({
+                                    "DiffChange:DiffAdd",
+                                    "DiffText:DiffAddText",
+                                }, ",")
+                            end
                         end
                     end,
                 },

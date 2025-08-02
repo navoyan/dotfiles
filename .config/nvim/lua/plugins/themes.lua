@@ -8,6 +8,11 @@ return {
             on_highlights = function(h, c)
                 h.CursorLineNr = { fg = c.border_highlight, bold = true }
 
+                h.Folded = { fg = h.Folded.fg, bg = "#2d3249" }
+
+                h.DiffDeleteText = { bg = "#713137" }
+                h.DiffAddText = { bg = "#2c5a66" }
+
                 -- HACK: fixes `live-rename.nvim` highlighting
                 h.Normal = { fg = c.fg, bg = c.bg }
 
