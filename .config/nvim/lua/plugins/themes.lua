@@ -16,6 +16,8 @@ return {
                 h.LeapBackdrop = nil
                 h.LeapLabel = { bg = c.magenta2, fg = c.fg, bold = true }
 
+                h.TreesitterContext = { link = "NormalFloat" }
+
                 -- original: hl-SnacksPickerInputTitle
                 h.FloatTitleFocused = {
                     bg = "#16161E",

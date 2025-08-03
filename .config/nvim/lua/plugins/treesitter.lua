@@ -52,6 +52,24 @@ return {
         end,
     },
     {
+        "nvim-treesitter/nvim-treesitter-context",
+        event = { "BufReadPost", "BufNewFile", "BufWritePre" },
+        opts = {
+            mode = "cursor",
+            multiline_threshold = 1,
+            max_lines = 3,
+        },
+        keys = {
+            {
+                "<leader>cc",
+                function()
+                    require("treesitter-context").toggle()
+                end,
+                desc = "Toggle [C]ode [C]ontext",
+            },
+        },
+    },
+    {
         "Wansmer/treesj",
         keys = {
             {

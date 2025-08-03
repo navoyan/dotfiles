@@ -101,7 +101,6 @@ return {
         "nvim-lualine/lualine.nvim",
         dependencies = {
             "echasnovski/mini.icons",
-            "SmiteshP/nvim-navic",
             "nvimtools/hydra.nvim",
         },
         config = function()
@@ -114,11 +113,11 @@ return {
 
             local map = vim.keymap.set
 
-            local navic_enabled = true
+            local full_path_enabled = false
             map("n", "<leader>cp", function()
-                navic_enabled = not navic_enabled
+                full_path_enabled = not full_path_enabled
                 lualine.refresh({ place = { "statusline" } })
-            end, { desc = "Toggle [C]ode [P]ath (Navic)" })
+            end, { desc = "Toggle full [C]ode [P]ath" })
 
             lualine.setup({
                 options = {
@@ -171,19 +170,9 @@ return {
                         },
                         {
                             function(self)
-                                return pretty_path(self, { full_path = not navic_enabled })
+                                return pretty_path(self, { full_path = full_path_enabled })
                             end,
                             padding = { left = 0, right = 1 },
-                        },
-                        {
-                            "navic",
-                            cond = function()
-                                return navic_enabled
-                            end,
-                            navic_opts = {
-                                highlight = true,
-                                separator = " ",
-                            },
                         },
                     },
                     lualine_x = {
@@ -211,14 +200,5 @@ return {
                 },
             })
         end,
-    },
-    {
-        "SmiteshP/nvim-navic",
-        lazy = true,
-        opts = {
-            lsp = {
-                auto_attach = true,
-            },
-        },
     },
 }
