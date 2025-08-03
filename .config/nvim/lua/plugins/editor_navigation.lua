@@ -1,26 +1,28 @@
 return {
     {
-        "folke/flash.nvim",
-        event = "VeryLazy",
-        keys = {
-            { "<Bs>", mode = { "n", "x", "o" } },
-            { "<Cr>", mode = { "n", "x", "o" } },
-            { "r", mode = "o" },
-            { "R", mode = { "o", "x" } },
-        },
+        "ggandor/leap.nvim",
+        lazy = false,
+        opts = {},
         config = function(_, opts)
+            require("leap").setup(opts)
             local map = vim.keymap.set
 
-            local flash = require("flash")
+            map({ "n", "x", "o" }, "<Bs>", "<Plug>(leap)")
 
-            flash.setup(opts)
+            map({ "n", "x", "o" }, "R", function()
+                require("leap.treesitter").select({
+                    -- To increase/decrease the selection in a clever-f-like manner,
+                    -- with the trigger key itself (vRRRRrr...).
+                    -- The default keys (<enter>/<backspace>) also work
+                    opts = require("leap.user").with_traversal_keys("R", "r"),
+                })
+            end)
 
-            map({ "n", "x", "o" }, "<Bs>", flash.jump)
-            map("o", "r", flash.remote)
-            map({ "o", "x" }, "R", flash.treesitter_search)
+            local leap_remote = require("leap.remote")
 
-            local enter = vim.api.nvim_replace_termcodes("<Enter>", true, true, true)
+            map({ "x", "o" }, "<Enter>", leap_remote.action)
 
+            -- Default <Enter> behaviour for these buftypes
             local excluded_bt = {
                 "quickfix",
                 "nofile",
@@ -29,46 +31,16 @@ return {
                 "terminal",
             }
 
-            map({ "n", "x", "o" }, "<Enter>", function()
+            local enter = vim.api.nvim_replace_termcodes("<Enter>", true, true, true)
+            map("n", "<Enter>", function()
                 if vim.tbl_contains(excluded_bt, vim.bo.buftype) then
                     vim.cmd("normal! " .. enter)
                     return
                 end
 
-                flash.treesitter()
+                leap_remote.action()
             end)
         end,
-        ---@type Flash.Config
-        opts = {
-            modes = {
-                char = {
-                    enabled = true,
-                    multi_line = false,
-                    keys = {
-                        "f",
-                        "F",
-                        "t",
-                        "T",
-                        [";"] = "m",
-                        ",",
-                    },
-                    highlight = { backdrop = false },
-                    char_actions = function(_)
-                        return {
-                            ["m"] = "next",
-                            [","] = "prev",
-                            -- NOTE: overwriting actions disables `f`/`F`/`t`/`T` enhanced behaviour:
-                            --
-                            -- [motion:lower()] = "next",
-                            -- [motion:upper()] = "prev",
-                        }
-                    end,
-                },
-                search = {
-                    enabled = false,
-                },
-            },
-        },
     },
     {
         "echasnovski/mini.bracketed",
