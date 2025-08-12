@@ -24,13 +24,27 @@ return {
                         },
                     },
                 },
-                gopls = {},
-                basedpyright = {},
+                basedpyright = {
+                    settings = {
+                        basedpyright = {
+                            analysis = {
+                                diagnosticMode = "workspace",
+                            },
+                        },
+                    },
+                },
+                ruff = {},
                 ts_ls = {
                     filetypes = { "javascript" },
                 },
+                gopls = {},
                 helm_ls = {},
                 yamlls = {},
+                typos_lsp = {
+                    init_options = {
+                        diagnosticSeverity = "Warning",
+                    },
+                },
             },
         },
         config = function(_, opts)
