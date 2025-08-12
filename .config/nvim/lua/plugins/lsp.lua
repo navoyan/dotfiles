@@ -188,6 +188,7 @@ return {
                 { path = "snacks.nvim", words = { "Snacks" } },
                 { path = "mini.bracketed", words = { "MiniBracketed" } },
                 { path = "mini.files", words = { "MiniFiles" } },
+                { path = "mini.extra", words = { "MiniExtra" } },
             },
         },
     },

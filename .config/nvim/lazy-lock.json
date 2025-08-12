@@ -18,6 +18,7 @@
   "lualine.nvim": { "branch": "master", "commit": "a94fc68960665e54408fe37dcf573193c4ce82c9" },
   "mini.ai": { "branch": "main", "commit": "e66a71449bdf719b4b9c96e0cd7b7d6cc4112f88" },
   "mini.bracketed": { "branch": "main", "commit": "a54a2a180dc40f4d85875eeafacbdf991d042a36" },
+  "mini.extra": { "branch": "main", "commit": "0dec9611833d058f9d2d48f6333b41631f5ef3b9" },
   "mini.files": { "branch": "main", "commit": "a92ba6f1bf9e1e0b9c6de50db1f5df7ca89cb9e4" },
   "mini.icons": { "branch": "main", "commit": "94848dad1589a199f876539bd79befb0c5e3abf0" },
   "mini.move": { "branch": "main", "commit": "f471ecb98395781827ef1dffee61afe1af0ace29" },

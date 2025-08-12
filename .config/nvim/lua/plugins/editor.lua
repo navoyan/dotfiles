@@ -2,6 +2,9 @@ return {
     {
         -- Better Around/Inside textobjects
         "echasnovski/mini.ai",
+        dependencies = {
+            { "echasnovski/mini.extra", opts = {} },
+        },
         lazy = true,
         keys = {
             { "i", mode = { "o", "x" } },
@@ -9,7 +12,16 @@ return {
             { "g[", mode = { "n", "o", "x" } },
             { "g]", mode = { "n", "o", "x" } },
         },
-        opts = {},
+        opts = function()
+            return {
+                custom_textobjects = {
+                    g = MiniExtra.gen_ai_spec.buffer(),
+                    i = MiniExtra.gen_ai_spec.indent(),
+                    e = MiniExtra.gen_ai_spec.line(),
+                    x = MiniExtra.gen_ai_spec.number(),
+                },
+            }
+        end,
     },
     {
         -- Add/delete/replace surroundings (brackets, quotes, etc.)
