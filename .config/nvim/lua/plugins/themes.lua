@@ -18,7 +18,6 @@ return {
 
                 h.SnacksLazygitNormal = { bg = c.none }
 
-                h.LeapBackdrop = nil
                 h.LeapLabel = { bg = c.magenta2, fg = c.fg, bold = true }
 
                 h.TreesitterContext = { link = "NormalFloat" }

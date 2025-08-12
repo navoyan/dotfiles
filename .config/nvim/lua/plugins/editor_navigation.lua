@@ -2,20 +2,24 @@ return {
     {
         "ggandor/leap.nvim",
         lazy = false,
-        opts = {},
+        opts = {
+            safe_labels = {},
+        },
         config = function(_, opts)
+            local default_opts = vim.deepcopy(require("leap.opts").default)
             require("leap").setup(opts)
+
             local map = vim.keymap.set
 
             map({ "n", "x", "o" }, "<Bs>", "<Plug>(leap)")
 
+            -- To increase/decrease the selection in a clever-f-like manner,
+            -- with the trigger key itself (vRRRRrr...).
+            -- The default keys (<enter>/<backspace>) also work
+            local ts_opts = require("leap.user").with_traversal_keys("R", "r")
+            ts_opts.safe_labels = default_opts.safe_labels
             map({ "n", "x", "o" }, "R", function()
-                require("leap.treesitter").select({
-                    -- To increase/decrease the selection in a clever-f-like manner,
-                    -- with the trigger key itself (vRRRRrr...).
-                    -- The default keys (<enter>/<backspace>) also work
-                    opts = require("leap.user").with_traversal_keys("R", "r"),
-                })
+                require("leap.treesitter").select({ opts = ts_opts })
             end)
 
             local leap_remote = require("leap.remote")
