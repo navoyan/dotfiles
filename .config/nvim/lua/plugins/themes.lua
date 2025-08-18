@@ -6,9 +6,11 @@ return {
         opts = {
             transparent = true,
             on_highlights = function(h, c)
+                local util = require("tokyonight.util")
+
                 h.CursorLineNr = { fg = c.border_highlight, bold = true }
 
-                h.Folded = { fg = h.Folded.fg, bg = "#2d3249" }
+                h.Folded = { fg = h.Folded.fg, bg = util.blend_bg(h.Folded.bg, 0.3) }
 
                 h.DiffDeleteText = { bg = "#713137" }
                 h.DiffAddText = { bg = "#2c5a66" }

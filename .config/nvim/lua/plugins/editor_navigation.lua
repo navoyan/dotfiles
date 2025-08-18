@@ -27,17 +27,17 @@ return {
             map({ "x", "o" }, "<Enter>", leap_remote.action)
 
             -- Default <Enter> behaviour for these buftypes
-            local excluded_bt = {
-                "quickfix",
-                "nofile",
-                "help",
-                "prompt",
-                "terminal",
+            local default_enter_bt = {
+                quickfix = true,
+                nofile = true,
+                help = true,
+                prompt = true,
+                terminal = true,
             }
 
-            local enter = vim.api.nvim_replace_termcodes("<Enter>", true, true, true)
+            local enter = Util.keycode("<Enter>")
             map("n", "<Enter>", function()
-                if vim.tbl_contains(excluded_bt, vim.bo.buftype) then
+                if default_enter_bt[vim.bo.buftype] then
                     vim.cmd("normal! " .. enter)
                     return
                 end

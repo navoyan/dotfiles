@@ -12,15 +12,13 @@ return {
             servers = {
                 lua_ls = {
                     -- cmd = {...},
-                    -- filetypes = { ...},
+                    -- filetypes = {...},
                     -- capabilities = {},
                     settings = {
                         Lua = {
                             completion = {
                                 callSnippet = "Replace",
                             },
-                            -- You can toggle below to ignore Lua_LS's noisy `missing-fields` warnings
-                            -- diagnostics = { disable = { 'missing-fields' } },
                         },
                     },
                 },
@@ -48,10 +46,6 @@ return {
             },
         },
         config = function(_, opts)
-            --  This function gets run when an LSP attaches to a particular buffer.
-            --    That is to say, every time a new file is opened that is associated with
-            --    an lsp (for example, opening `main.rs` is associated with `rust_analyzer`) this
-            --    function will be executed to configure the current buffer
             vim.api.nvim_create_autocmd("LspAttach", {
                 group = vim.api.nvim_create_augroup("lsp-config-lsp-attach", { clear = true }),
                 callback = function(event)
@@ -64,39 +58,39 @@ return {
                     -- Jump to the definition of the word under the cursor.
                     map("gd", picker.lsp_definitions, "[G]oto [D]efinition")
 
+                    -- Jump to the declaration of the word under the cursor.
+                    -- For example, in C this would take to the header.
+                    map("gD", vim.lsp.buf.declaration, "[G]oto [D]eclaration")
+
                     -- Find references for the word under the cursor.
                     map("gr", picker.lsp_references, "[G]oto [R]eferences")
 
                     -- Jump to the implementation of the word under the cursor.
-                    --  Useful when your language has ways of declaring types without an actual implementation.
+                    -- Useful when language has ways of declaring types without an actual implementation.
                     map("gI", picker.lsp_implementations, "[G]oto [I]mplementation")
 
                     -- Jump to the type of the symbol under the cursor.
                     map("gy", picker.lsp_type_definitions, "[G]oto T[y]pe Definition")
 
-                    -- Fuzzy find all the symbols in your current document.
-                    --  Symbols are things like variables, functions, types, etc.
+                    -- Fuzzy find all the symbols in current document.
+                    -- Symbols are things like variables, functions, types, etc.
                     map("<leader>sd", picker.lsp_symbols, "[S]ymbols in [D]ocument")
 
-                    -- Fuzzy find all the symbols in your current workspace.
+                    -- Fuzzy find all the symbols in current workspace.
                     map("<leader>sw", picker.lsp_workspace_symbols, "[S]ymbols in [W]orkspace")
 
-                    -- Show diagnostics for the current line in a floating window
+                    -- Show diagnostics for the current line in a floating window.
                     map("<leader>cd", function()
                         vim.diagnostic.open_float({ scope = "line" })
                     end, "[C]ode [D]iagnostics")
 
-                    -- Enable global inlay hints
+                    -- Enable global inlay hints.
                     map("<leader>ch", function()
                         vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({}))
                     end, "[C]ode Inlay [H]ints")
 
-                    -- Opens a popup that displays documentation about the word under the cursor
+                    -- Opens a popup that displays documentation about the word under the cursor.
                     map("K", vim.lsp.buf.hover, "Hover Documentation")
-
-                    -- This is not Goto Definition, this is Goto Declaration.
-                    --    For example, in C this would take you to the header.
-                    map("<leader>D", vim.lsp.buf.declaration, "[G]oto [D]eclaration")
                 end,
             })
 

@@ -37,12 +37,14 @@ return {
             windows = {
                 -- Maximum number of windows to show side by side
                 max_number = math.huge,
-                -- Whether to show preview of file/directory under cursor
-                preview = false,
                 -- Width of focused window
                 width_focus = 50,
                 -- Width of non-focused window
                 width_nofocus = 20,
+                -- Whether to show preview of file/directory under cursor
+                preview = true,
+                -- Width of preview window
+                width_preview = 50,
             },
         },
         config = function(_, opts)
@@ -92,21 +94,18 @@ return {
         config = function()
             local splits = require("smart-splits")
 
-            -- creating vim splits
-            vim.keymap.set("n", "<leader>sh", "<cmd>vertical leftabove split<cr>")
-            vim.keymap.set("n", "<leader>sj", "<cmd>horizontal belowright split<cr>")
-            vim.keymap.set("n", "<leader>sk", "<cmd>horizontal topleft split<cr>")
-            vim.keymap.set("n", "<leader>sl", "<cmd>vertical rightbelow split<cr>")
+            local map = vim.keymap.set
+
             -- moving between splits
-            vim.keymap.set("n", "<M-h>", splits.move_cursor_left)
-            vim.keymap.set("n", "<M-j>", splits.move_cursor_down)
-            vim.keymap.set("n", "<M-k>", splits.move_cursor_up)
-            vim.keymap.set("n", "<M-l>", splits.move_cursor_right)
+            map("n", "<M-h>", splits.move_cursor_left)
+            map("n", "<M-j>", splits.move_cursor_down)
+            map("n", "<M-k>", splits.move_cursor_up)
+            map("n", "<M-l>", splits.move_cursor_right)
             -- resizing splits
-            vim.keymap.set("n", "<M-S-h>", splits.resize_left)
-            vim.keymap.set("n", "<M-S-j>", splits.resize_down)
-            vim.keymap.set("n", "<M-S-k>", splits.resize_up)
-            vim.keymap.set("n", "<M-S-l>", splits.resize_right)
+            map("n", "<M-S-h>", splits.resize_left)
+            map("n", "<M-S-j>", splits.resize_down)
+            map("n", "<M-S-k>", splits.resize_up)
+            map("n", "<M-S-l>", splits.resize_right)
         end,
     },
     {

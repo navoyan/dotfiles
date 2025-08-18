@@ -1,9 +1,10 @@
 vim.cmd("source ~/.vimrc")
 
+require("util")
 require("options")
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-if not vim.loop.fs_stat(lazypath) then
+if not vim.uv.fs_stat(lazypath) then
     vim.fn.system({
         "git",
         "clone",
@@ -38,7 +39,6 @@ require("current_theme")
 
 -- Explorer-specific configuration
 
-vim.opt.modifiable = false
 vim.opt.number = false
 vim.opt.relativenumber = false
 vim.opt.laststatus = 0
