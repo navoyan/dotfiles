@@ -28,9 +28,18 @@ return {
         "echasnovski/mini.surround",
         lazy = true,
         keys = {
-            { "s", mode = { "x", "n" } },
+            { "sa", mode = { "x", "n" } },
+            { "sd", mode = { "x", "n" } },
+            { "sf", mode = { "x", "n" } },
+            { "sF", mode = { "x", "n" } },
+            { "sh", mode = { "x", "n" } },
+            { "sr", mode = { "x", "n" } },
         },
-        opts = {},
+        opts = {
+            mappings = {
+                update_n_lines = "", -- Update `n_lines`
+            },
+        },
     },
     {
         "echasnovski/mini.move",
@@ -127,65 +136,145 @@ return {
     },
     {
         "chrisgrieser/nvim-spider",
-        lazy = false,
-        config = function()
-            local b = "<cmd>lua require('spider').motion('b')<CR>"
-            vim.keymap.set("i", "<C-Bs>", "<Esc>cv" .. b, { remap = true })
-        end,
+        event = "InsertEnter",
+        lazy = true,
+        keys = {
+            {
+                "<C-Bs>",
+                function()
+                    if Util.is_multicursor_mode() then
+                        return "<C-w>"
+                    end
+
+                    local b = "<cmd>lua require('spider').motion('b')<CR>"
+                    return "<Esc>cv" .. b
+                end,
+                mode = "i",
+                remap = true,
+                expr = true,
+            },
+        },
     },
     {
         "jake-stewart/multicursor.nvim",
-        branch = "1.0",
+        branch = "*",
         config = function()
             local mc = require("multicursor-nvim")
-            mc.setup()
+            mc.setup({
+                hlsearch = true,
+            })
 
             local map = vim.keymap.set
 
-            -- Add or skip cursor above/below the main cursor.
-            map({ "n", "x" }, "<up>", function()
+            -- Add cursor above/below the main cursor.
+            map({ "n", "x" }, "<S-Up>", function()
                 mc.lineAddCursor(-1)
             end)
-            map({ "n", "x" }, "<down>", function()
+            map({ "n", "x" }, "<S-Down>", function()
                 mc.lineAddCursor(1)
             end)
 
-            -- Add or skip adding a new cursor by matching word/selection
-            map({ "n", "x" }, "<leader>n", function()
-                mc.matchAddCursor(1)
-            end)
-            map({ "n", "x" }, "<leader>sn", function()
-                mc.matchSkipCursor(1)
-            end)
-            map({ "n", "x" }, "<leader>N", function()
-                mc.matchAddCursor(-1)
-            end)
-            map({ "n", "x" }, "<leader>S", function()
-                mc.matchSkipCursor(-1)
-            end)
+            local visual_mode = {
+                v = true,
+                V = true,
+                [""] = true,
+            }
+            local function match_or_search_cursor_fn(opts)
+                return function()
+                    if visual_mode[vim.fn.mode()] then
+                        opts.match_fn(opts.direction)
+                    elseif vim.v.hlsearch == 1 then
+                        opts.search_fn(opts.direction)
+                    else
+                        opts.match_fn(opts.direction)
+                    end
+                end
+            end
 
-            -- Disable and enable cursors.
-            map("n", "<c-q>", mc.toggleCursor)
-            map("x", "<c-q>", mc.visualToCursors)
+            -- Add a new cursor by matching word / selection / search result
+            map(
+                { "n", "x" },
+                "sn",
+                match_or_search_cursor_fn({
+                    direction = 1,
+                    match_fn = mc.matchAddCursor,
+                    search_fn = mc.searchAddCursor,
+                })
+            )
+            map(
+                { "n", "x" },
+                "sN",
+                match_or_search_cursor_fn({
+                    direction = -1,
+                    match_fn = mc.matchAddCursor,
+                    search_fn = mc.searchAddCursor,
+                })
+            )
 
             -- Mappings defined in a keymap layer only apply when there are
             -- multiple cursors. This lets you have overlapping mappings.
-            mc.addKeymapLayer(function(layerSet)
+            mc.addKeymapLayer(function(layer_map)
                 -- Select a different cursor as the main one.
-                layerSet({ "n", "x" }, "<left>", mc.prevCursor)
-                layerSet({ "n", "x" }, "<right>", mc.nextCursor)
+                layer_map({ "n", "x" }, "[", mc.prevCursor)
+                layer_map({ "n", "x" }, "]", mc.nextCursor)
+
+                -- Skip cursor above/below the main cursor.
+                map({ "n", "x" }, "<S-C-Up>", function()
+                    mc.lineSkipCursor(-1)
+                end)
+                map({ "n", "x" }, "<S-C-Down>", function()
+                    mc.lineSkipCursor(1)
+                end)
+
+                -- Add or skip adding a new cursor by matching word / selection / search result.
+                layer_map(
+                    { "n", "x" },
+                    "n",
+                    match_or_search_cursor_fn({
+                        direction = 1,
+                        match_fn = mc.matchAddCursor,
+                        search_fn = mc.searchAddCursor,
+                    })
+                )
+                layer_map(
+                    { "n", "x" },
+                    "sn",
+                    match_or_search_cursor_fn({
+                        direction = 1,
+                        match_fn = mc.matchSkipCursor,
+                        search_fn = mc.searchSkipCursor,
+                    })
+                )
+                layer_map(
+                    { "n", "x" },
+                    "N",
+                    match_or_search_cursor_fn({
+                        direction = -1,
+                        match_fn = mc.matchAddCursor,
+                        search_fn = mc.searchAddCursor,
+                    })
+                )
+                layer_map(
+                    { "n", "x" },
+                    "sN",
+                    match_or_search_cursor_fn({
+                        direction = -1,
+                        match_fn = mc.matchSkipCursor,
+                        search_fn = mc.searchSkipCursor,
+                    })
+                )
 
                 -- Delete the main cursor.
-                layerSet({ "n", "x" }, "<leader>x", mc.deleteCursor)
+                layer_map({ "n", "x" }, "sx", mc.deleteCursor)
 
                 -- Align cursor columns.
-                layerSet("n", "<leader>a", mc.alignCursors)
+                layer_map("n", "sc", mc.alignCursors)
 
                 -- Clone every cursor and disable the originals.
-                map({ "n", "x" }, "<leader><c-q>", mc.duplicateCursors)
+                layer_map({ "n", "x" }, "ssm", mc.duplicateCursors)
 
                 -- Enable and clear cursors using escape.
-                layerSet("n", "<esc>", function()
+                layer_map("n", "<Esc>", function()
                     if not mc.cursorsEnabled() then
                         mc.enableCursors()
                     else
@@ -194,59 +283,60 @@ return {
                 end)
             end)
 
-            -- Split visual selections by regex.
-            map("x", "S", mc.splitCursors)
+            -- Disable and enable cursors.
+            map("n", "sm", mc.toggleCursor)
+            map("x", "sm", mc.visualToCursors)
 
-            -- match new cursors within visual selections by regex.
-            map("x", "M", mc.matchCursors)
-
-            -- bring back cursors if you accidentally clear them
-            map("n", "<leader>gv", mc.restoreCursors)
-
-            -- Add a cursor for all matches of cursor word/selection in the document.
-            map({ "n", "x" }, "<leader>A", mc.matchAllAddCursors)
+            -- Bring back previous cursors.
+            map("n", "sv", mc.restoreCursors)
 
             -- Append/insert for each line of visual selections.
             -- Similar to block selection insertion.
             map("x", "I", mc.insertVisual)
             map("x", "A", mc.appendVisual)
 
-            -- Add a cursor and jump to the next/previous search result.
-            map("n", "<leader>/n", function()
-                mc.searchAddCursor(1)
-            end)
-            map("n", "<leader>/N", function()
-                mc.searchAddCursor(-1)
-            end)
-
-            -- Jump to the next/previous search result without adding a cursor.
-            map("n", "<leader>/s", function()
-                mc.searchSkipCursor(1)
-            end)
-            map("n", "<leader>/S", function()
-                mc.searchSkipCursor(-1)
-            end)
+            local function au_after_search(fn)
+                vim.fn.setreg("/", "")
+                vim.api.nvim_create_autocmd("CmdlineLeave", {
+                    pattern = "/",
+                    once = true,
+                    callback = vim.schedule_wrap(function()
+                        fn()
+                        vim.fn.setreg("/", "")
+                    end),
+                })
+            end
 
             -- Add a cursor to every search result in the buffer.
-            map("n", "<leader>/A", mc.searchAllAddCursors)
+            map("n", "s/", function()
+                au_after_search(mc.searchAllAddCursors)
+                return "/"
+            end, { expr = true })
 
-            -- Pressing `gaip` will add a cursor on each line of a paragraph.
-            map("n", "ga", mc.addCursorOperator)
+            -- Add a cursor to every search result in the visual selection.
+            map("x", "s/", function()
+                au_after_search(mc.searchAllAddCursors)
+                return "<Esc>/\\%V"
+            end, { expr = true })
 
-            -- Pressing `<leader>miwap` will create a cursor in every match of the
+            -- Split visual selections by search result.
+            map("x", "S", function()
+                au_after_search(function()
+                    vim.cmd("normal! gv")
+                    local search = vim.fn.getreg("/")
+                    -- strip `\%V` ("in previous selection") from search
+                    search = search:sub(4, -1)
+                    mc.splitCursors(search)
+                end)
+                return "<Esc>/\\%V"
+            end, { expr = true })
+
+            -- Example: pressing `seip` will add a cursor on each line of a paragraph.
+            map("n", "se", mc.addCursorOperator)
+
+            -- Example: pressing `sgiwap` will create a cursor in every match of the
             -- string captured by `iw` inside range `ap`.
-            -- This action is highly customizable, see `:h multicursor-operator`.
-            map({ "n", "x" }, "gs", mc.operator)
-
-            -- Customize how cursors look.
-            local hl = vim.api.nvim_set_hl
-            hl(0, "MultiCursorCursor", { link = "Cursor" })
-            hl(0, "MultiCursorVisual", { link = "Visual" })
-            hl(0, "MultiCursorSign", { link = "SignColumn" })
-            hl(0, "MultiCursorMatchPreview", { link = "Search" })
-            hl(0, "MultiCursorDisabledCursor", { link = "Visual" })
-            hl(0, "MultiCursorDisabledVisual", { link = "Visual" })
-            hl(0, "MultiCursorDisabledSign", { link = "SignColumn" })
+            map({ "n", "x" }, "sg", mc.operator)
         end,
     },
 }

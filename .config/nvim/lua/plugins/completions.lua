@@ -71,9 +71,19 @@ return {
             -- Default list of enabled providers defined so that you can extend it
             -- elsewhere in your config, without redefining it, due to `opts_extend`
             sources = {
-                default = { "lazydev", "lsp", "snippets", "path", "buffer" },
+                default = function()
+                    if Util.is_multicursor_mode() then
+                        return { "buffer" }
+                    end
+
+                    return { "lsp", "snippets", "path", "buffer" }
+                end,
 
                 per_filetype = {
+                    lua = {
+                        inherit_defaults = true,
+                        "lazydev",
+                    },
                     -- NOTE: disables completions when using `live-rename.nvim`
                     liverename = {},
                 },
