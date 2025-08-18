@@ -66,21 +66,29 @@ return {
         "gbprod/substitute.nvim",
         dependencies = { "gbprod/yanky.nvim" },
         lazy = true,
-        keys = { "x", "X" },
-        opts = function()
+        keys = {
+            "x",
+            "xx",
+            "X",
+            { "x", mode = "x" },
+        },
+        config = function()
             local substitute = require("substitute")
 
             substitute.setup({
                 on_substitute = require("yanky.integration").substitute(),
+                preserve_cursor_position = true,
                 highlight_substituted_text = {
                     timer = 150,
                 },
             })
 
-            vim.keymap.set("n", "x", substitute.operator, { noremap = true })
-            vim.keymap.set("n", "xx", substitute.line, { noremap = true })
-            vim.keymap.set("n", "X", substitute.eol, { noremap = true })
-            vim.keymap.set("x", "x", substitute.visual, { noremap = true })
+            local map = vim.keymap.set
+
+            map("n", "x", substitute.operator, { noremap = true })
+            map("n", "xx", substitute.line, { noremap = true })
+            map("n", "X", substitute.eol, { noremap = true })
+            map("x", "x", substitute.visual, { noremap = true })
         end,
     },
     {
