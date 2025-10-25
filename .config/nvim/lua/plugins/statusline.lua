@@ -111,21 +111,14 @@ return {
             local colors = require("tokyonight.colors").setup()
             local hydra = require("hydra.statusline")
 
-            local map = vim.keymap.set
-
-            local full_path_enabled = false
-            map("n", "<leader>cp", function()
-                full_path_enabled = not full_path_enabled
-                lualine.refresh({ place = { "statusline" } })
-            end, { desc = "Toggle full [C]ode [P]ath" })
-
             lualine.setup({
                 options = {
                     theme = "auto",
+                    always_show_tabline = false,
                     component_separators = { left = "", right = "" },
                     section_separators = { left = "", right = "" },
                     disabled_filetypes = { -- Filetypes to disable lualine for.
-                        statusline = { "no-neck-pain", "snacks_dashboard" }, -- only ignores the ft for statusline.
+                        statusline = { "toggleterm", "snacks_dashboard" }, -- only ignores the ft for statusline.
                         winbar = {}, -- only ignores the ft for winbar.
                     },
                     refresh = {
@@ -143,6 +136,16 @@ return {
                             -- NOTE: differs from default events:
                             "RecordingEnter",
                             "RecordingLeave",
+                        },
+                    },
+                },
+                tabline = {
+                    lualine_a = {
+                        {
+                            "tabs",
+                            mode = 2,
+                            show_modified_status = false,
+                            component_separators = { left = "", right = "" },
                         },
                     },
                 },
@@ -170,7 +173,7 @@ return {
                         },
                         {
                             function(self)
-                                return pretty_path(self, { full_path = full_path_enabled })
+                                return pretty_path(self, { full_path = true })
                             end,
                             padding = { left = 0, right = 1 },
                         },

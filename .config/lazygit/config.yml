@@ -1,23 +1,19 @@
-gui:
-  border: single
-  showNumstatInFilesView: true
-  scrollHeight: 15
-  expandFocusedSidePanel: true
-  expandedSidePanelWeight: 3
-  statusPanelView: allBranchesLog
-
 promptToReturnFromSubprocess: false
+notARepository: quit
 
 update:
   method: never
 
 git:
+  log:
+    order: default
   paging:
     colorArg: always
     pager: delta --paging=never
 
 keybinding:
   universal:
+    quit: Q
     prevItem: k
     nextItem: j
     scrollUpMain-alt1: <Up>
@@ -30,6 +26,11 @@ keybinding:
     renameCommit: R
 
 customCommands:
+  - key: q
+    context: global
+    output: log
+    command: |-
+      _lazygit nvim_term_close
   - key: <C-t>
     context: files
     output: log
@@ -73,37 +74,46 @@ customCommands:
 
 os:
   edit: |-
-    begin
-      if test -z "$NVIM"
-        nvim -- {{filename}}
-      else
-        nvim --server "$NVIM" --remote-send "q"
-        nvim --server "$NVIM" --remote {{filename}}
-      end
-    end
+    _lazygit edit_file {{filename}}
 
-  # FIXME: jump to {{line}} does not work properly
   editAtLine: |-
-    begin
-      if test -z "$NVIM"
-        nvim +{{line}} -- {{filename}}
-      else
-        nvim --server "$NVIM" --remote-send "q"
-        nvim --server "$NVIM" --remote {{filename}}
-        nvim --server "$NVIM" --remote-send ":{{line}}<CR>"
-      end
-    end
-
-  # ISSUE: No remote-wait support yet. See https://github.com/neovim/neovim/pull/17856
-  editAtLineAndWait: |-
-    nvim +{{line}} {{filename}}
+    _lazygit edit_file_at_line {{filename}} {{line}}
 
   openDirInEditor: |-
-    begin
-      if test -z "$NVIM"
-        nvim -- {{dir}}
-      else
-        nvim --server "$NVIM" --remote-send "q"
-        nvim --server "$NVIM" --remote {{dir}}
-      end
-    end
+    _lazygit edit_file {{dir}}
+
+gui:
+  border: single
+  showNumstatInFilesView: true
+  scrollHeight: 15
+  expandFocusedSidePanel: true
+  expandedSidePanelWeight: 3
+  statusPanelView: allBranchesLog
+  nerdFontsVersion: "3"
+
+  # upstream: https://github.com/folke/tokyonight.nvim/blob/main/extras/lazygit/tokyonight_night.yml
+  theme:
+    activeBorderColor:
+      - "#ff9e64"
+      - "bold"
+    inactiveBorderColor:
+      - "#27a1b9"
+    searchingActiveBorderColor:
+      - "#ff9e64"
+      - "bold"
+    optionsTextColor:
+      - "#7aa2f7"
+    selectedLineBgColor:
+      - "#283457"
+    cherryPickedCommitFgColor:
+      - "#7aa2f7"
+    cherryPickedCommitBgColor:
+      - "#bb9af7"
+    markedBaseCommitFgColor:
+      - "#7aa2f7"
+    markedBaseCommitBgColor:
+      - "#e0af68"
+    unstagedChangesColor:
+      - "#db4b4b"
+    defaultFgColor:
+      - "#c0caf5"

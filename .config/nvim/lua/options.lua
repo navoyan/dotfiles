@@ -1,5 +1,9 @@
 vim.g.have_nerd_font = true
 
+if vim.fn.executable("nvr") then
+    vim.env.GIT_EDITOR = "nvr -cc split --remote-wait +'set bufhidden=wipe'"
+end
+
 vim.diagnostic.config({ virtual_text = true }) -- Use virtual text for diagnostics
 
 local opt = vim.opt

@@ -1,37 +1,39 @@
 function _nvim_diffview -a subcommand
+    if test -z "$NVIM"
+        return
+    end
+
     set args $argv[2..]
 
     switch $subcommand
         case file
-            _diff_file $args
+            diff_file $args
         case commit_file
-            _diff_commit_file $args
+            diff_commit_file $args
         case commits
-            _diff_commits $args
+            diff_commits $args
         case local_branch
-            _diff_local_branch $args
+            diff_local_branch $args
         case remote_branch
-            _diff_remote_branch $args
+            diff_remote_branch $args
         case stash_entry
-            _diff_stash_entry $args
+            diff_stash_entry $args
     end
 end
 
-function _nvim_remote_cmd -a ex_cmd
-    if test -n "$NVIM"
-        nvim --server "$NVIM" --remote-send "<C-\><C-n>:$ex_cmd<Cr>"
-    end
+function remote_term_cmd -a ex_cmd
+    nvim --server "$NVIM" --remote-send "<C-\><C-n><Cmd>$ex_cmd<Cr>"
 end
 
-function _diff_file -a path
-    _nvim_remote_cmd "DiffviewOpen --selected-file=$path --imply-local"
+function diff_file -a path
+    remote_term_cmd "DiffviewOpen --selected-file=$path --imply-local"
 end
 
-function _diff_commit_file -a commit path
-    _nvim_remote_cmd "DiffviewOpen $commit^..$commit --selected-file=$path"
+function diff_commit_file -a commit path
+    remote_term_cmd "DiffviewOpen $commit^..$commit --selected-file=$path"
 end
 
-function _diff_commits -a commit_from commit_to
+function diff_commits -a commit_from commit_to
     set range $commit_from^..$commit_to
     set range_count $(git rev-list --count $range)
 
@@ -41,20 +43,20 @@ function _diff_commits -a commit_from commit_to
         set cmd "DiffviewFileHistory --range=$range"
     end
 
-    _nvim_remote_cmd $cmd
+    remote_term_cmd $cmd
 end
 
-function _diff_stash_entry -a entry_idx
+function diff_stash_entry -a entry_idx
     set ref_name "stash@{$entry_idx}"
 
-    _nvim_remote_cmd "DiffviewOpen $ref_name^..$ref_name"
+    remote_term_cmd "DiffviewOpen $ref_name^..$ref_name"
 end
 
-function _diff_local_branch -a branch
-    _nvim_remote_cmd "DiffviewOpen --imply-local ...$branch"
+function diff_local_branch -a branch
+    remote_term_cmd "DiffviewOpen --imply-local ...$branch"
 end
 
-function _diff_remote_branch -a remote branch
+function diff_remote_branch -a remote branch
     set range "$remote/HEAD...$remote/$branch"
     set range_count $(git rev-list --count $range --right-only --no-merges)
 
@@ -64,5 +66,5 @@ function _diff_remote_branch -a remote branch
         set cmd "DiffviewFileHistory --range=$range --right-only --no-merges"
     end
 
-    _nvim_remote_cmd $cmd
+    remote_term_cmd $cmd
 end

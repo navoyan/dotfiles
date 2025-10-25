@@ -18,7 +18,7 @@ return {
                 -- HACK: fixes `live-rename.nvim` highlighting
                 h.Normal = { fg = c.fg, bg = c.bg }
 
-                h.SnacksLazygitNormal = { bg = c.none }
+                h.LazygitNormal = { bg = c.none }
 
                 h.LeapLabel = { bg = c.magenta2, fg = c.fg, bold = true }
 

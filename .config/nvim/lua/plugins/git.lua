@@ -49,40 +49,41 @@ return {
         },
     },
     {
-        "folke/snacks.nvim",
+        "akinsho/toggleterm.nvim",
         version = "*",
         lazy = false,
-        keys = {
-            {
-                "<leader>gg",
-                function()
-                    Snacks.lazygit.open()
-                end,
-            },
-        },
-        opts = {
-            ---@type snacks.lazygit.Config
-            lazygit = {
-                config = {
-                    os = nil,
-                },
-                ---@type snacks.win.Config
-                win = {
-                    width = 0,
-                    height = 0,
-                    wo = {
-                        winhighlight = table.concat({
-                            "Normal:SnacksNormal",
-                            "NormalNC:SnacksNormalNC",
-                            "WinBar:SnacksWinBar",
-                            "WinBarNC:SnacksWinBarNC",
-                            -- custom hl
-                            "NormalFloat:SnacksLazygitNormal",
-                        }, ","),
+        config = function()
+            require("toggleterm").setup()
+
+            local Terminal = require("toggleterm.terminal").Terminal
+            local map = vim.keymap.set
+
+            local lazygit = Terminal:new({
+                cmd = "lazygit",
+                direction = "tab",
+                highlights = {
+                    Normal = {
+                        link = "LazygitNormal",
                     },
                 },
-            },
-        },
+                on_open = function(term)
+                    -- Handle the case when lazygit executes `DiffViewOpen` via nvim-remote
+                    -- and then regains focus when closing the diff view
+                    local enter_augroup = vim.api.nvim_create_augroup("LazygitEnter", { clear = true })
+                    vim.api.nvim_create_autocmd("BufEnter", {
+                        group = enter_augroup,
+                        buffer = term.bufnr,
+                        callback = vim.schedule_wrap(function()
+                            vim.cmd.startinsert()
+                        end),
+                    })
+                end,
+            })
+
+            map("n", "<leader>gg", function()
+                lazygit:toggle()
+            end)
+        end,
     },
     {
         "sindrets/diffview.nvim",
