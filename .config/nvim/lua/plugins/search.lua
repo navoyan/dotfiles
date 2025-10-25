@@ -130,16 +130,21 @@ return {
         config = function(_, opts)
             require("snacks").setup(opts)
 
-            local is_cwd_dotfiles = vim.fn.getcwd() == vim.env.HOME .. "/dotfiles"
-            local show_hidden_for_dotfiles = is_cwd_dotfiles and { hidden = true } or {}
+            local is_cwd_dotfiles = function()
+                return vim.fn.getcwd() == vim.env.HOME .. "/dotfiles"
+            end
+            local show_hidden_for_dotfiles = function()
+                return is_cwd_dotfiles() and { hidden = true } or {}
+            end
 
             local function conf(picker_fn, ...)
-                local result_config = {}
-                for _, config in ipairs({ ... }) do
-                    result_config = vim.tbl_deep_extend("error", result_config, config)
-                end
-
+                local configs = { ... }
                 return function()
+                    local result_config = {}
+                    for _, config in ipairs(configs) do
+                        result_config = vim.tbl_deep_extend("error", result_config, config())
+                    end
+
                     picker_fn(result_config)
                 end
             end
@@ -162,7 +167,9 @@ return {
 
             local vim_severity = vim.diagnostic.severity
             local function severity(picker_severity)
-                return { severity = picker_severity }
+                return function()
+                    return { severity = picker_severity }
+                end
             end
 
             map("n", "<leader>dd", Snacks.picker.diagnostics_buffer)
