@@ -13,6 +13,8 @@ git:
 
 keybinding:
   universal:
+    prevBlock-alt2: <left>
+    nextBlock-alt2: <right>
     quit: Q
     prevItem: k
     nextItem: j
@@ -30,7 +32,17 @@ customCommands:
     context: global
     output: log
     command: |-
-      _lazygit nvim_term_close
+      _lazygit nvim_term_send close
+  - key: <tab>
+    context: global
+    output: log
+    command: |-
+      _lazygit nvim_term_send tabprevious
+  - key: <backtab>
+    context: global
+    output: log
+    command: |-
+      _lazygit nvim_term_send tabnext
   - key: <C-t>
     context: files
     output: log
