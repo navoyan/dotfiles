@@ -1,3 +1,11 @@
+local function preview_with_full_filepath(ctx)
+    local res = Snacks.picker.preview.file(ctx)
+    if ctx.item.file then
+        ctx.picker.preview:set_title(ctx.item.file)
+    end
+    return res
+end
+
 return {
     {
         "folke/snacks.nvim",
@@ -116,14 +124,20 @@ return {
                     },
                 },
                 sources = {
-                    diagnostics_buffer = { layout = "inline_preview" },
-                    diagnostics = { layout = "inline_preview" },
-                    lsp_definitions = { layout = "inline_preview" },
-                    lsp_references = { layout = "inline_preview" },
-                    lsp_implementations = { layout = "inline_preview" },
-                    lsp_type_definitions = { layout = "inline_preview" },
-                    lsp_symbols = { layout = "inline_preview" },
-                    lsp_workspace_symbols = { layout = "inline_preview" },
+                    files = { preview = preview_with_full_filepath },
+                    grep = { preview = preview_with_full_filepath },
+                    grep_word = { preview = preview_with_full_filepath },
+                    buffers = { preview = preview_with_full_filepath },
+                    grep_buffers = { preview = preview_with_full_filepath },
+                    select = { focus = "list" },
+                    diagnostics_buffer = { layout = "inline_preview", focus = "list" },
+                    diagnostics = { layout = "inline_preview", focus = "list" },
+                    lsp_definitions = { layout = "inline_preview", focus = "list" },
+                    lsp_references = { layout = "inline_preview", focus = "list" },
+                    lsp_implementations = { layout = "inline_preview", focus = "list" },
+                    lsp_type_definitions = { layout = "inline_preview", focus = "list" },
+                    lsp_symbols = { layout = "inline_preview", focus = "list" },
+                    lsp_workspace_symbols = { focus = "list", layout = "inline_preview" },
                 },
             },
         },
