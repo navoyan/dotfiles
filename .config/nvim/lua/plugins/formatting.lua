@@ -37,10 +37,12 @@ return {
                     lua = { "stylua" },
                     python = { "ruff_format" },
                     bzl = { "buildifier" },
-                    json = { "prettier" },
+                    json = { "jq" },
+                    just = { "just" },
                 },
                 formatters = {
-                    prettier = {
+                    jq = {
+                        append_args = { "--indent", "4" },
                         condition = function(_, ctx)
                             return vim.fs.basename(ctx.filename) ~= "lazy-lock.json"
                         end,
