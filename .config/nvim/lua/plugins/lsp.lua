@@ -79,6 +79,9 @@ return {
                     -- Fuzzy find all the symbols in current workspace.
                     map("<leader>sw", picker.lsp_workspace_symbols, "[S]ymbols in [W]orkspace")
 
+                    -- Execute a code action
+                    map("<leader>ca", vim.lsp.buf.code_action, "[C]ode [A]ction")
+
                     -- Show diagnostics for the current line in a floating window.
                     map("<leader>cd", function()
                         vim.diagnostic.open_float({ scope = "line" })
@@ -129,49 +132,6 @@ return {
         end,
     },
     {
-        "rachartier/tiny-code-action.nvim",
-        dependencies = {
-            "nvim-lua/plenary.nvim",
-            {
-                "folke/snacks.nvim",
-                opts = {
-                    terminal = {},
-                },
-            },
-        },
-        event = "LspAttach",
-        keys = {
-            {
-                "<leader>ca",
-                function()
-                    require("tiny-code-action").code_action({})
-                end,
-                mode = { "n", "x" },
-            },
-        },
-        opts = {
-            picker = {
-                "snacks",
-                opts = {
-                    layout = "code_action",
-                },
-            },
-            backend = "difftastic",
-            backend_opts = {
-                difftastic = {
-                    header_lines_to_remove = 1,
-
-                    args = {
-                        "--color=always",
-                        "--syntax-highlight=on",
-                        "--display=inline",
-                        "--width=105",
-                    },
-                },
-            },
-        },
-    },
-    {
         "folke/lazydev.nvim",
         ft = "lua",
         opts = {
@@ -182,7 +142,6 @@ return {
                 { path = "snacks.nvim", words = { "Snacks" } },
                 { path = "mini.bracketed", words = { "MiniBracketed" } },
                 { path = "mini.files", words = { "MiniFiles" } },
-                { path = "mini.extra", words = { "MiniExtra" } },
             },
         },
     },

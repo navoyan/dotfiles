@@ -8,11 +8,6 @@ return {
             tools = {},
             -- LSP configuration
             server = {
-                capabilities = {
-                    experimental = {
-                        snippetTextEdit = false,
-                    },
-                },
                 on_attach = function(_, bufnr)
                     local ra_client_name = "rust-analyzer"
 
