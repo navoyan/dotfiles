@@ -39,7 +39,7 @@ return {
             },
 
             completion = {
-                ghost_text = { enabled = true },
+                ghost_text = { enabled = false },
                 documentation = {
                     auto_show = true,
                     auto_show_delay_ms = 200,
@@ -52,7 +52,9 @@ return {
                 },
                 list = {
                     selection = {
-                        preselect = true,
+                        preselect = function()
+                            return vim.bo.filetype ~= "liverename"
+                        end,
                         auto_insert = false,
                     },
                 },
@@ -84,8 +86,6 @@ return {
                         inherit_defaults = true,
                         "lazydev",
                     },
-                    -- NOTE: disables completions when using `live-rename.nvim`
-                    liverename = {},
                 },
 
                 providers = {
