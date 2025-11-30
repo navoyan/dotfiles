@@ -1,14 +1,18 @@
 return {
     {
         "echasnovski/mini.files",
-        lazy = true,
+        lazy = false,
         dependencies = { "echasnovski/mini.icons" },
         keys = {
             {
                 "<leader>e",
                 function()
                     local current_buf = vim.api.nvim_buf_get_name(0)
-                    MiniFiles.open(current_buf)
+                    local ok = pcall(MiniFiles.open, current_buf)
+                    if not ok then
+                        vim.notify("Not a valid path", vim.log.levels.ERROR)
+                        return
+                    end
                     MiniFiles.reveal_cwd()
                 end,
                 desc = "[E]xplore MiniFiles",
