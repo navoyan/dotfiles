@@ -7,12 +7,12 @@ update:
 git:
   log:
     order: default
-  paging:
-    colorArg: always
-    pager: delta --paging=never
-
+  pagers:
+    - colorArg: always
+      pager: delta --paging=never
 keybinding:
   universal:
+    remove: X
     prevBlock-alt2: <left>
     nextBlock-alt2: <right>
     quit: Q
