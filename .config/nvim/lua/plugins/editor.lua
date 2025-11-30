@@ -69,7 +69,22 @@ return {
     {
         "windwp/nvim-autopairs",
         event = "InsertEnter",
-        config = true,
+        opts = {},
+        config = function(_, opts)
+            local autopairs = require("nvim-autopairs")
+
+            -- HACK: disable autopairs in multicursor mode
+            local state_mt = {
+                __index = function(_, key)
+                    return key == "disabled" and Util.is_multicursor_mode()
+                end,
+            }
+
+            autopairs.state.disabled = nil
+            setmetatable(autopairs.state, state_mt)
+
+            autopairs.setup(opts)
+        end,
     },
     {
         "gbprod/substitute.nvim",
