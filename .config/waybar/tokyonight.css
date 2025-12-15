@@ -1,9 +1,9 @@
-@define-color text #c0caf5;	
+@define-color text #c0caf5;
 @define-color textlight #cfc9c2;
 @define-color textdark #a9b1d6;
-@define-color foregroundlight #414868; 
-@define-color foreground #3b4261; 
-@define-color foregrounddark #292e42; 
+@define-color foregroundlight #414868;
+@define-color foreground #3b4261;
+@define-color foregrounddark #292e42;
 
 @define-color background rgba(41, 46, 66, 0.9);
 @define-color backgrounddark rgba(26, 27, 38, 0.9);

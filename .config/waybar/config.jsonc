@@ -1,18 +1,19 @@
 [
 	{
+		"reload_style_on_change": true,
 		"layer": "top",
 		"position": "top",
-		"height": 45,
 		"output": [
-			"DP-2",
+			"DP-1"
 		],
 		"modules-left": [
 			"cpu",
 			"memory",
 			"disk",
+			"niri/language"
 		],
 		"modules-center": [
-			"hyprland/workspaces#numbers",
+			"niri/workspaces#numbers"
 		],
 		"modules-right": [
 			"tray",
@@ -22,34 +23,35 @@
 		],
 		// MODULES
 		"cpu": {
-			"interval": 10,
-			"format": "  {}%",
+			"interval": 1,
+			"format": "  {load:0.2f} %",
 			"max-length": 10
 		},
 		"memory": {
-			"interval": 30,
-			"format": "  {used} GiB",
+			"interval": 1,
+			"format": "  {used:0.2f} GiB"
 		},
 		"disk": {
 			"interval": 1,
 			"format": "  {specific_used:0.2f} GB",
-			//"path": "/",
 			"unit": "GB"
 		},
+		"niri/language": {
+			"format": "<span text-transform='uppercase'>{shortDescription}</span>"
+		},
 		// Numbers Style workspace 
-		"hyprland/workspaces#numbers": {
+		"niri/workspaces#numbers": {
 			"all-outputs": true,
-			"active-only": false,
 			"show-special": false,
 			"on-click": "activate",
-			"on-scroll-up": "hyprctl dispatch workspace e+1",
-			"on-scroll-down": "hyprctl dispatch workspace e-1",
+			"on-scroll-up": "niri msg action focus-workspace-up",
+			"on-scroll-down": "niri msg action focus-workspace-down",
 			"persistent-workspaces": {
 				"1": [],
 				"2": [],
 				"3": [],
 				"4": [],
-				"5": [],
+				"5": []
 			},
 			"format": "{icon}",
 			"format-icons": {
@@ -63,17 +65,17 @@
 				"8": "8",
 				"9": "9",
 				"10": "10",
-				"urgent": "",
-			},
+				"urgent": ""
+			}
 		},
 		"tray": {
-			"icon-size": 14,
-			"spacing": 10
+			"icon-size": 18,
+			"spacing": 8
 		},
 		"pulseaudio": {
-			"format": "{icon} {volume}%",
-			"format-bluetooth": "󰂰 {volume}%",
-			"format-muted": " ",
+			"format": "{icon} {volume}%{format_source}",
+			"format-bluetooth": "󰂰 {volume}%{format_source}",
+			"format-muted": "󰖁 {format_source}",
 			"format-icons": {
 				"bluetooth": "󰥰 ",
 				"headphone": " ",
@@ -88,10 +90,12 @@
 					" "
 				]
 			},
+			"format-source": "",
+			"format-source-muted": " 󰍭",
 			"scroll-step": 1,
-			"on-click": "pavucontrol",
+			"on-click": "pavucontrol-qt",
 			"on-click-right": "blueman-manager",
-			"on-click-middle": "pactl set-sink-mute @DEFAULT_SINK@ toggle",
+			"on-click-middle": "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle",
 			"ignored-sinks": [
 				"Easy Effects Sink"
 			]
@@ -99,12 +103,28 @@
 		"clock": {
 			"format": "{:%OI:%OM %p}",
 			"format-alt": "{:%A, %b %e}",
-			"interval": 60
+			"tooltip-format": "<tt>{calendar}</tt>",
+			"calendar": {
+				"mode": "month",
+				"mode-mon-col": 3,
+				"on-scroll": 1,
+				"format": {
+					"months": "<span color='#f9e2af'><b>{}</b></span>",
+					"days": "<span color='#c0caf5'><b>{}</b></span>",
+					"weekdays": "<span color='#ffc777'><b>{}</b></span>",
+					"today": "<span color='#ff757f'><b><u>{}</u></b></span>"
+				}
+			},
+			"actions": {
+				"on-click-right": "mode",
+				"on-scroll-up": "shift_up",
+				"on-scroll-down": "shift_down"
+			}
 		},
 		"custom/nc-center": {
 			"format": "󰂚",
 			"on-click": "swaync-client -t -sw",
 			"tooltip": false
-		},
+		}
 	}
 ]

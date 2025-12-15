@@ -1,19 +1,18 @@
-@import "colors/current-theme.css";
+@import "tokyonight.css";
 
-/* Waybar styling */
 window#waybar {
     background-color: transparent;
 }
 
-window > box {
+window#waybar > box {
     background-color: @backgrounddark;
-    padding: 0px 5px;
-    margin: 5px 7px 0px 7px;
-    border-radius: 7px;
+    padding: 0;
+    margin: 5px 6px 0 5px;
+    border-radius: 0;
 }
 
 * {
-    font-family: SpaceMono Nerd Font;
+    font-family: JetBrainsMono NF;
     font-weight: 600;
     font-size: 16px;
     padding: 0;
@@ -22,12 +21,10 @@ window > box {
 #cpu,
 #memory,
 #disk,
-#custom-updates,
 #pulseaudio,
 #workspaces,
 #clock,
 #sys-settings,
-#custom-spotify,
 #network,
 #network.linked,
 #network.ethernet,
@@ -51,14 +48,30 @@ window > box {
     color: @module2;
 }
 
+#pulseaudio.muted, #pulseaudio.source-muted {
+    color: @module3;
+}
+
 #clock {
     color: @module1;
 }
 
-#cpu, #memory, #disk, #mpris, #sys-settings, #pulseaudio, #custom-updates, #clock {
-    border-radius: 7px;
-    padding: 0px 9px;
-    margin: 6px 2px;
+#custom-nc-center {
+    color: @color14;
+}
+
+
+#cpu, #memory, #disk, #tray, #pulseaudio, #clock, #custom-nc-center {
+    padding: 0 8px 0 8px;
+    margin: 0;
+}
+
+#cpu, #memory, #disk {
+    margin-right: 4px;
+}
+
+#pulseaudio, #clock {
+    margin-left: 4px;
 }
 
 /* Internet module spaced away from bluetooth */
@@ -67,26 +80,20 @@ window > box {
 }
 
 #workspaces {
-    border-radius: 7px;
-    padding: 0px 1px;
-    margin: 6px 2px;
+    margin: 0 2px;
 }
 
 #workspaces button {
     color: @textdark;
-    padding: 0px 5px;
 }
 
 #workspaces button.active {
-    color: @module2;
+    background-color: @color12;
+    color: @backgrounddark;
 }
 
 #workspaces button.urgent {
     color: @color5;
-}
-
-#workspaces button.empty {
-    color: @textdark;
 }
 
 #workspaces button:hover {
@@ -96,11 +103,15 @@ window > box {
 
 #bluetooth {
     color: @color12;
-    padding: 0px;
+    padding: 0;
 }
 
 #bluetooth:hover {
     color: @color7;
+}
+
+#custom-nc-center {
+    padding-right: 10px;
 }
 
 #network {
@@ -121,30 +132,18 @@ window > box {
     animation-direction: alternate;
 }
 
+#battery {
+    margin-left: 2px;
+    margin-right: 5px;
+}
+
 tooltip {
-    padding: 25px;
+    padding: 5px;
     background-color: @backgrounddark;
     color: @foreground;
-    font-family: CartographCF Nerd Font;
 }
 
 tooltip label {
-    padding: 15px;
+    padding: 5px;
     color: @textdark;
-}
-
-#battery {
-    margin-left: 2px;
-    margin-right: 10px;
-}
-
-#custom-nc-center {
-    color: @color14;
-    padding: 0px 10px;
-    margin: 6px 2px;
-}
-
-#tray {
-    margin: 6px 2px;
-    padding: 0px 10px;
 }
