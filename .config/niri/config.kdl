@@ -32,7 +32,7 @@ input {
 
 // Outputs are configured by their name, that can be found by running `niri msg outputs`.
 // https://yalter.github.io/niri/Configuration:-Outputs
-output "DP-2" {
+output "DP-1" {
     // Uncomment this line to disable this output.
     // off
 
@@ -259,6 +259,7 @@ binds {
     Mod+T repeat=false { spawn "kitty"; }
     Mod+R repeat=false { spawn "nc" "-U" "/run/user/1000/walker/walker.sock"; }
     Mod+P repeat=false { spawn-sh "hyprpicker | wl-copy"; }
+    Mod+N repeat=false { spawn "swaync-client" "-t"; }
 
     // The allow-when-locked=true property makes them work even when the session is locked.
     Mod+Ctrl+M           repeat=false allow-when-locked=true { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SINK@" "toggle"; }
