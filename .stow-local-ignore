@@ -1,7 +1,7 @@
-.idea
 .git
 .gitignore
 .gitmodules
-dotfiles.iml
+.gitattributes
 .stylua.toml
+.pre-commit-config.yaml
 LICENSE
