@@ -217,6 +217,14 @@ window-rule {
 }
 
 window-rule {
+    match app-id="kitty-popup-small"
+
+    open-floating true
+    default-column-width { proportion 0.55; }
+    default-window-height { proportion 0.5; }
+}
+
+window-rule {
     match app-id="blueman-manager"
     match app-id="pavucontrol-qt"
     match app-id="me.kavishdevar.librepods"
