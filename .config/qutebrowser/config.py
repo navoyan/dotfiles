@@ -74,7 +74,7 @@ c.editor.command = [
     "bash",
     "-c",
     "NVIM_APPNAME=nvim-explorer nvim"
-    "'+set wrap' '+call cursor({line}, {column})' {file}",
+    " '+set wrap' '+call cursor({line}, {column})' {file}",
 ]
 
 c.content.pdfjs = True
