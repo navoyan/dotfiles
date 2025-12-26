@@ -1,0 +1,39 @@
+name = "powermenu"
+name_pretty = "Power menu"
+icon = "system-shutdown"
+fixed_order = true
+
+[[entries]]
+text = "Logout"
+actions = { "execute" = "niri msg action quit --skip-confirmation" }
+icon = "system-log-out"
+
+[[entries]]
+text = "Power off monitor"
+actions = { "execute" = "niri msg action power-off-monitors" }
+icon = "flashlight-off"
+
+[[entries]]
+text = "Shutdown"
+actions = { "execute" = "systemctl poweroff" }
+icon = "system-shutdown"
+
+[[entries]]
+text = "Reboot"
+actions = { "execute" = "systemctl reboot" }
+icon = "system-reboot"
+
+[[entries]]
+text = "Firmware setup"
+actions = { "execute" = "systemctl reboot --firmware-setup" }
+icon = "akonadiconsole"
+
+[[entries]]
+text = "Suspend"
+actions = { "execute" = "systemctl suspend" }
+icon = "system-suspend"
+
+[[entries]]
+text = "Hibernate"
+actions = { "execute" = "systemctl hibernate" }
+icon = "system-hibernate"

@@ -16,8 +16,8 @@
             "buttons-per-row": 4,
             "actions": [
                 {
-                    "label": "󰍃",
-                    "command": "wlogout"
+                    "label": "",
+                    "command": "walker -m menus:powermenu"
                 },
                 {
                     "label": "󰕧",
