@@ -27,7 +27,14 @@ require("lazy").setup({
             "KittyScrollbackGenerateCommandLineEditing",
         },
         event = { "User KittyScrollbackLaunch" },
-        opts = {},
+        opts = {
+            {
+                paste_window = { yank_register = "x" },
+            },
+        },
+        keys = {
+            { "x", [["xy]] },
+        },
     },
     { import = "plugins.themes" },
     { import = "plugins.editor_navigation" },
@@ -42,5 +49,3 @@ require("current_theme")
 vim.opt.number = false
 vim.opt.relativenumber = false
 vim.opt.laststatus = 0
-
-vim.keymap.set("n", "q", "<cmd>quit!<cr>")
