@@ -19,7 +19,7 @@
 			"tray",
 			"pulseaudio",
 			"clock",
-			"custom/nc-center"
+			"custom/notifications"
 		],
 		// MODULES
 		"cpu": {
@@ -121,7 +121,7 @@
 				"on-scroll-down": "shift_down"
 			}
 		},
-		"custom/nc-center": {
+		"custom/notifications": {
 			"tooltip": true,
 			"format": "{icon}",
 			"format-icons": {

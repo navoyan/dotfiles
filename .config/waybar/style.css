@@ -56,12 +56,12 @@ window#waybar > box {
     color: @module1;
 }
 
-#custom-nc-center {
+#custom-notifications {
     color: @color14;
 }
 
 
-#cpu, #memory, #disk, #tray, #pulseaudio, #clock, #custom-nc-center {
+#cpu, #memory, #disk, #tray, #pulseaudio, #clock, #custom-notifications {
     padding: 0 8px 0 8px;
     margin: 0;
 }
@@ -110,7 +110,7 @@ window#waybar > box {
     color: @color7;
 }
 
-#custom-nc-center {
+#custom-notifications {
     padding-right: 10px;
 }
 

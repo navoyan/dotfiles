@@ -5,7 +5,7 @@
 @define-color foreground #3b4261;
 @define-color foregrounddark #292e42;
 
-@define-color background rgba(41, 46, 66, 0.9);
+@define-color background #292e42;
 @define-color backgrounddark rgba(26, 27, 38, 0.9);
 
 @define-color module1 #f9e2af;
