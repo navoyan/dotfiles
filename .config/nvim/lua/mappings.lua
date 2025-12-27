@@ -58,13 +58,13 @@ local function save_jump(motion)
     })
 end
 
-local down_motion = Util.keycode("<C-d>")
+local down_motion = vim.keycode("<C-d>")
 map("n", "<C-j>", function()
     save_jump(down_motion)
     vim.cmd("normal! zz")
 end, { silent = true })
 
-local up_motion = Util.keycode("<C-u>")
+local up_motion = vim.keycode("<C-u>")
 map("n", "<C-k>", function()
     save_jump(up_motion)
     vim.cmd("normal! zz")

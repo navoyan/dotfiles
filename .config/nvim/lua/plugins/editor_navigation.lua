@@ -35,7 +35,7 @@ return {
                 terminal = true,
             }
 
-            local enter = Util.keycode("<Enter>")
+            local enter = vim.keycode("<Enter>")
             map("n", "<Enter>", function()
                 if default_enter_bt[vim.bo.buftype] then
                     vim.cmd("normal! " .. enter)

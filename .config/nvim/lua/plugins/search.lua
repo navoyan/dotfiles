@@ -199,7 +199,7 @@ return {
             map("n", "<leader>sK", Snacks.picker.keymaps)
             map("n", "<leader>sM", Snacks.picker.man)
 
-            local esc = Util.keycode("<Esc>")
+            local esc = vim.keycode("<Esc>")
             local function command_history()
                 vim.api.nvim_feedkeys(esc, "c", true)
 
