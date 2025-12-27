@@ -158,7 +158,7 @@ layout {
 
 spawn-at-startup "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1"
 
-spawn-at-startup "swayidle" "-w" "timeout" "300" "niri msg action power-off-monitors"
+spawn-at-startup "swayidle" "-w" "timeout" "900" "niri msg action power-off-monitors"
 spawn-sh-at-startup "swaybg --image ~/.config/wallpapers/perfect-blue-2560x1440.png"
 
 spawn-at-startup "waybar"
