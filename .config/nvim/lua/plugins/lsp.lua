@@ -38,6 +38,8 @@ return {
                 gopls = {},
                 helm_ls = {},
                 yamlls = {},
+                jsonls = {},
+                taplo = {},
                 typos_lsp = {
                     init_options = {
                         diagnosticSeverity = "Warning",
