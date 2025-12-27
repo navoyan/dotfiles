@@ -46,14 +46,13 @@ return {
     },
     {
         "folke/snacks.nvim",
-        version = "*",
         lazy = false,
         opts = {
             -- ISSUE: https://github.com/neovim/neovim/issues/33067
-            -- statuscolumn = {
-            --     left = { "sign" },
-            --     right = { "git" },
-            -- },
+            statuscolumn = {
+                left = { "sign" },
+                right = { "git" },
+            },
             words = {
                 debounce = 10,
             },
