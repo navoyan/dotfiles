@@ -20,12 +20,13 @@ c.content.site_specific_quirks.skip = ["ua-google"]
 
 c.url.searchengines = {
     "DEFAULT": "https://google.com/search?q={}",
-    "!aw": "https://wiki.archlinux.org/?search={}",
-    "!ar": "https://archlinux.org/packages/?sort=&q={}&maintainer=&flagged=",
-    "!aur": "https://aur.archlinux.org/packages/?K={}",
-    "!gh": "https://github.com/search?o=desc&q={}&s=stars",
-    "!ghc": "https://github.com/search?q={}&type=code",
-    "!yt": "https://www.youtube.com/results?search_query={}",
+    ":g": "https://google.com/search?q={}",
+    ":aw": "https://wiki.archlinux.org/?search={}",
+    ":ar": "https://archlinux.org/packages/?sort=&q={}&maintainer=&flagged=",
+    ":aur": "https://aur.archlinux.org/packages/?K={}",
+    ":gh": "https://github.com/search?o=desc&q={}&s=stars",
+    ":ghc": "https://github.com/search?q={}&type=code",
+    ":yt": "https://www.youtube.com/results?search_query={}",
 }
 c.url.start_pages = ["https://google.com"]
 c.url.default_page = "https://google.com"
