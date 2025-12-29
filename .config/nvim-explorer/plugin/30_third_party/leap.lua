@@ -1,0 +1,1 @@
+../../../nvim/plugin/30_third_party/leap.lua

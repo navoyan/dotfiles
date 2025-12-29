@@ -1,0 +1,17 @@
+{
+  "plugins": {
+    "kitty-scrollback.nvim": {
+      "rev": "2ca6956b9c99cc2d5df0ef1be537b54ccbb7b3d9",
+      "src": "https://github.com/mikesmithgh/kitty-scrollback.nvim",
+      "version": ">=0.0.0"
+    },
+    "leap.nvim": {
+      "rev": "af1dedf49efe203b98c65970a6bb652af256b882",
+      "src": "https://codeberg.org/andyg/leap.nvim"
+    },
+    "tokyonight.nvim": {
+      "rev": "5da1b76e64daf4c5d410f06bcb6b9cb640da7dfd",
+      "src": "https://github.com/folke/tokyonight.nvim"
+    }
+  }
+}

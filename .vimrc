@@ -77,15 +77,15 @@ nnoremap syp <Cmd>let @+=expand("%")<Cr>
 nnoremap syl <Cmd>let @+=expand("%") . ':' . line(".")<Cr>
 
 " creating vim splits
-nnoremap <leader>sh <Cmd>vertical leftabove split<Cr>
-nnoremap <leader>sj <Cmd>horizontal belowright split<Cr>
-nnoremap <leader>sk <Cmd>horizontal aboveleft split<Cr>
-nnoremap <leader>sl <Cmd>vertical rightbelow split<Cr>
+nnoremap <Leader>sh <Cmd>vertical leftabove split<Cr>
+nnoremap <Leader>sj <Cmd>horizontal belowright split<Cr>
+nnoremap <Leader>sk <Cmd>horizontal aboveleft split<Cr>
+nnoremap <Leader>sl <Cmd>vertical rightbelow split<Cr>
 
-nmap <leader>x <Cmd>bdelete<Cr>
+nmap <Leader>x <Cmd>bdelete<Cr>
 
-nmap <leader>C <Cmd>tab split<Cr>
-nmap <leader>X <Cmd>tabclose<Cr>
+nmap <Leader>C <Cmd>tab split<Cr>
+nmap <Leader>X <Cmd>tabclose<Cr>
 for n in range(1, 10)
     execute 'noremap <C-'.n.'> <Cmd>tabn '.n.'<Cr>'
 endfor

@@ -1,0 +1,1 @@
+../../nvim/plugin/10_options.lua

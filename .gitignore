@@ -1,5 +1,4 @@
 .config/nvim/target
-.config/nvim/lua/current_theme.lua
 
 .config/fish/completions/**
 .config/fish/functions/**
