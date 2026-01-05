@@ -102,7 +102,7 @@
 		},
 		"clock": {
 			"format": "{:%OI:%OM %p}",
-			"format-alt": "{:%A, %b %e}",
+			"format-alt": "{:%A, %b %d}",
 			"tooltip-format": "<tt>{calendar}</tt>",
 			"calendar": {
 				"mode": "month",
@@ -112,7 +112,7 @@
 					"months": "<span color='#f9e2af'><b>{}</b></span>",
 					"days": "<span color='#c0caf5'><b>{}</b></span>",
 					"weekdays": "<span color='#ffc777'><b>{}</b></span>",
-					"today": "<span color='#ff757f'><b><u>{}</u></b></span>"
+					"today": "<span color='#ff757f'><b>{}</b></span>"
 				}
 			},
 			"actions": {
