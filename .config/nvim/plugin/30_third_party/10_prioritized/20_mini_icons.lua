@@ -5,10 +5,8 @@ schedule.now(function()
         config.github("nvim-mini/mini.icons"),
     })
 
-    package.preload["nvim-web-devicons"] = function()
-        require("mini.icons").mock_nvim_web_devicons()
-        return package.loaded["nvim-web-devicons"]
-    end
+    local icons = require("mini.icons")
 
-    require("mini.icons").setup()
+    icons.setup()
+    icons.mock_nvim_web_devicons()
 end)
