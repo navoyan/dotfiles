@@ -39,7 +39,7 @@ set tabstop=4 " Number of spaces tabs count for
 set shiftwidth=0 " Use 'tabstop' to determine number of spaces for 'smartindent', `>`, `<`, etc.
 set expandtab " Use spaces when inserting tabs
 
-set shortmess+=WcC " Reduce command line messages
+set shortmess+=WcCS " Reduce command line messages
 set updatetime=50 " How often `CursorHold` is triggered in milliseconds
 
 if empty($SSH_TTY)

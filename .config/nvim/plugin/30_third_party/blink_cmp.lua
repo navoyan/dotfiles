@@ -1,5 +1,4 @@
 local schedule, config = require("schedule"), require("config")
-local map = vim.keymap.set
 
 schedule.later(function()
     vim.pack.add({
@@ -8,9 +7,6 @@ schedule.later(function()
             version = vim.version.range("*"),
         },
     })
-
-    -- NOTE: fixes auto-accept behaviour
-    map("c", "<Esc>", "<C-c>")
 
     require("blink.cmp").setup({
         -- 'default' for mappings similar to built-in completion
@@ -22,20 +18,7 @@ schedule.later(function()
             ["<C-n>"] = { "show", "show_documentation", "hide_documentation" },
         },
         cmdline = {
-            keymap = {
-                ["<Left>"] = {},
-                ["<Right>"] = {},
-                ["<Esc>"] = { "cancel", "fallback" },
-            },
-            completion = {
-                menu = { auto_show = true },
-                ghost_text = { enabled = false },
-                list = {
-                    selection = {
-                        preselect = false,
-                    },
-                },
-            },
+            enabled = false,
         },
 
         completion = {

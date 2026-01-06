@@ -61,14 +61,6 @@
       "rev": "47f91c416daef12db467145e16bed5bbfe00add8",
       "src": "https://github.com/nvim-lualine/lualine.nvim"
     },
-    "lz.n": {
-      "rev": "b36c73e1a9d1cb2c05b354b390da0d141c9fa09d",
-      "src": "https://github.com/lumen-oss/lz.n"
-    },
-    "lze": {
-      "rev": "1540c513dcd330f7d251279059975bed8b3a9364",
-      "src": "https://github.com/BirdeeHub/lze"
-    },
     "mini.ai": {
       "rev": "bfb26d9072670c3aaefab0f53024b2f3729c8083",
       "src": "https://github.com/nvim-mini/mini.ai"
@@ -76,6 +68,10 @@
     "mini.bracketed": {
       "rev": "e50e3abcf6a3a5d234f58e4a247dfb3035f30a65",
       "src": "https://github.com/nvim-mini/mini.bracketed"
+    },
+    "mini.cmdline": {
+      "rev": "9b55f71f84b11627e80f6a060979695cb5c6e0c0",
+      "src": "https://github.com/nvim-mini/mini.cmdline"
     },
     "mini.deps": {
       "rev": "8f6f74a8b68dbad02f1813dff4ddae5afeee92df",
@@ -104,14 +100,6 @@
     "multicursor.nvim": {
       "rev": "c982cc8375f062e9f98e96a408e0f7ad0c80d4db",
       "src": "https://github.com/jake-stewart/multicursor.nvim"
-    },
-    "noice.nvim": {
-      "rev": "7bfd942445fb63089b59f97ca487d605e715f155",
-      "src": "https://github.com/folke/noice.nvim"
-    },
-    "nui.nvim": {
-      "rev": "de740991c12411b663994b2860f1a4fd0937c130",
-      "src": "https://github.com/MunifTanjim/nui.nvim"
     },
     "nvim-autopairs": {
       "rev": "c2a0dd0d931d0fb07665e1fedb1ea688da3b80b4",
