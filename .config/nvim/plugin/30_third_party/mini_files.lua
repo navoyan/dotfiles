@@ -6,7 +6,9 @@ schedule.now_if_args(function()
         config.github("nvim-mini/mini.files"),
     })
 
-    require("mini.files").setup({
+    local files = require("mini.files")
+
+    files.setup({
         options = {
             -- Whether to delete permanently or move into module-specific trash
             permanent_delete = false,
@@ -47,12 +49,12 @@ schedule.now_if_args(function()
     end)
 
     map("n", "<Leader>e", function()
-        local current_buf = vim.api.nvim_buf_get_name(0)
-        local ok = pcall(MiniFiles.open, current_buf)
-        if not ok then
-            vim.notify("Not a valid path", vim.log.levels.ERROR)
-            return
+        local path = vim.api.nvim_buf_get_name(0)
+        if vim.uv.fs_stat(path) then
+            files.open(path)
+        else
+            files.open(vim.fs.dirname(path))
         end
-        MiniFiles.reveal_cwd()
+        files.reveal_cwd()
     end)
 end)
