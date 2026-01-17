@@ -2,7 +2,9 @@ local schedule, config = require("schedule"), require("config")
 local map = vim.keymap.set
 
 schedule.later(function()
-    vim.pack.add({ config.github("stevearc/conform.nvim") })
+    vim.pack.add({
+        config.github("stevearc/conform.nvim"),
+    })
 
     local conform = require("conform")
 

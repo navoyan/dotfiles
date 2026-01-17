@@ -9,6 +9,7 @@ local function picker_config()
         return res
     end
 
+    ---@type snacks.picker.Config
     return {
         matcher = {
             frecency = true,
@@ -19,8 +20,19 @@ local function picker_config()
                 truncate = 60,
             },
         },
-        debug = {
-            scores = false,
+        win = {
+            input = {
+                keys = {
+                    ["<c-k>"] = { "list_scroll_up", mode = { "i", "n" } },
+                    ["<c-j>"] = { "list_scroll_down", mode = { "i", "n" } },
+                },
+            },
+            list = {
+                keys = {
+                    ["<c-k>"] = { "list_scroll_up", mode = { "i", "n" } },
+                    ["<c-j>"] = { "list_scroll_down", mode = { "i", "n" } },
+                },
+            },
         },
         layouts = {
             default = {
