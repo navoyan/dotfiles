@@ -93,10 +93,6 @@
       "rev": "4d214202d71e0a4066b6288176bbe88f268f9777",
       "src": "https://github.com/nvim-mini/mini.move"
     },
-    "mini.surround": {
-      "rev": "cc7b9d0a056b5fa6915ffac1cb91f29bf7c96f69",
-      "src": "https://github.com/nvim-mini/mini.surround"
-    },
     "multicursor.nvim": {
       "rev": "c982cc8375f062e9f98e96a408e0f7ad0c80d4db",
       "src": "https://github.com/jake-stewart/multicursor.nvim"
@@ -112,6 +108,11 @@
     "nvim-spider": {
       "rev": "8ef683624e797f26ab6bff688fad272198fbe3cc",
       "src": "https://github.com/chrisgrieser/nvim-spider"
+    },
+    "nvim-surround": {
+      "rev": "1098d7b3c34adcfa7feb3289ee434529abd4afd1",
+      "src": "https://github.com/kylechui/nvim-surround",
+      "version": ">=0.0.0"
     },
     "nvim-treesitter": {
       "rev": "42fc28ba918343ebfd5565147a42a26580579482",
