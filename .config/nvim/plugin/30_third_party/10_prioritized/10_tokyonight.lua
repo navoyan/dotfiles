@@ -21,6 +21,12 @@ schedule.now(function()
             -- HACK: fixes `live-rename.nvim` highlighting
             h.Normal = { fg = c.fg, bg = c.bg }
 
+            for _, mode in ipairs({ "Normal", "Insert", "Visual", "Replace", "Command", "Other" }) do
+                h["MiniStatuslineMode" .. mode].bold = false
+            end
+            h.MiniStatuslineBranch = { bg = c.fg_gutter, fg = c.blue }
+            h.MiniStatuslineInactive = { fg = c.dark3 }
+
             h.LazygitNormal = { bg = c.none }
 
             h.LeapLabel = { bg = c.magenta2, fg = c.fg, bold = true }

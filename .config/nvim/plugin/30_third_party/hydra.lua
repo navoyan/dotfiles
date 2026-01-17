@@ -73,10 +73,10 @@ schedule.later(function()
             color = "pink",
             on_enter = function()
                 vim.bo.modifiable = false
-                require("lualine").refresh({ place = { "statusline" } })
+                vim.schedule(vim.cmd.redrawstatus)
             end,
             on_exit = function()
-                require("lualine").refresh({ place = { "statusline" } })
+                vim.schedule(vim.cmd.redrawstatus)
             end,
         }
     end

@@ -39,7 +39,7 @@ set tabstop=4 " Number of spaces tabs count for
 set shiftwidth=0 " Use 'tabstop' to determine number of spaces for 'smartindent', `>`, `<`, etc.
 set expandtab " Use spaces when inserting tabs
 
-set shortmess+=WcCS " Reduce command line messages
+set shortmess+=WcCsS " Reduce command line messages
 set updatetime=50 " How often `CursorHold` is triggered in milliseconds
 
 if empty($SSH_TTY)
@@ -49,6 +49,8 @@ endif
 
 
 """ Mappings """
+nnoremap <Space> <Nop>
+
 nnoremap v "_v
 vnoremap v "_v
 
@@ -73,8 +75,8 @@ nnoremap s <Nop>
 nnoremap sl "_dl
 
 " yank current path
-nnoremap syp <Cmd>let @+=expand("%")<Cr>
-nnoremap syl <Cmd>let @+=expand("%") . ':' . line(".")<Cr>
+nnoremap syp <Cmd>let @+=expand("%:~:.")<Cr>
+nnoremap syl <Cmd>let @+=expand("%:~:.") . ':' . line(".")<Cr>
 
 " creating vim splits
 nnoremap <Leader>sh <Cmd>vertical leftabove split<Cr>

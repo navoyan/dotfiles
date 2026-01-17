@@ -22,6 +22,8 @@ schedule.later(function()
             },
         },
         on_open = function(term)
+            vim.b[term.bufnr].ministatusline_disable = true
+
             -- Handle the case when lazygit executes `DiffViewOpen` via nvim-remote
             -- and then regains focus when closing the diff view
             local enter_augroup = vim.api.nvim_create_augroup("LazygitEnter", { clear = true })

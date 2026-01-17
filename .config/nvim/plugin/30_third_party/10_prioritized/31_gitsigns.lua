@@ -53,5 +53,19 @@ schedule.later(function()
             -- Text object
             map({ "o", "x" }, "ih", ":<C-u>Gitsigns select_hunk<CR>")
         end,
+        status_formatter = function(status)
+            local added, changed, removed = status.added, status.changed, status.removed
+            local status_txt = {}
+            if added and added > 0 then
+                table.insert(status_txt, "%#GitSignsAdd#" .. "+" .. added)
+            end
+            if changed and changed > 0 then
+                table.insert(status_txt, "%#GitSignsChange#" .. "~" .. changed)
+            end
+            if removed and removed > 0 then
+                table.insert(status_txt, "%#GitSignsDelete#" .. "-" .. removed)
+            end
+            return table.concat(status_txt, " ")
+        end,
     })
 end)
