@@ -11,7 +11,7 @@ schedule.later(function()
 
     substitute.setup({
         on_substitute = require("yanky.integration").substitute(),
-        preserve_cursor_position = true,
+        preserve_cursor_position = false, -- default. otherwise dot-repeat jumps to position of original command
         highlight_substituted_text = {
             timer = 150,
         },
