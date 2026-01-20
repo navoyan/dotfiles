@@ -43,6 +43,8 @@ schedule.now(function()
             h.SnacksPickerInputTitle = { link = "FloatTitleFocused" }
             h.SnacksPickerBoxTitle = { link = "FloatTitleFocused" }
             h.SnacksPickerPreviewTitle = { link = "FloatTitleFocused" }
+
+            h.SnacksPickerInputBorder = { link = "FloatBorder" }
         end,
     })
 

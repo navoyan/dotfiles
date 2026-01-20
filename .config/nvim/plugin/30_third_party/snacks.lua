@@ -1,6 +1,9 @@
 local schedule, config = require("schedule"), require("config")
+local map = vim.keymap.set
 
 local function picker_config()
+    --- @param ctx snacks.picker.preview.ctx
+    --- @return boolean?
     local function preview_with_full_filepath(ctx)
         local res = Snacks.picker.preview.file(ctx)
         if ctx.item.file then
@@ -62,25 +65,43 @@ local function picker_config()
                     },
                 },
             },
-            inline_preview = {
+            ivy = {
                 preview = "main",
                 layout = {
-                    backdrop = false,
-                    row = 1,
-                    width = 0.4,
-                    min_width = 80,
-                    height = 0.4,
-                    border = "none",
                     box = "vertical",
+                    backdrop = false,
+                    row = -1,
+                    width = 0,
+                    height = 0.4,
                     {
                         win = "input",
                         height = 1,
                         border = "single",
+                        title_pos = "left",
                         title = "{title} {live} {flags}",
-                        title_pos = "center",
                     },
-                    { win = "list", border = "hpad" },
-                    { win = "preview", title = "{preview}", border = "single" },
+                    {
+                        box = "horizontal",
+                        { win = "list", border = "none" },
+                        { win = "preview", title = "{preview}", width = 0.6, border = "left" },
+                    },
+                },
+            },
+            ivy_no_preview = {
+                layout = {
+                    box = "vertical",
+                    backdrop = false,
+                    row = -1,
+                    width = 0,
+                    height = 0.4,
+                    {
+                        win = "input",
+                        height = 1,
+                        border = "single",
+                        title_pos = "left",
+                        title = "{title} {live} {flags}",
+                    },
+                    { win = "list", border = "none" },
                 },
             },
             select = {
@@ -132,31 +153,27 @@ local function picker_config()
             },
         },
         sources = {
-            files = { preview = preview_with_full_filepath },
-            grep = { preview = preview_with_full_filepath },
-            grep_word = { preview = preview_with_full_filepath },
+            select = { focus = "list" },
+            files = { preview = preview_with_full_filepath, hidden = true },
+            grep = { preview = preview_with_full_filepath, hidden = true },
+            grep_word = { preview = preview_with_full_filepath, hidden = true },
             buffers = { preview = preview_with_full_filepath },
             grep_buffers = { preview = preview_with_full_filepath },
-            select = { focus = "list" },
-            diagnostics_buffer = { layout = "inline_preview", focus = "list" },
-            diagnostics = { layout = "inline_preview", focus = "list" },
-            lsp_definitions = { layout = "inline_preview", focus = "list" },
-            lsp_references = { layout = "inline_preview", focus = "list" },
-            lsp_implementations = { layout = "inline_preview", focus = "list" },
-            lsp_type_definitions = { layout = "inline_preview", focus = "list" },
-            lsp_symbols = { layout = "inline_preview", focus = "list" },
-            lsp_workspace_symbols = { focus = "list", layout = "inline_preview" },
+            diagnostics_buffer = { layout = "ivy", focus = "list" },
+            diagnostics = { layout = "ivy", focus = "list" },
+            lsp_definitions = { layout = "ivy", focus = "list" },
+            lsp_references = { layout = "ivy", focus = "list" },
+            lsp_implementations = { layout = "ivy", focus = "list" },
+            lsp_type_definitions = { layout = "ivy", focus = "list" },
+            lsp_symbols = { layout = "ivy", focus = "list" },
+            lsp_workspace_symbols = { layout = "ivy", focus = "list" },
+            command_history = { layout = "ivy_no_preview", focus = "list" },
         },
     }
 end
 
 local function picker_create_mappings()
-    local is_cwd_dotfiles = function()
-        return vim.fn.getcwd() == vim.env.HOME .. "/dotfiles"
-    end
-    local show_hidden_for_dotfiles = function()
-        return is_cwd_dotfiles() and { hidden = true } or {}
-    end
+    local picker = Snacks.picker
 
     local function conf(picker_fn, ...)
         local configs = { ... }
@@ -170,21 +187,19 @@ local function picker_create_mappings()
         end
     end
 
-    local map = vim.keymap.set
+    map("n", "<Leader>sp", picker.resume)
 
-    map("n", "<Leader>sp", Snacks.picker.resume)
+    map("n", "<Leader>ff", picker.files)
+    map("n", "<Leader>fo", picker.buffers)
+    map("n", "<Leader>fg", picker.git_status)
+    map("n", "<Leader>fp", picker.projects)
 
-    map("n", "<Leader>ff", conf(Snacks.picker.files, show_hidden_for_dotfiles))
-    map("n", "<Leader>fo", Snacks.picker.buffers)
-    map("n", "<Leader>fg", Snacks.picker.git_status)
-    map("n", "<Leader>fp", Snacks.picker.projects)
+    map("n", "<Leader>sf", picker.grep)
+    map("n", "<Leader>so", picker.grep_buffers)
+    map("n", "<Leader>sg", picker.git_grep)
+    map({ "n", "x" }, "<Leader>sc", picker.grep_word)
 
-    map("n", "<Leader>sf", conf(Snacks.picker.grep, show_hidden_for_dotfiles))
-    map("n", "<Leader>so", Snacks.picker.grep_buffers)
-    map("n", "<Leader>sg", Snacks.picker.git_grep)
-    map({ "n", "x" }, "<Leader>sc", conf(Snacks.picker.grep_word, show_hidden_for_dotfiles))
-
-    map("n", "<Leader>ss", Snacks.picker.lines)
+    map("n", "<Leader>ss", picker.lines)
 
     local vim_severity = vim.diagnostic.severity
     local function severity(picker_severity)
@@ -193,31 +208,30 @@ local function picker_create_mappings()
         end
     end
 
-    map("n", "<Leader>dd", Snacks.picker.diagnostics_buffer)
-    map("n", "<Leader>dD", conf(Snacks.picker.diagnostics_buffer, severity(vim_severity.ERROR)))
-    map("n", "<Leader>dw", Snacks.picker.diagnostics)
-    map("n", "<Leader>dW", conf(Snacks.picker.diagnostics, severity(vim_severity.ERROR)))
+    map("n", "<Leader>dd", picker.diagnostics_buffer)
+    map("n", "<Leader>dD", conf(picker.diagnostics_buffer, severity(vim_severity.ERROR)))
+    map("n", "<Leader>dw", picker.diagnostics)
+    map("n", "<Leader>dW", conf(picker.diagnostics, severity(vim_severity.ERROR)))
 
-    map("n", "<Leader>su", Snacks.picker.undo)
-    map("n", "<Leader>sq", Snacks.picker.qflist)
+    map("n", "<Leader>su", picker.undo)
+    map("n", "<Leader>sq", picker.qflist)
 
-    map("n", "<Leader>sH", Snacks.picker.help)
-    map("n", "<Leader>sC", Snacks.picker.commands)
-    map("n", "<Leader>sK", Snacks.picker.keymaps)
-    map("n", "<Leader>sM", Snacks.picker.man)
+    map("n", "<Leader>sH", picker.help)
+    map("n", "<Leader>sC", picker.commands)
+    map("n", "<Leader>sK", picker.keymaps)
+    map("n", "<Leader>sM", picker.man)
 
-    local esc = vim.keycode("<Esc>")
-    local function command_history()
-        vim.api.nvim_feedkeys(esc, "c", true)
+    local ctrl_c = vim.keycode("<C-c>")
+    map("c", "<C-r>", function()
+        local cmdline = vim.fn.getcmdline()
+        vim.api.nvim_feedkeys(ctrl_c, "c", true)
 
-        vim.defer_fn(function()
-            Snacks.picker.command_history()
-        end, 1)
-    end
+        vim.schedule(function()
+            picker.command_history({ pattern = cmdline })
+        end)
+    end)
 
-    map("c", "<C-r>", command_history)
-
-    map("n", "<Leader>sT", Snacks.picker.colorschemes)
+    map("n", "<Leader>sT", picker.colorschemes)
 end
 
 schedule.now(function()
@@ -231,7 +245,6 @@ schedule.now(function()
     require("snacks").setup({
         picker = picker_config(),
         bigfile = {},
-        quickfile = {},
         statuscolumn = {
             left = { "sign" },
             right = { "git" },
@@ -253,7 +266,6 @@ schedule.now(function()
                 { section = "header" },
             },
         },
-        -- TODO: setup `gitbrowse`
     })
 
     picker_create_mappings()
