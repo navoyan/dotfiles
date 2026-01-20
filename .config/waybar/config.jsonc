@@ -24,7 +24,7 @@
 		// MODULES
 		"cpu": {
 			"interval": 1,
-			"format": "  {load:0.2f} %",
+			"format": "  {usage:02} %",
 			"max-length": 10
 		},
 		"memory": {
@@ -73,8 +73,8 @@
 			"spacing": 8
 		},
 		"pulseaudio": {
-			"format": "{icon} {volume}%{format_source}",
-			"format-bluetooth": "󰂰 {volume}%{format_source}",
+			"format": "{icon} {volume:02}%{format_source}",
+			"format-bluetooth": "󰂰 {volume:02}%{format_source}",
 			"format-muted": "󰖁 {format_source}",
 			"format-icons": {
 				"bluetooth": "󰥰 ",
