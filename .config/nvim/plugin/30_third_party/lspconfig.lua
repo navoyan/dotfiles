@@ -24,7 +24,13 @@ schedule.later(function()
                 },
             },
         },
-        ruff = {},
+        ruff = {
+            init_options = {
+                settings = {
+                    configuration = { lint = { fixable = { "ALL" } } },
+                },
+            },
+        },
         ts_ls = {
             filetypes = { "javascript" },
         },
