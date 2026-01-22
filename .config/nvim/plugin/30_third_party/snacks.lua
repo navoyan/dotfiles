@@ -34,6 +34,7 @@ local function picker_config()
                 keys = {
                     ["<c-k>"] = { "list_scroll_up", mode = { "i", "n" } },
                     ["<c-j>"] = { "list_scroll_down", mode = { "i", "n" } },
+                    ["/"] = false,
                 },
             },
         },
