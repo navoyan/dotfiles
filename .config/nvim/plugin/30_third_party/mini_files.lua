@@ -48,6 +48,12 @@ schedule.now_if_args(function()
         vim.wo[win_id].cursorlineopt = "line"
     end)
 
+    config.new_autocmd("User", "MiniFilesBufferCreate", function(args)
+        local buf_id = args.data.buf_id
+
+        map("n", "<Leader>e", "<Nop>", { buffer = buf_id })
+    end)
+
     map("n", "<Leader>e", function()
         local path = vim.api.nvim_buf_get_name(0)
         if vim.uv.fs_stat(path) then
