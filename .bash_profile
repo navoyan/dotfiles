@@ -1,14 +1,16 @@
-[[ -f ~/.bashrc ]] && . ~/.bashrc
-
-export QT_QPA_PLATFORMTHEME="hyprqt6engine"
-export QT_QPA_PLATFORM="wayland"
-
-export GTK_THEME="TokyoNight"
+[[ -f ~/.bashrc ]] && source .bashrc
 
 export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_CACHE_HOME="$HOME/.cache"
 export XDG_DATA_HOME="$HOME/.local/share"
 export XDG_STATE_HOME="$HOME/.local/state"
+
+
+export QT_QPA_PLATFORMTHEME="qtengine"
+export QT_QPA_PLATFORM="wayland"
+
+export GTK_THEME="TokyoNight"
+
 
 if [ -n "$NVIM_LISTEN_ADDRESS" ]; then
     alias nvim="nvr -cc split --remote-wait +'set bufhidden=wipe'"
@@ -18,7 +20,7 @@ else
     export VISUAL=nvim
     export EDITOR=nvim
 fi
-export SUDOEDITOR=nvim
+export SUDO_EDITOR=nvim
 
 export LESSKEYIN="$XDG_CONFIG_HOME/lesskey/config"
 export MANPAGER="bash -c 'NVIM_APPNAME=nvim-explorer nvim +Man!'"
