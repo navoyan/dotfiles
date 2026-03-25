@@ -226,7 +226,7 @@ window-rule {
 
 window-rule {
     match app-id="blueman-manager"
-    match app-id="pavucontrol-qt"
+    match app-id="wiremix"
     match app-id="me.kavishdevar.librepods"
 
     open-floating true
@@ -236,9 +236,9 @@ window-rule {
 }
 
 window-rule {
-    match app-id="pavucontrol-qt"
+    match app-id="wiremix"
 
-    default-column-width { proportion 0.35; }
+    default-column-width { proportion 0.40; }
 }
 
 window-rule {

@@ -1,0 +1,9 @@
+# Initial tab
+tab = "output"
+
+keybindings = [
+    { key = "Left", action = "TabLeft" },
+    { key = "Right", action = "TabRight" },
+    { key = "Up", action = "Nothing" },
+    { key = "Down", action = "Nothing" },
+]
