@@ -15,6 +15,18 @@
   compression = 0
   editor = NVIM_APPNAME='nvim-explorer' nvim
 
+[http]
+  postBuffer = 524288000
+
+[push]
+  autoSetupRemote = true
+
+[gpg]
+  format = ssh
+
+[commit]
+  gpgsign = true
+
 [delta]
   navigate = true
 

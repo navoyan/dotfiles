@@ -5,6 +5,7 @@ update:
   method: never
 
 git:
+  overrideGpg: true
   log:
     order: default
   pagers:
