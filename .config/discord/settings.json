@@ -1,0 +1,25 @@
+{
+  "chromiumSwitches": {},
+  "IS_MAXIMIZED": false,
+  "IS_MINIMIZED": false,
+  "WINDOW_BOUNDS": {
+    "x": 1024,
+    "y": 0,
+    "width": 2036,
+    "height": 1111
+  },
+  "BACKGROUND_COLOR": "#121214",
+  "offloadAdmControls": true,
+  "enableHardwareAcceleration": true,
+  "asyncVideoInputDeviceInit": false,
+  "DANGEROUS_ENABLE_DEVTOOLS_ONLY_ENABLE_IF_YOU_KNOW_WHAT_YOURE_DOING": true,
+  "enableLibOpenH264Electron": false,
+  "SKIP_HOST_UPDATE": true,
+  "openasar": {
+    "setup": true,
+    "quickstart": true
+  },
+  "trayBalloonShown": true,
+  "openH264Enabled": true,
+  "MINIMIZE_TO_TRAY": false
+}

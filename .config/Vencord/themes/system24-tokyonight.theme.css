@@ -19,6 +19,8 @@ body {
     font-weight: 400;
     letter-spacing: normal;
 
+    --ascii-titles: off;
+
     --border-hover: var(--border);
 
     --label-color: var(--inactive);
@@ -28,4 +30,10 @@ body {
 /* color options */
 :root {
     --inactive: #27a1b9;
+
+    --online: #40a258;
+    --dnd: #d83a41;
+    --idle: #cc954c;
+    --streaming: #9147ff;
+    --offline: #82838b;
 }
