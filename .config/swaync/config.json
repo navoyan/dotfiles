@@ -17,7 +17,7 @@
             "actions": [
                 {
                     "label": "",
-                    "command": "walker -m menus:powermenu"
+                    "command": "rofi -show power"
                 },
                 {
                     "label": "󰕧",

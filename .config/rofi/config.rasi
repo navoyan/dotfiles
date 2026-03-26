@@ -1,0 +1,29 @@
+@theme "tokyonight"
+
+configuration {
+    modes: "drun,clip:~/.config/rofi/modes/clip.sh,calc,power:~/.config/rofi/modes/power.sh";
+    font: "JetBrainsMono NFM 14";
+
+    drun-display-format: "{name}";
+    drun-match-fields: "name";
+
+    matching: "normal";
+    case-smart: true;
+
+    calc {
+        calc-command: "wl-copy {result}";
+        terse: true;
+
+        hint-welcome: "\n";
+        hint-result: "";
+    }
+
+    // free the Tab key to open rofi-rbw menus:
+    kb-element-next: "";
+    kb-element-prev: "";
+
+    timeout {
+        action: "kb-cancel";
+        delay:  0;
+    }
+}

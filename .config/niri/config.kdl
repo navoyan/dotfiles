@@ -158,15 +158,14 @@ layout {
 
 spawn-at-startup "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1"
 
-spawn-at-startup "swayidle" "-w" "timeout" "900" "niri msg action power-off-monitors"
+spawn-sh-at-startup "swayidle -w timeout 900 'niri msg action power-off-monitors'"
 spawn-sh-at-startup "swaybg --image ~/.config/wallpapers/perfect-blue-2560x1440.png"
+spawn-sh-at-startup "wl-paste --type text --watch cliphist store"
+spawn-sh-at-startup "wl-paste --type image --watch cliphist store"
 
-spawn-at-startup "waybar"
-spawn-at-startup "elephant"
-spawn-at-startup "walker" "--gapplication-service"
+spawn-sh-at-startup "waybar"
 
-spawn-at-startup "1password" "--silent"
-spawn-at-startup "librepods" "--hide"
+spawn-sh-at-startup "librepods --hide"
 
 hotkey-overlay {
     // Disable the "Important Hotkeys" pop-up at startup.
@@ -212,6 +211,7 @@ window-rule {
     match title="termfilechooser"
 
     open-floating true
+    open-focused true
     default-column-width { proportion 0.8; }
     default-window-height { proportion 0.8; }
 }
@@ -269,7 +269,10 @@ binds {
     // Most actions here can also be invoked programmatically with `niri msg action do-something`.
 
     Mod+T repeat=false { spawn "kitty"; }
-    Mod+R repeat=false { spawn "nc" "-U" "/run/user/1000/walker/walker.sock"; }
+
+    Mod+R repeat=false { spawn "rofi" "-show" "drun"; }
+    Mod+W repeat=false { spawn "rofi-rbw"; }
+
     Mod+P repeat=false { spawn-sh "hyprpicker | wl-copy"; }
     Mod+N repeat=false { spawn "swaync-client" "-t"; }
 
@@ -305,8 +308,6 @@ binds {
     Mod+Shift+U         { move-workspace-up; }
     Mod+Shift+I         { move-workspace-down; }
 
-    MouseBack                 { focus-column-left; }
-    MouseForward              { focus-column-right; }
     Mod+Ctrl+WheelScrollUp    { move-column-left; }
     Mod+Ctrl+WheelScrollDown  { move-column-right; }
 
@@ -394,7 +395,7 @@ binds {
     // Toggle tabbed column display mode.
     // Windows in this column will appear as vertical tabs,
     // rather than stacked on top of each other.
-    Mod+W { toggle-column-tabbed-display; }
+    Mod+Ctrl+W { toggle-column-tabbed-display; }
 
     // Actions to switch layouts.
     // Note: a matching layout switch hotkey configured in xkb options above.

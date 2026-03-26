@@ -1,0 +1,3 @@
+prompt=rbw
+action=copy
+keybindings=Tab:copy:menu,alt+u:copy:username,alt+s:sync
