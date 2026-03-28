@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=Google Meet
+Exec=chromium --app="https://meet.google.com/landing?authuser=1"
+Icon=chromium
+Type=Application
+StartupNotify=true
+Terminal=false
