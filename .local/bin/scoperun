@@ -1,0 +1,64 @@
+#!/usr/bin/env bash
+
+if ! opts=$(getopt -o WHrhm -l steam,hdr,grab-cursor,mango -n scoperun -- "$@"); then
+  echo 'Failed to parse options' >&2
+  exit 1
+fi
+
+eval set -- "$opts"
+
+width=2560
+height=1440
+refresh_rate=180
+
+while true; do
+  case "$1" in
+    --steam)
+      extra_flags+=(--steam)
+      shift
+      ;;
+    -h|--hdr)
+      extra_flags+=(--hdr-enabled)
+      export PROTON_ENABLE_HDR=1 DXVK_HDR=1
+      shift
+      ;;
+    --grab-cursor)
+      extra_flags+=(--force-grab-cursor)
+      shift
+      ;;
+    -m|--mango)
+      extra_flags+=(--mangoapp)
+      shift
+      ;;
+    -W)
+      width="$2"
+      shift 2
+      ;;
+    -H)
+      height="$2"
+      shift 2
+      ;;
+    -r)
+      refresh_rate="$2"
+      shift 2
+      ;;
+    --)
+      shift
+      break
+      ;;
+  esac
+done
+
+if [ $# -eq 0 ]; then
+  echo 'Nothing to run, exiting...'
+  exit 0
+fi
+
+exec gamescope \
+  --fullscreen \
+  --xwayland-count 2 \
+  --output-width "$width" --output-height "$height" \
+  --adaptive-sync \
+  --nested-refresh "$refresh_rate" \
+  "${extra_flags[@]}" \
+  -- "$@"

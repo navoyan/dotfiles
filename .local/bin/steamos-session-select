@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+chvt 2
+steam -shutdown

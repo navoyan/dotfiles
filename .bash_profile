@@ -5,6 +5,7 @@ export XDG_CACHE_HOME="$HOME/.cache"
 export XDG_DATA_HOME="$HOME/.local/share"
 export XDG_STATE_HOME="$HOME/.local/state"
 
+export PATH="$PATH:$HOME/.local/bin:$HOME/.local/share/goverlay/fgmod"
 
 export QT_QPA_PLATFORMTHEME="qtengine"
 export QT_QPA_PLATFORM="wayland"
@@ -50,3 +51,9 @@ export FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS \
   --color=separator:#ff9e64 \
   --color=spinner:#ff007c \
 "
+
+if [[ $(tty) == "/dev/tty3" ]]; then
+    firejail --profile=~/.config/firejail/steam.profile scoperun --steam --hdr --mango -- steam -gamepadui -steamos3
+    chvt 2
+    exit
+fi

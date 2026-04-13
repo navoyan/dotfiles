@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+
+if ! opts=$(getopt -o hm -l hdr,mango -n wlrun -- "$@"); then
+  echo 'Failed to parse options' >&2
+  exit 1
+fi
+
+eval set -- "$opts"
+
+while true; do
+  case "$1" in
+    -h|--hdr)
+      export PROTON_ENABLE_HDR=1 DXVK_HDR=1
+      shift
+      ;;
+    -m|--mango)
+      mango=(mangohud)
+      shift
+      ;;
+    --)
+      shift
+      break
+      ;;
+  esac
+done
+
+export PROTON_ENABLE_WAYLAND=1
+
+"${mango[@]}" "$@"
