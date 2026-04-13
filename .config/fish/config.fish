@@ -14,8 +14,8 @@ abbr kctx kubectx
 
 abbr rust evcxr
 
-alias explore "NVIM_APPNAME=nvim-explorer nvim"
-abbr e explore
+alias page "command $PAGER"
+abbr p page
 
 bind -M insert ctrl-backspace backward-kill-word
 bind -M insert ctrl-enter 'commandline -i \\n' expand-abbr
