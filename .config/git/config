@@ -4,7 +4,6 @@
 
 [alias]
   delta = "-c core.pager=delta diff"
-  vimdiff = "-c core.pager='NVIM_APPNAME=nvim-explorer nvim' -c color.pager=no diff"
   diffview = "!nvim +DiffviewOpen +1tabclose"
 
   dlog = "-c diff.external=difft log --ext-diff"
@@ -13,7 +12,6 @@
 
 [core]
   compression = 0
-  editor = NVIM_APPNAME='nvim-explorer' nvim
 
 [http]
   postBuffer = 524288000

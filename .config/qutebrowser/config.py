@@ -74,8 +74,7 @@ c.editor.command = [
     "--app-id=kitty-popup-small",
     "bash",
     "-c",
-    "NVIM_APPNAME=nvim-explorer nvim"
-    " '+set wrap' '+call cursor({line}, {column})' {file}",
+    "nvim '+set wrap' '+call cursor({line}, {column})' {file}",
 ]
 
 c.content.pdfjs = True

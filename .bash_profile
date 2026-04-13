@@ -22,9 +22,11 @@ else
 fi
 export SUDO_EDITOR=nvim
 
+export PAGER="env NVIM_APPNAME=npage page -W -q 90000 -z 90000"
+export MANPAGER="env NVIM_APPNAME=npage nvim +Man!"
 export LESSKEYIN="$XDG_CONFIG_HOME/lesskey/config"
-export MANPAGER="bash -c 'NVIM_APPNAME=nvim-explorer nvim +Man!'"
 
+export FZF_DEFAULT_COMMAND="fd --type f --hidden --exclude drive_c"
 export FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS \
   --bind 'ctrl-backspace:backward-kill-word' \
   --highlight-line \
