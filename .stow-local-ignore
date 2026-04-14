@@ -5,3 +5,8 @@
 .stylua.toml
 .pre-commit-config.yaml
 LICENSE
+
+.config/kitty/.venv
+.config/kitty/pyproject.toml
+.config/kitty/uv.lock
+.config/kitty/.ruff_cache

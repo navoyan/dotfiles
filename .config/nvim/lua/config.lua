@@ -38,7 +38,7 @@ end
 
 --- @param plugin_name string
 --- @param kinds ("install"|"update"|"delete")[]
---- @param callback fun()
+--- @param callback fun(args: vim.api.keyset.create_autocmd.callback_args?)
 function M.on_packchanged(plugin_name, kinds, callback)
     local function f(ev)
         local name, kind = ev.data.spec.name, ev.data.kind
@@ -48,7 +48,7 @@ function M.on_packchanged(plugin_name, kinds, callback)
         if not ev.data.active then
             vim.cmd.packadd(plugin_name)
         end
-        callback()
+        callback(ev)
     end
     M.new_autocmd("PackChanged", "*", f)
 end

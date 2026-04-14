@@ -1,11 +1,11 @@
 local schedule, config = require("schedule"), require("config")
 
 schedule.now_if_args(function()
+    config.on_packchanged("nvim-treesitter", { "install", "update" }, vim.cmd.TSUpdate)
+
     vim.pack.add({
         config.github("nvim-treesitter/nvim-treesitter"),
     })
-
-    config.on_packchanged("nvim-treesitter", { "install", "update" }, vim.cmd.TSUpdate)
 
     local treesitter = require("nvim-treesitter")
 

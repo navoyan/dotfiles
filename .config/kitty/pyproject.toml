@@ -1,0 +1,30 @@
+[project]
+name = "kitty-config"
+version = "0.1.0"
+requires-python = ">=3.12"
+
+[dependency-groups]
+dev = ["basedpyright>=1.21.0", "ruff>=0.15.0"]
+
+[tool.pyright]
+extraPaths = ["/usr/lib/kitty"]
+typeCheckingMode = "off"
+reportUnusedParameter = "none"
+
+[tool.ruff.lint]
+select = [
+    # pycodestyle
+    "E",
+    # Pyflakes
+    "F",
+    # pyupgrade
+    "UP",
+    # flake8-bugbear
+    "B",
+    # flake8-simplify
+    "SIM",
+    # isort
+    "I",
+    # flake8-unused-arguments
+    "ARG",
+]

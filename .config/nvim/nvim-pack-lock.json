@@ -137,7 +137,7 @@
       "version": ">=0.0.0"
     },
     "smart-splits.nvim": {
-      "rev": "1ea2e55bcc0dd2bdec5c5fef0082219f76c532fc",
+      "rev": "09796a7ad0776c92518e0afae8688ef8d7f720e6",
       "src": "https://github.com/mrjones2014/smart-splits.nvim"
     },
     "snacks.nvim": {
