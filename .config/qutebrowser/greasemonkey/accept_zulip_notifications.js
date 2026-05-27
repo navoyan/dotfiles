@@ -8,9 +8,9 @@
 // ==/UserScript==
 
 let checkAndClickButton = setInterval(function() {
-    let button = document.querySelector(".request-desktop-notifications")
+    let button = document.querySelector(".request-desktop-notifications");
     if (button) {
         button.click();
         clearInterval(checkAndClickButton);
     }
-}, 500)
+}, 500);
