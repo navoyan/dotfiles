@@ -40,6 +40,7 @@ c.tabs.new_position.related = "last"
 c.tabs.position = "left"
 c.tabs.padding = {"top": 5, "bottom": 5, "left": 9, "right": 9}
 c.tabs.title.format = "{aligned_index}: {audio}{current_title}"
+c.tabs.title.format_pinned = "{aligned_index}  {audio}"
 
 c.fonts.default_size = "12pt"
 c.fonts.default_family = ["JetBrainsMono NFM"]
@@ -107,6 +108,16 @@ config.bind("H", "history")
 config.bind("<Ctrl-H>", "history -t")
 
 config.bind("go", "edit-url")
+
+config.unbind("T")
+default_binds = c.bindings.default["normal"]
+keys_to_change = [key for key in default_binds if key.startswith("t")]
+for key in keys_to_change:
+    config.unbind(key)
+    config.bind("T" + key[1:], default_binds[key])
+
+config.bind("t", "cmd-set-text -sr :tab-select")
+config.bind("gt", "cmd-set-text -sr :tab-focus")
 
 config.bind("cj", "tab-only --prev")
 config.bind("ck", "tab-only --next")
