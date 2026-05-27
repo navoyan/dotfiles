@@ -60,21 +60,15 @@ output "DP-1" {
     // so to put another output directly adjacent to it on the right, set its x to 1920.
     // If the position is unset or results in an overlap, the output is instead placed
     // automatically.
-    position x=1280 y=0
+    position x=0 y=0
 }
 
-workspace "browser"
-workspace "terminal"
-workspace "editor"
-workspace "chat"
-workspace "media"
-workspace "special" // ISSUE: https://github.com/YaLTeR/niri/issues/845
-
-gestures {
-    hot-corners {
-        off
-    }
-}
+workspace "1"
+workspace "2"
+workspace "3"
+workspace "4"
+workspace "5"
+workspace "6"
 
 // Settings that influence how windows are positioned and sized.
 // https://yalter.github.io/niri/Configuration:-Layout
@@ -125,10 +119,10 @@ layout {
 
         width 1
         active-color "#7AA2F7"
-        inactive-color "#292e42"
+        inactive-color "#292E42"
 
         // Color of the border around windows that request your attention.
-        urgent-color "#9b0000"
+        urgent-color "#DB4B4B"
 
         // Gradients can use a few different interpolation color spaces.
         // For example, this is a pastel rainbow gradient via in="oklch longer hue".
@@ -163,7 +157,9 @@ spawn-sh-at-startup "swaybg --image ~/.config/wallpapers/perfect-blue-2560x1440.
 spawn-sh-at-startup "wl-paste --type text --watch cliphist store"
 spawn-sh-at-startup "wl-paste --type image --watch cliphist store"
 
-spawn-sh-at-startup "waybar"
+spawn-sh-at-startup "niri-float-sticky -app-id='^wiremix$|^blueman-manager$|^me.kavishdevar.librepods$'"
+
+spawn-at-startup "waybar"
 
 spawn-sh-at-startup "librepods --hide"
 
@@ -182,7 +178,7 @@ prefer-no-csd
 // The path where screenshots are saved.
 // A ~ at the front will be expanded to the home directory.
 // The path is formatted with strftime(3) to give the screenshot date and time.
-screenshot-path "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png"
+screenshot-path "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H:%M:%S.png"
 
 // Animation settings.
 // https://yalter.github.io/niri/Configuration:-Animations
@@ -197,18 +193,18 @@ animations {
 // https://yalter.github.io/niri/Configuration:-Window-Rules
 
 window-rule {
-    match app-id="kitty"
-    match app-id="org.qutebrowser.qutebrowser"
-    match app-id="Zulip"
-    match app-id="chrome-meet.google.com__landing-Default"
-    match app-id="spotify"
+    match app-id="^kitty$"
+    match app-id="^org.qutebrowser.qutebrowser$"
+    match app-id="^Zulip$"
+    match app-id="^chrome-meet.google.com"
+    match app-id="^spotify$"
 
     open-maximized true
 }
 
 window-rule {
-    match app-id="kitty-popup"
-    match title="termfilechooser"
+    match app-id="^kitty-popup$"
+    match title="^termfilechooser$"
 
     open-floating true
     open-focused true
@@ -217,7 +213,7 @@ window-rule {
 }
 
 window-rule {
-    match app-id="kitty-popup-small"
+    match app-id="^kitty-popup-small$"
 
     open-floating true
     default-column-width { proportion 0.55; }
@@ -225,9 +221,8 @@ window-rule {
 }
 
 window-rule {
-    match app-id="blueman-manager"
-    match app-id="wiremix"
-    match app-id="me.kavishdevar.librepods"
+    match app-id="^wiremix$"
+    match app-id="^me.kavishdevar.librepods$"
 
     open-floating true
     default-column-width { proportion 0.25; }
@@ -236,25 +231,25 @@ window-rule {
 }
 
 window-rule {
-    match app-id="wiremix"
+    match app-id="^wiremix$"
 
     default-column-width { proportion 0.40; }
 }
 
 window-rule {
-    match app-id="steam" title=r#"^notificationtoasts_\d+_desktop$"#
+    match app-id="^steam$" title=r#"^notificationtoasts_\d+_desktop$"#
     default-floating-position x=5 y=5 relative-to="bottom-right"
 }
 
 window-rule {
     match title="^.* is sharing your screen.$"
 
-    open-on-workspace "special"
+    // ISSUE: https://github.com/YaLTeR/niri/issues/845
+    open-on-workspace "6"
 }
 
 window-rule {
-    match app-id="spotify"
-    match app-id="1password"
+    match app-id="^Bitwarden$"
 
     block-out-from "screen-capture"
 }
@@ -277,8 +272,8 @@ binds {
     Mod+N repeat=false { spawn "swaync-client" "-t"; }
 
     // The allow-when-locked=true property makes them work even when the session is locked.
-    Mod+Ctrl+M           repeat=false allow-when-locked=true { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SINK@" "toggle"; }
-    Mod+M                repeat=false allow-when-locked=true { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SOURCE@" "toggle"; }
+    Mod+Ctrl+M repeat=false allow-when-locked=true { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SINK@" "toggle"; }
+    Mod+M      repeat=false allow-when-locked=true { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SOURCE@" "toggle"; }
 
     // Open/close the Overview: a zoomed-out view of workspaces and windows.
     Mod+O repeat=false { toggle-overview; }
@@ -318,7 +313,7 @@ binds {
     Mod+Ctrl+Shift+WheelScrollDown { move-column-right; }
     Mod+Ctrl+Shift+WheelScrollUp   { move-column-left; }
 
-    // Workspaces can be referred by index. 
+    // Workspaces can be referred by index.
     // However, niri is a dynamic workspace system, so these commands are kind of
     // "best effort". Trying to refer to a workspace index bigger than
     // the current workspace count will instead refer to the bottommost
@@ -395,13 +390,14 @@ binds {
     // Toggle tabbed column display mode.
     // Windows in this column will appear as vertical tabs,
     // rather than stacked on top of each other.
-    Mod+Ctrl+W { toggle-column-tabbed-display; }
+    Mod+Ctrl+T { toggle-column-tabbed-display; }
 
     // Actions to switch layouts.
     // Note: a matching layout switch hotkey configured in xkb options above.
     // Having both at once on the same hotkey will break the switching,
     // since it will switch twice upon pressing the hotkey (once by xkb, once by niri).
-    Mod+S { switch-layout "next"; }
+    Mod+Space { switch-layout "next"; }
+
 
     Mod+Ctrl+S { screenshot; }
 
