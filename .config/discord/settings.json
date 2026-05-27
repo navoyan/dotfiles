@@ -3,7 +3,7 @@
   "IS_MAXIMIZED": false,
   "IS_MINIMIZED": false,
   "WINDOW_BOUNDS": {
-    "x": 1024,
+    "x": 0,
     "y": 0,
     "width": 2036,
     "height": 1111
@@ -21,5 +21,6 @@
   },
   "trayBalloonShown": true,
   "openH264Enabled": true,
-  "MINIMIZE_TO_TRAY": false
+  "MINIMIZE_TO_TRAY": false,
+  "DESKTOP_TTI_DNSTCP_WARMUP": true
 }
