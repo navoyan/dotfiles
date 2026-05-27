@@ -158,6 +158,7 @@ spawn-sh-at-startup "wl-paste --type text --watch cliphist store"
 spawn-sh-at-startup "wl-paste --type image --watch cliphist store"
 
 spawn-sh-at-startup "niri-float-sticky -app-id='^wiremix$|^blueman-manager$|^me.kavishdevar.librepods$'"
+spawn-at-startup "~/.config/niri/bluetooth_notify.sh"
 
 spawn-at-startup "waybar"
 

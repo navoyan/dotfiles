@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=bluetui
+GenericName=Bluetooth Manager
+Comment=Bluetui Bluetooth Manager
+Exec=kitty --app-id bluetui bluetui
+Terminal=false
+Type=Application
+Categories=Utility;Settings;HardwareSettings;ConsoleOnly;
