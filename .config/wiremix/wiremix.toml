@@ -1,9 +1,41 @@
-# Initial tab
-tab = "output"
+tab = "output" # default tab
+
+tabs = ["output", "playback", "configuration", "input", "recording"]
+
 
 keybindings = [
-    { key = "Left", action = "TabLeft" },
-    { key = "Right", action = "TabRight" },
-    { key = "Up", action = "Nothing" },
-    { key = "Down", action = "Nothing" },
+  { key = "Left", action = "TabLeft" },
+  { key = "Right", action = "TabRight" },
+  { key = "Up", action = "Nothing" },
+  { key = "Down", action = "Nothing" },
+]
+
+## names
+
+[[names.overrides]]
+types = ["stream"]
+matches = [{ "client:application.name" = "spotify" }]
+templates = ["{client:application.name}"]
+
+
+## filters
+
+[[filters]]
+matches = [
+  { "device:device.nick" = "HDA ATI HDMI", "media.class" = "Audio/Sink" },
+]
+
+[[filters]]
+matches = [
+  { "device:device.nick" = "Elgato Wave Neo", "media.class" = "Audio/Sink" },
+]
+
+[[filters]]
+matches = [
+  { "device:device.nick" = "HD-Audio Generic", "media.class" = "Audio/Source" },
+]
+
+[[filters]]
+matches = [
+  { "device:device.nick" = "Logitech BRIO", "media.class" = "Audio/Source" },
 ]
