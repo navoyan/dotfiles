@@ -1,7 +1,7 @@
 @theme "tokyonight"
 
 configuration {
-    modes: "drun,clip:~/.config/rofi/modes/clip.sh,calc,power:~/.config/rofi/modes/power.sh";
+    modes: "drun,calc,clip:~/.config/rofi/modes/clip.sh,power:~/.config/rofi/modes/power.sh";
     font: "JetBrainsMono NFM 14";
 
     drun-display-format: "{name}";
@@ -18,9 +18,15 @@ configuration {
         hint-result: "";
     }
 
+    hover-select: true;
+
     // free the Tab key to open rofi-rbw menus:
     kb-element-next: "";
     kb-element-prev: "";
+
+    kb-cancel: "Escape";
+    me-select-entry: "MousePrimary";
+    me-accept-entry: "!MousePrimary";
 
     timeout {
         action: "kb-cancel";

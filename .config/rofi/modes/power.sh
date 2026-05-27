@@ -26,7 +26,7 @@ icons[hibernate]="󱛟"
 icons[cancel]="󰜺"
 
 declare -A actions
-actions[logout]="niri msg action quit --skip-confirmation || hyprctl dispatch exit"
+actions[logout]="loginctl terminate-user $USER"
 actions[shutdown]="systemctl poweroff"
 actions[reboot]="systemctl reboot"
 actions[firmware]="systemctl reboot --firmware-setup"

@@ -9,7 +9,7 @@
     blue:                        rgba ( 42, 195, 222, 100 % );
     lightfg:                     rgba ( 41, 46, 66, 100 % );
     lightbg:                     rgba ( 26, 27, 38, 100 % );
-    foreground:                  rgba ( 169, 177, 214, 100 % );
+    foreground:                  rgba( 192, 202, 245, 100 % );
     background:                  rgba ( 22, 22, 30, 100 % );
     background-color:            rgba ( 26, 27, 38, 0 % );
     separatorcolor:              @foreground;
