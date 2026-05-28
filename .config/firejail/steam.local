@@ -1,0 +1,48 @@
+# for xwayland:
+ignore noroot
+ignore private-tmp
+noblacklist /tmp/.wine-*
+
+# for gamepad recognition:
+ignore private-dev
+
+# for gamescope:
+include allow-lua.inc
+
+# for steam big picture:
+ignore blacklist ${PATH}/timedatectl
+
+
+# `steam -steamos3` is powering off bluetooth via D-Bus on startup.
+# Firejail support for filtering D-Bus calls is only whitelist-based:
+dbus-system filter
+dbus-system.talk org.freedesktop.NetworkManager
+dbus-system.talk org.freedesktop.Avahi
+dbus-system.talk org.freedesktop.login1
+dbus-system.talk org.freedesktop.hostname1
+
+noblacklist ${HOME}/Data/Steam
+whitelist ${HOME}/Data/Steam
+
+noblacklist ${HOME}/Data/Games
+whitelist ${HOME}/Data/Games
+
+noblacklist ${HOME}/Games
+whitelist ${HOME}/Games
+
+noblacklist ${HOME}/.local/share/goverlay
+whitelist ${HOME}/.local/share/goverlay
+
+
+# directories created by profile in home:
+ignore mkdir ${HOME}/.factorio
+ignore mkdir ${HOME}/.killingfloor
+ignore mkdir ${HOME}/.klei
+ignore mkdir ${HOME}/.mbwarband
+ignore mkdir ${HOME}/.paradoxinteractive
+ignore mkdir ${HOME}/.paradoxlauncher
+ignore mkdir ${HOME}/.prey
+ignore mkdir ${HOME}/Zomboid
+
+
+include base.profile

@@ -19,5 +19,4 @@ whitelist ${HOME}/.local/share/lutris
 ignore private-etc
 
 
-include game.profile
 include steam.profile
