@@ -1,0 +1,29 @@
+include tokyonight.zathurarc
+
+## options
+
+set font "JetBrainsMono NFM 13"
+
+set incremental-search  true
+set selection-clipboard clipboard
+
+
+## keymap
+
+map              f toggle_fullscreen
+map [fullscreen] f toggle_fullscreen
+
+map              <BackSpace> follow
+map [fullscreen] <BackSpace> follow
+map              <Return>    display_link
+map [fullscreen] <Return>    display_link
+
+map              <C-j> scroll half-down
+map [fullscreen] <C-j> scroll half-down
+map              <C-k> scroll half-up
+map [fullscreen] <C-k> scroll half-up
+
+map              <Down> navigate previous
+map [fullscreen] <Down> navigate previous
+map              <Up>   navigate next
+map [fullscreen] <Up>   navigate next

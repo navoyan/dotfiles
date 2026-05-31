@@ -78,8 +78,6 @@ c.editor.command = [
     "nvim '+set wrap' '+call cursor({line}, {column})' {file}",
 ]
 
-c.content.pdfjs = True
-
 
 c.aliases.update(
     {

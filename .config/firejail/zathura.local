@@ -1,0 +1,11 @@
+# redirects to: /etc/firejail/zathura.profile
+
+## fixes for opening links in qutebrowser
+
+include allow-bin-sh.inc
+include allow-python3.inc
+
+noblacklist ${RUNUSER}/qutebrowser
+whitelist ${RUNUSER}/qutebrowser
+
+private-bin xdg-open,qutebrowser,sh,bash,grep,sed,xdg-mime,tr,awk,head,cut,env,basename,realpath,readlink,dbus-send,python3

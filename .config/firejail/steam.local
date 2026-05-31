@@ -1,3 +1,5 @@
+# redirects to: /etc/firejail/steam.profile
+
 # for xwayland:
 ignore noroot
 ignore private-tmp
