@@ -99,6 +99,9 @@ config.bind("<Shift-Backspace>", "hint all tab")
 config.bind("w<Backspace>", "hint all window")
 config.bind("f", "fake-key f")
 
+config.bind(";v", "spawn mpv {url}")
+config.bind(";V", "hint links spawn mpv {hint-url}")
+
 config.bind("<Ctrl-O>", "back")
 config.bind("<Ctrl-I>", "forward")
 

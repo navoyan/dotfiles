@@ -6,6 +6,9 @@
 .pre-commit-config.yaml
 LICENSE
 
+.config/qutebrowser/default.py
+.config/mpv/default
+
 .config/kitty/.venv
 .config/kitty/pyproject.toml
 .config/kitty/uv.lock

@@ -1,0 +1,2 @@
+--format bestvideo[height<=?1440]+bestaudio/best
+--cookies-from-browser chromium:~/.local/share/qutebrowser

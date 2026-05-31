@@ -1,0 +1,9 @@
+# redirects to: /etc/firejail/mpv.profile
+
+whitelist ${HOME}/Videos
+whitelist ${HOME}/Data/Videos
+
+# needed for `thumbfast`/`thumbyt` to function:
+include allow-bin-sh.inc
+ignore noexec /tmp
+private-bin bash,chmod,echo,ps,socat,tail,uname,mkdir,rm,curl,ffmpeg
