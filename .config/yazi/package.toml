@@ -1,0 +1,22 @@
+[[plugin.deps]]
+use = "mikavilpas/easyjump.yazi:easyjump"
+rev = "83180b5"
+hash = "b976709df0f6d3341736f053e87b2b8"
+
+[[plugin.deps]]
+use = "yazi-rs/plugins:types"
+rev = "598cdb6"
+hash = "9105494e98299f392aee95340066da9f"
+
+[[plugin.deps]]
+use = "yazi-rs/plugins:mount"
+rev = "bb758e2"
+hash = "e3260d0b1feded8c8e3ae3afa1169e30"
+
+[[plugin.deps]]
+use = "Shallow-Seek/modif"
+rev = "2c96c3a"
+hash = "a9096eeeb9c69d6c325e979afb838a5f"
+
+[flavor]
+deps = []

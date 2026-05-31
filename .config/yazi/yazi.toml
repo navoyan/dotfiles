@@ -1,0 +1,73 @@
+#:schema https://yazi-rs.github.io/schemas/yazi.json
+# tombi: format.rules.table-keys-order.disabled = true
+
+[mgr]
+sort_by = "natural"
+
+[preview]
+max_width = 1500
+max_height = 1500
+
+## file opening rules
+
+### videos:
+[[opener.open-in-mpv]]
+run = "mpv %s"
+orphan = true
+desc = "Open videos(-s) in MPV"
+
+[[open.prepend_rules]]
+mime = "video/*"
+use = ["open-in-mpv", "reveal"]
+
+### images:
+[[opener.open-in-imv]]
+run = "imv -d %s"
+desc = "Open image(-s) in IMV"
+orphan = true
+
+[[opener.set-wallpaper]]
+run = "awww img %s"
+desc = "Set as wallpaper"
+orphan = true
+
+[[opener.crop-wallpaper]]
+run = "cd ~/projects/personal/rwcrop/ && cargo run --release -- %s"
+desc = "Crop wallpaper"
+orphan = true
+
+[[open.prepend_rules]]
+url = "/home/narek/.config/wallpapers/**"
+use = ["set-wallpaper", "crop-wallpaper", "open-in-imv", "reveal"]
+
+[[open.prepend_rules]]
+mime = "image/*"
+use = ["open-in-imv", "set-wallpaper", "reveal"]
+
+### subtitles:
+[[opener.add-sub]]
+run = ''' printf "sub-add '%%s'\n" %s1 | socat - /tmp/mpv.sock '''
+desc = "Add sub to MPV"
+
+[[open.prepend_rules]]
+url = "*.{ass,srt,ssa,sty,sup,vtt}"
+use = ["add-sub"]
+
+### sounds:
+[[opener.add-sound]]
+run = ''' printf "audio-add '%%s'\n" %s1 | socat - /tmp/mpv.sock '''
+desc = "Add sound to MPV"
+
+[[open.prepend_rules]]
+url = "*.mka"
+use = ["add-sound"]
+
+### directories:
+[[open.append_rules]]
+url = "*/"
+use = ["open-in-mpv", "open-in-imv"]
+
+### exe files:
+[[open.append_rules]]
+url = "*.exe"
+use = ["reveal"]

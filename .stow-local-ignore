@@ -7,9 +7,12 @@
 LICENSE
 
 .config/qutebrowser/default.py
+.config/yazi/default
 .config/mpv/default
 
 .config/kitty/.venv
 .config/kitty/pyproject.toml
 .config/kitty/uv.lock
 .config/kitty/.ruff_cache
+
+.config/yazi/plugins/types.yazi/

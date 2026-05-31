@@ -1,0 +1,100 @@
+#:schema https://yazi-rs.github.io/schemas/keymap.json
+# tombi: format.rules.table-keys-order.disabled = true
+
+## operations
+
+[[mgr.prepend_keymap]]
+on = ["P"]
+run = "plugin confirm-paste-force"
+desc = "Paste yanked files (overwrite if the destination exists)"
+
+[[mgr.prepend_keymap]]
+on = ":"
+run = "shell fish --block"
+desc = "Open shell here"
+
+[[mgr.prepend_keymap]]
+on = "e"
+run = "shell --block -- $EDITOR %h"
+desc = "Edit selected file(-s)"
+
+[[mgr.prepend_keymap]]
+on = "o"
+run = "open --interactive"
+desc = "Open selected files interactively"
+
+[[mgr.prepend_keymap]]
+on = "M"
+run = "plugin mount"
+desc = "Mount"
+
+[[mgr.prepend_keymap]]
+on = ["b", "m"]
+run = "plugin modif 5d"
+desc = "Show files modified in the last 5 days"
+
+## navigation
+
+[[mgr.prepend_keymap]]
+on = ["<C-o>"]
+run = "back"
+desc = "Back to previous directory"
+
+[[mgr.prepend_keymap]]
+on = ["<C-i>"]
+run = "forward"
+desc = "Forward to next directory"
+
+## hopping
+
+[[mgr.prepend_keymap]]
+on = ["<Backspace>"]
+run = "plugin easyjump"
+desc = "Easyjump"
+
+# <C-k> is used instead:
+[[mgr.prepend_keymap]]
+on = "<C-u>"
+run = "noop"
+
+[[mgr.append_keymap]]
+on = "<C-k>"
+run = "arrow -50%"
+desc = "Move cursor up half page"
+
+[[mgr.append_keymap]]
+on = "<C-j>"
+run = "arrow 50%"
+desc = "Move cursor down half page"
+
+## location shortcuts
+
+[[mgr.append_keymap]]
+on = ["g", "t"]
+run = "cd ~/.local/share/Trash/files"
+desc = "Go ~/.local/share/Trash/files"
+
+[[mgr.append_keymap]]
+on = ["g", "w"]
+run = "cd ~/.config/wallpapers"
+desc = "Go ~/.config/wallpapers"
+
+[[mgr.append_keymap]]
+on = ["g", "G"]
+run = "cd ~/Data/Games"
+desc = "Go ~/Data/Games"
+
+[[mgr.append_keymap]]
+on = ["g", "v"]
+run = "cd ~/Data/Videos"
+desc = "Go ~/Data/Videos"
+
+[[mgr.append_keymap]]
+on = ["g", "p"]
+run = "cd ~/Pictures"
+desc = "Go ~/Pictures"
+
+[[mgr.append_keymap]]
+on = ["g", "W"]
+run = "cd /mnt/windows"
+desc = "Go /mnt/windows"

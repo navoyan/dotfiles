@@ -1,0 +1,172 @@
+#:schema https://yazi-rs.github.io/schemas/theme.json
+
+## upstream: https://github.com/folke/tokyonight.nvim/blob/main/extras/yazi/tokyonight_night.toml
+
+[mgr]
+cwd = { fg = "#a9b1d6", italic = true }
+
+## find
+find_keyword = { fg = "#16161e", bg = "#ff9e64", bold = true }
+find_position = { fg = "#0db9d7", bg = "#192b38", bold = true }
+
+## symlink
+symlink_target = { italic = true }
+
+## marker
+marker_copied = { fg = "#9ece6a", bg = "#9ece6a" }
+marker_cut = { fg = "#f7768e", bg = "#f7768e" }
+marker_marked = { fg = "#bb9af7", bg = "#bb9af7" }
+marker_selected = { fg = "#7aa2f7", bg = "#7aa2f7" }
+
+## count
+count_copied = { fg = "#16161e", bg = "#9ece6a" }
+count_cut = { fg = "#16161e", bg = "#f7768e" }
+count_selected = { fg = "#16161e", bg = "#7aa2f7" }
+
+## border
+border_symbol = "│"
+border_style = { fg = "#27a1b9" }
+
+# NOTE: can be combined with tmTheme (sublime colorshceme file) for preview code highlight
+# Syntect_theme = "path/to/tmTheme"
+
+## tab
+[tabs]
+active = { fg = "#15161e", bg = "#7aa2f7" }
+inactive = { fg = "#7aa2f7", bg = "#3b4261" }
+
+[mode]
+normal_main = { fg = "#15161e", bg = "#7aa2f7", bold = true }
+normal_alt = { fg = "#7aa2f7", bg = "#3b4261" }
+
+select_main = { fg = "#15161e", bg = "#bb9af7", bold = true }
+select_alt = { fg = "#bb9af7", bg = "#3b4261" }
+
+unset_main = { fg = "#15161e", bg = "#9d7cd8", bold = true }
+unset_alt = { fg = "#9d7cd8", bg = "#3b4261" }
+
+## hover
+[indicator]
+parent = { bg = "#292e42" }
+current = { bg = "#292e42" }
+preview = { bg = "#292e42" }
+padding = { open = "█", close = "█" }
+
+[status]
+overall = { fg = "#c0caf5", bg = "#16161e" }
+sep_left = { open = "", close = "" }
+sep_right = { open = "", close = "" }
+
+## permissions
+perm_type = { fg = "#7aa2f7" }
+perm_read = { fg = "#e0af68" }
+perm_write = { fg = "#f7768e" }
+perm_exec = { fg = "#9ece6a" }
+perm_sep = { fg = "#414868" }
+
+## progress
+progress_label = { fg = "#c0caf5", bold = true }
+progress_normal = { fg = "#3d59a1", bg = "#292e42" }
+progress_error = { fg = "#db4b4b", bg = "#292e42" }
+
+## which
+[which]
+cols = 3
+mask = { bg = "#16161e" }
+cand = { fg = "#7dcfff" }
+rest = { fg = "#7aa2f7" }
+desc = { fg = "#bb9af7" }
+separator = " ➜ "
+separator_style = { fg = "#565f89" }
+
+## confirm
+[confirm]
+border = { fg = "#0db9d7" }
+title = { fg = "#27a1b9" }
+body = {}
+list = {}
+btn_yes = { bg = "#283457" }
+btn_no = {}
+btn_labels = ["  [Y]es  ", "  (N)o  "]
+
+## spottter
+[spot]
+border = { fg = "#27a1b9" }
+title = { fg = "#27a1b9" }
+
+## notification
+[notify]
+title_info = { fg = "#0db9d7" }
+title_warn = { fg = "#e0af68" }
+title_error = { fg = "#db4b4b" }
+
+## icons
+icon_info = ""
+icon_warn = ""
+icon_error = ""
+
+## picker
+[pick]
+border = { fg = "#27a1b9" }
+active = { fg = "#c0caf5", bg = "#283457" }
+inactive = { fg = "#c0caf5" }
+
+## input
+[input]
+border = { fg = "#0db9d7" }
+title = { fg = "#0db9d7" }
+value = { fg = "#9d7cd8" }
+selected = { bg = "#283457" }
+
+## completion
+[cmp]
+border = { fg = "#0db9d7" }
+active = { fg = "#c0caf5", bg = "#343a55" }
+inactive = { fg = "#c0caf5" }
+
+## icons
+icon_file = ""
+icon_folder = ""
+icon_command = ""
+
+## task manager
+[tasks]
+border = { fg = "#27a1b9" }
+title = { fg = "#27a1b9" }
+hovered = { fg = "#c0caf5", bg = "#283457" }
+
+## help menu
+[help]
+on = { fg = "#9ece6a" }
+run = { fg = "#bb9af7" }
+desc = { fg = "#7dcfff" }
+hovered = { bg = "#292e42" }
+footer = { fg = "#c0caf5", bg = "#1a1b26" }
+
+## file-specific styles
+[filetype]
+rules = [
+  # images
+  { mime = "image/*", fg = "#e0af68" },
+
+  # media
+  { mime = "{audio,video}/*", fg = "#bb9af7" },
+
+  # archives
+  { mime = "application/*zip", fg = "#f7768e" },
+  { mime = "application/x-{tar,bzip*,7z-compressed,xz,rar}", fg = "#f7768e" },
+
+  # documents
+  { mime = "application/{pdf,doc,rtf,vnd.*}", fg = "#7dcfff" },
+
+  # empty files
+  # { mime = "inode/x-empty", fg = "#f7768e" },
+
+  # special files
+  { url = "*", is = "orphan", bg = "#f7768e" },
+  { url = "*", is = "exec", fg = "#9ece6a" },
+
+  # fallback
+  { url = "*/", fg = "#7aa2f7" },
+  { url = "*", fg = "#c0caf5" },
+]
