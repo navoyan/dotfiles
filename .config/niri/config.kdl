@@ -222,6 +222,7 @@ window-rule {
 }
 
 window-rule {
+    match app-id="^bluetui$"
     match app-id="^wiremix$"
     match app-id="^me.kavishdevar.librepods$"
 
@@ -232,6 +233,7 @@ window-rule {
 }
 
 window-rule {
+    match app-id="^bluetui$"
     match app-id="^wiremix$"
 
     default-column-width { proportion 0.40; }
