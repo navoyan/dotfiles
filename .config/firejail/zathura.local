@@ -8,4 +8,4 @@ include allow-python3.inc
 noblacklist ${RUNUSER}/qutebrowser
 whitelist ${RUNUSER}/qutebrowser
 
-private-bin xdg-open,qutebrowser,sh,bash,grep,sed,xdg-mime,tr,awk,head,cut,env,basename,realpath,readlink,dbus-send,python3
+private-bin xdg-open,sh,bash,handlr,qutebrowser,python3
