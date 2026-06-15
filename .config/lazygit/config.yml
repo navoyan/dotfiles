@@ -8,9 +8,10 @@ git:
   overrideGpg: true
   log:
     order: default
-  pagers:
+  diffRenderers:
     - colorArg: always
-      pager: delta --paging=never
+      command: delta --paging=never
+
 keybinding:
   universal:
     remove: X
@@ -19,8 +20,8 @@ keybinding:
     quit: Q
     prevItem: k
     nextItem: j
-    scrollUpMain-alt1: <Up>
-    scrollDownMain-alt1: <Down>
+    scrollUpMain-alt1: <up>
+    scrollDownMain-alt1: <down>
   files:
     commitChanges: C
     commitChangesWithEditor: c
@@ -44,42 +45,42 @@ customCommands:
     output: log
     command: |-
       _lazygit nvim_term_send tabnext
-  - key: <C-t>
+  - key: <c-t>
     context: files
     output: log
     command: |-
       _nvim_diffview file {{ .SelectedPath }}
-  - key: <C-t>
+  - key: <c-t>
     context: commitFiles
     output: log
     command: |-
       _nvim_diffview commit_file {{ .SelectedCommit.Hash }} {{ .SelectedPath }}
-  - key: <C-t>
+  - key: <c-t>
     context: stash
     output: log
     command: |-
       _nvim_diffview stash_entry {{ .SelectedStashEntry.Index }}
-  - key: <C-t>
+  - key: <c-t>
     context: commits
     output: log
     command: |-
       _nvim_diffview commits {{ .SelectedCommitRange.From }} {{ .SelectedCommitRange.To }}
-  - key: <C-t>
+  - key: <c-t>
     context: subCommits
     output: log
     command: |-
       _nvim_diffview commits {{ .SelectedCommitRange.From }} {{ .SelectedCommitRange.To }}
-  - key: <C-t>
+  - key: <c-t>
     context: reflogCommits
     output: log
     command: |-
       _nvim_diffview commits {{ .SelectedCommitRange.From }} {{ .SelectedCommitRange.To }}
-  - key: <C-t>
+  - key: <c-t>
     context: localBranches
     output: log
     command: |-
       _nvim_diffview local_branch {{ .SelectedLocalBranch.Name }}
-  - key: <C-t>
+  - key: <c-t>
     context: remoteBranches
     output: log
     command: |-
