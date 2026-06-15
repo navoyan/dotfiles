@@ -52,6 +52,9 @@ export FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS \
   --color=spinner:#ff007c \
 "
 
+export AWWW_TRANSITION="any"
+export AWWW_TRANSITION_FPS="180"
+
 if [[ $(tty) == "/dev/tty3" ]]; then
     firejail --profile=~/.config/firejail/steam.profile scoperun --steam --hdr --mango -- steam -gamepadui
     chvt 2

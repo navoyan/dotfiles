@@ -1,0 +1,99 @@
+#!/usr/bin/env bash
+
+set -uo pipefail
+
+wall_dir=~/.config/wallpapers
+cache_dir=~/.cache/pickwall
+thumb_w=640
+thumb_h=360
+
+mkdir -p "$cache_dir"
+
+rofi_cmd=(
+    rofi
+    -dmenu
+    -p
+    "wall"
+    -theme
+    ~/.config/rofi/themes/pickwall.rasi
+)
+
+exec 8>"${cache_dir}/.wallselect.lock"
+flock --nonblock 8 || exit 1
+
+process_image() {
+    local image="$1"
+
+    local file_name="${image##*/}"
+    local cache_file="${cache_dir}/${file_name}"
+    local meta_file="${cache_dir}/.${file_name}.meta"
+
+    local stat_info
+    stat_info=$(stat -c "%Y %s" "$image") || return 0
+    local cur_mtime=${stat_info%% *}
+    local cur_size=${stat_info#* }
+
+    local saved_mtime=""
+    local saved_size=""
+    local saved_hash=""
+
+    if [ -f "$cache_file" ] && [ -f "$meta_file" ]; then
+        read -r saved_mtime saved_size saved_hash < "$meta_file"
+    fi
+
+    # fast path
+    if [ "$cur_mtime" = "$saved_mtime" ] && [ "$cur_size" = "$saved_size" ]; then
+        return 0
+    fi
+
+    cur_hash=$(xxh64sum "$image")
+    cur_hash=${cur_hash%% *}
+    if [ "$cur_hash" = "$saved_hash" ] && [ -f "$cache_file" ]; then
+        printf "%s %s %s\n" "$cur_mtime" "$cur_size" "$cur_hash" > "$meta_file"
+        return 0
+    fi
+
+    magick "$image" -strip -define jpeg:size="${thumb_w}x${thumb_h}" \
+        -thumbnail "${thumb_w}x${thumb_h}^" \
+        -gravity center -extent "${thumb_w}x${thumb_h}" "$cache_file" \
+        && printf "%s %s %s\n" "$cur_mtime" "$cur_size" "$cur_hash" > "$meta_file"
+}
+export -f process_image
+export cache_dir thumb_w thumb_h
+
+file_list=$(mktemp)
+trap 'rm -f "$file_list"' EXIT
+
+fd . "${wall_dir}" \
+    --type file --type symlink --print0 \
+    -e jpg -e jpeg -e png -e gif \
+    --exclude 'default.png' --exclude 'raw/**' \
+    | shuf -z > "$file_list"
+
+parallel_jobs=4
+
+# shellcheck disable=SC2016
+xargs -0 -P "$parallel_jobs" -I {} bash -c 'process_image "$1"' _ {} < "$file_list"
+
+for cached in "$cache_dir"/*; do
+    if [[ ! -f "$cached" ]]; then
+        continue
+    fi
+    file_name="${cached##*/}"
+    case "$file_name" in
+        .*.meta) continue ;;
+    esac
+    original="${wall_dir}/${file_name}"
+    if [ ! -f "$original" ]; then
+        rm -f "$cached" "${cache_dir}/.${file_name}.meta"
+    fi
+done
+
+wall_selection=$(xargs -0 basename -a < "$file_list" |
+    while IFS='' read -r name; do
+        printf '%s\000icon\037%s/%s\n' "$name" "$cache_dir" "$name"
+    done | "${rofi_cmd[@]}")
+
+if [[ -n "$wall_selection" ]]; then
+    awww img "${wall_dir}/${wall_selection}"
+fi

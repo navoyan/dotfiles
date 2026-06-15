@@ -2,7 +2,6 @@
 
 configuration {
     modes: "drun,calc,clip:~/.config/rofi/modes/clip.sh,power:~/.config/rofi/modes/power.sh";
-    font: "JetBrainsMono NFM 14";
 
     drun-display-format: "{name}";
     drun-match-fields: "name";
@@ -14,7 +13,7 @@ configuration {
         calc-command: "wl-copy {result}";
         terse: true;
 
-        hint-welcome: "\n";
+        hint-welcome: "";
         hint-result: "";
     }
 

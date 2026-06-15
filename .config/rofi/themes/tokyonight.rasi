@@ -5,17 +5,18 @@
  */
 
 * {
-    red:                         rgba ( 192, 202, 245, 100 % );
-    blue:                        rgba ( 42, 195, 222, 100 % );
-    lightfg:                     rgba ( 41, 46, 66, 100 % );
-    lightbg:                     rgba ( 26, 27, 38, 100 % );
-    foreground:                  rgba( 192, 202, 245, 100 % );
-    background:                  rgba ( 22, 22, 30, 100 % );
-    background-color:            rgba ( 26, 27, 38, 0 % );
-    separatorcolor:              @foreground;
-    border-color:                @foreground;
+    red:                         #C0CAF5;
+    blue:                        #2AC3DE;
+    lightfg:                     #292E42;
+    lightbg:                     #1A1B26;
+    selectbg:                    #283457;
+    foreground:                  #C0CAF5;
+    background:                  #16161E;
+    background-color:            #1A1B2600;
+    separatorcolor:              @background-color;
+    border-color:                @lightfg;
     selected-normal-foreground:  @red;
-    selected-normal-background:  @lightfg;
+    selected-normal-background:  @selectbg;
     selected-active-foreground:  @background;
     selected-active-background:  @blue;
     selected-urgent-foreground:  @background;
@@ -33,6 +34,10 @@
     alternate-urgent-foreground: @red;
     alternate-urgent-background: @background;
     spacing:                     2;
+}
+
+configuration {
+    font: "JetBrainsMono NFM 14";
 }
 
 window {
@@ -148,7 +153,6 @@ inputbar {
     text-color:       @normal-foreground;
     padding:          3px ;
     children:         [ prompt,textbox-prompt-colon,entry,case-indicator ];
-    border:           0px 0px 1px 0px;
 }
 
 case-indicator {

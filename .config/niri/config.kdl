@@ -153,9 +153,10 @@ layout {
 spawn-at-startup "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1"
 
 spawn-sh-at-startup "swayidle -w timeout 900 'niri msg action power-off-monitors'"
-spawn-sh-at-startup "swaybg --image ~/.config/wallpapers/perfect-blue-2560x1440.png"
 spawn-sh-at-startup "wl-paste --type text --watch cliphist store"
 spawn-sh-at-startup "wl-paste --type image --watch cliphist store"
+spawn-sh-at-startup "awww-daemon & sleep 1s && awww-reset"
+
 
 spawn-sh-at-startup "niri-float-sticky -app-id='^wiremix$|^blueman-manager$|^me.kavishdevar.librepods$'"
 spawn-at-startup "~/.config/niri/bluetooth_notify.sh"
@@ -257,6 +258,12 @@ window-rule {
     block-out-from "screen-capture"
 }
 
+layer-rule {
+    match namespace="awww-daemon"
+
+    block-out-from "screencast"
+}
+
 binds {
     // Keys consist of modifiers separated by + signs, followed by an XKB key name
     // in the end. To find an XKB name for a particular key, a program like wev can be used.
@@ -271,8 +278,8 @@ binds {
     Mod+R repeat=false { spawn "rofi" "-show" "drun"; }
     Mod+W repeat=false { spawn "rofi-rbw"; }
 
-    Mod+P repeat=false { spawn-sh "hyprpicker | wl-copy"; }
-    Mod+N repeat=false { spawn "swaync-client" "-t"; }
+    Mod+Ctrl+W repeat=false { spawn "pickwall"; }
+    Mod+Ctrl+A repeat=false { spawn "awww-reset"; }
 
     // The allow-when-locked=true property makes them work even when the session is locked.
     Mod+Ctrl+M repeat=false allow-when-locked=true { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SINK@" "toggle"; }
