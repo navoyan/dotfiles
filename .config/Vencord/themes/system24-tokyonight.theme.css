@@ -1,17 +1,16 @@
 /**
  * @name system24 (tokyo night)
- * @description a tui-style discord theme. based on tokyo night theme (https://github.com/tokyo-night/tokyo-night-vscode-theme).
+ * @description a tui-style discord theme based on tokyo night.
  * @author refact0r
  * @version 2.0.0
  * @invite nz87hXyvcy
  * @website https://github.com/refact0r/system24
- * @source https://github.com/refact0r/system24/blob/master/theme/system24-tokyo-night.theme.css
  * @authorId 508863359777505290
  * @authorLink https://www.refact0r.dev
 */
 
 /* import theme modules */
-@import url('https://refact0r.github.io/system24/theme/flavors/system24-tokyo-night.theme.css');
+@import url("https://refact0r.github.io/system24/theme/flavors/system24-tokyo-night.theme.css");
 
 body {
     --font: "Noto Sans";
@@ -19,21 +18,88 @@ body {
     font-weight: 400;
     letter-spacing: normal;
 
+    --gap: 5px;
+
     --ascii-titles: off;
 
+    --panel-labels: off;
     --border-hover: var(--border);
-
-    --label-color: var(--inactive);
-    --label-hover-color: var(--label-color);
 }
 
 /* color options */
 :root {
     --inactive: #27a1b9;
 
+    --bg-3: #16161e;
+
     --online: #40a258;
     --dnd: #d83a41;
     --idle: #cc954c;
     --streaming: #9147ff;
     --offline: #82838b;
+}
+
+.user-profile-popout, .user-profile-modal-v2, .user-profile-sidebar,
+.contentWrapper__08434 { /* gif picker container */
+    border-radius: 0 !important;
+}
+
+.header_f37cb1 /* server name */,
+.searchBar_e6b769 { /* search bar container in DM scene */
+    border-width: var(--border-thickness);
+    height: calc(var(--custom-channel-header-height) - 2px);
+}
+
+.headerGlass_f37cb1 { /* glass effect when hovering server name on server banner */
+    display: none;
+}
+
+.container_e131a9 { /* voice panel */
+    border-width: var(--border-thickness);
+    border-color: var(--border);
+    margin-left: 1px; /* fix for overlapping borders */
+}
+
+.winButtons_c38106 { /* window controls */
+    display: none;
+}
+
+:has(.video_cb9592) .trailing_c38106 { /* controls on vc scene */
+    display: none;
+}
+
+.toolbar__9293f { /* toolbar */
+    padding-right: 40px; /* smaller padding to make up for removed window controls */
+}
+
+:has(.video_cb9592) .toolbar__9293f { /* toolbar on vc scene */
+    padding-right: unset;
+}
+
+.fullScreen_cb9592:not(.sidebarOpen_cb9592) { /* container in vc scene when sidebar is closed */
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+[data-fullscreen="true"] .page__5e434:not(:has(.chatLayerWrapper__01ae2)) { /* container in vc fullscreen scene when chat is closed */
+    padding: 0;
+}
+
+.gradientContainer_bfe55a { /* dimming gradient when hovering over the vc scene */
+    display: none;
+}
+
+.root__4ad81 { /* tile for inviting/activity in single person vc scene */
+    background-image: none;
+    background-color: var(--bg-4);
+}
+
+.pulseGradient__11664 { /* gradient in non-active vc scene */
+    display: none;
+}
+
+.gradientBackground__41626 { /* gradient that is appearing for a split second when entering vc scene */
+    display: none;
 }
