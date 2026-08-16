@@ -2,7 +2,7 @@
     "theme": {
         "colorScheme": "~/.local/share/color-schemes/TokyoNight.colors",
         "iconTheme": "breeze-dark",
-        "style": "kvantum-dark",
+        "style": "klassy",
         "font": {
             "family": "Noto Sans",
             "size": 11,

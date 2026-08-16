@@ -1,0 +1,14 @@
+#!/usr/bin/python
+
+import runpy
+
+from PyQt6.QtWidgets import QWidget
+
+
+def _empty_set_style_sheet(self, sheet):
+    pass
+
+
+QWidget.setStyleSheet = _empty_set_style_sheet
+
+runpy.run_path("/usr/bin/opensnitch-ui", run_name="__main__")
