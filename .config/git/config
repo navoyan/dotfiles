@@ -10,6 +10,12 @@
   dshow = "-c diff.external=difft show --ext-diff"
   ddiff = "-c diff.external=difft diff"
 
+[filter "lfs"]
+  required = true
+  clean = git-lfs clean -- %f
+  smudge = git-lfs smudge -- %f
+  process = git-lfs filter-process
+
 [core]
   compression = 0
 
