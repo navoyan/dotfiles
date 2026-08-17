@@ -6,6 +6,8 @@
 .pre-commit-config.yaml
 LICENSE
 
+justfile
+
 .config/qutebrowser/default.py
 .config/yazi/default
 .config/mpv/default
