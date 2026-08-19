@@ -24,6 +24,7 @@ text/*=nvim.desktop;
 x-scheme-handler/about=org.qutebrowser.qutebrowser.desktop;
 x-scheme-handler/armgddn=armgddn-downloader.desktop;
 x-scheme-handler/chrome=org.qutebrowser.qutebrowser.desktop;
+x-scheme-handler/claude-cli=claude-code-url-handler.desktop;
 x-scheme-handler/discord=discord.desktop;
 x-scheme-handler/http=org.qutebrowser.qutebrowser.desktop;
 x-scheme-handler/https=org.qutebrowser.qutebrowser.desktop;
