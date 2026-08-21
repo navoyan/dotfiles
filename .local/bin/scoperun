@@ -58,7 +58,6 @@ exec gamescope \
   --fullscreen \
   --xwayland-count 2 \
   --output-width "$width" --output-height "$height" \
-  --adaptive-sync \
   --nested-refresh "$refresh_rate" \
   "${extra_flags[@]}" \
   -- "$@"

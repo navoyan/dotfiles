@@ -17,6 +17,10 @@ schedule.later(function()
         return statusline.section_mode(args)
     end
 
+    local function section_grapple()
+        return package.loaded["grapple"] and require("grapple").statusline() or ""
+    end
+
     local function section_filename()
         -- In terminal always use plain name
         if vim.bo.buftype == "terminal" then
@@ -48,6 +52,7 @@ schedule.later(function()
         git = git ~= "" and git or last_section_git
         last_section_git = git
 
+        local grapple = section_grapple()
         local filename = section_filename()
 
         local searchcount = statusline.section_searchcount({ trunc_width = 75 })
@@ -60,6 +65,7 @@ schedule.later(function()
         return statusline.combine_groups({
             { hl = mode_hl, strings = { mode } },
             { hl = "MiniStatuslineBranch", strings = { git } },
+            { hl = "CursorLine", strings = { grapple } },
             "%<", -- Mark general truncate point
             { hl = "StatusLine", strings = { filename, searchcount } },
             "%=", -- End left alignment

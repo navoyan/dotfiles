@@ -1,0 +1,21 @@
+-- local schedule, config = require("schedule"), require("config")
+-- local map = vim.keymap.set
+--
+-- schedule.later(function()
+--     vim.pack.add({
+--         config.github("coder/claudecode.nvim"),
+--     })
+--
+--     require("claudecode").setup()
+--
+--     map("n", "<leader>ac", "<cmd>ClaudeCode<cr>")
+--     map("n", "<leader>af", "<cmd>ClaudeCodeFocus<cr>")
+--     map("n", "<leader>ar", "<cmd>ClaudeCode --resume<cr>")
+--     map("n", "<leader>aC", "<cmd>ClaudeCode --continue<cr>")
+--     map("n", "<leader>am", "<cmd>ClaudeCodeSelectModel<cr>")
+--     map("n", "<leader>ab", "<cmd>ClaudeCodeAdd %<cr>")
+--     map("v", "<leader>as", "<cmd>ClaudeCodeSend<cr>")
+--     -- Diff management
+--     map("n", "<leader>aa", "<cmd>ClaudeCodeDiffAccept<cr>")
+--     map("n", "<leader>ad", "<cmd>ClaudeCodeDiffDeny<cr>")
+-- end)

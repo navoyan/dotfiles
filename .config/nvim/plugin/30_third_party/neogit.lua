@@ -1,0 +1,8 @@
+-- local schedule, config = require("schedule"), require("config")
+--
+-- schedule.later(function()
+--     vim.pack.add({
+--         config.github("nvim-lua/plenary.nvim"),
+--         config.github("NeogitOrg/neogit"),
+--     })
+-- end)

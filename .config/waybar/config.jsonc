@@ -1,145 +1,163 @@
-[
-	{
-		"reload_style_on_change": true,
-		"layer": "top",
-		"position": "top",
-		"output": [
-			"DP-1"
-		],
-		"modules-left": [
-			"cpu",
-			"memory",
-			"disk",
-			"niri/language"
-		],
-		"modules-center": [
-			"niri/workspaces#numbers"
-		],
-		"modules-right": [
-			"tray",
-			"pulseaudio",
-			"clock",
-			"custom/notifications"
-		],
-		// MODULES
-		"cpu": {
-			"interval": 1,
-			"format": "  {usage:02} %",
-			"max-length": 10
-		},
-		"memory": {
-			"interval": 1,
-			"format": "  {used:0.2f} GiB"
-		},
-		"disk": {
-			"interval": 1,
-			"format": "  {specific_used:0.2f} GB",
-			"unit": "GB"
-		},
-		"niri/language": {
-			"format": "<span text-transform='uppercase'>{shortDescription}</span>"
-		},
-		// Numbers Style workspace 
-		"niri/workspaces#numbers": {
-			"all-outputs": true,
-			"show-special": false,
-			"on-click": "activate",
-			"on-scroll-up": "niri msg action focus-workspace-up",
-			"on-scroll-down": "niri msg action focus-workspace-down",
-			"persistent-workspaces": {
-				"1": [],
-				"2": [],
-				"3": [],
-				"4": [],
-				"5": []
-			},
-			"format": "{icon}",
-			"format-icons": {
-				"1": "1",
-				"2": "2",
-				"3": "3",
-				"4": "4",
-				"5": "5",
-				"6": "6",
-				"7": "7",
-				"8": "8",
-				"9": "9",
-				"10": "10",
-				"urgent": ""
-			}
-		},
-		"tray": {
-			"icon-size": 18,
-			"spacing": 8
-		},
-		"pulseaudio": {
-			"format": "{icon} {volume:02}%{format_source}",
-			"format-bluetooth": "󰂰 {volume:02}%{format_source}",
-			"format-muted": "󰖁 {format_source}",
-			"format-icons": {
-				"bluetooth": "󰥰 ",
-				"headphone": " ",
-				"hands-free": " ",
-				"headset": " ",
-				"phone": " ",
-				"phone-muted": " ",
-				"portable": " ",
-				"car": " ",
-				"default": [
-					" ",
-					" "
-				]
-			},
-			"format-source": "",
-			"format-source-muted": " 󰍭",
-			"scroll-step": 1,
-			"on-click": "kitty --app-id wiremix -e wiremix",
-			"on-click-right": "blueman-manager",
-			"on-click-middle": "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle",
-			"ignored-sinks": [
-				"Easy Effects Sink"
-			]
-		},
-		"clock": {
-			"format": "{:%OI:%OM %p}",
-			"format-alt": "{:%A, %b %d}",
-			"tooltip-format": "<tt>{calendar}</tt>",
-			"calendar": {
-				"mode": "month",
-				"mode-mon-col": 3,
-				"on-scroll": 1,
-				"format": {
-					"months": "<span color='#f9e2af'><b>{}</b></span>",
-					"days": "<span color='#c0caf5'><b>{}</b></span>",
-					"weekdays": "<span color='#ffc777'><b>{}</b></span>",
-					"today": "<span color='#ff757f'><b>{}</b></span>"
-				}
-			},
-			"actions": {
-				"on-click-right": "mode",
-				"on-scroll-up": "shift_up",
-				"on-scroll-down": "shift_down"
-			}
-		},
-		"custom/notifications": {
-			"tooltip": true,
-			"format": "{icon}",
-			"format-icons": {
-				"notification": "󱅫",
-				"none": "󰂜",
-				"dnd-notification": "󰂠",
-				"dnd-none": "󰪓",
-				"inhibited-notification": "󰂛",
-				"inhibited-none": "󰪑",
-				"dnd-inhibited-notification": "󰂛",
-				"dnd-inhibited-none": "󰪑"
-			},
-			"return-type": "json",
-			"exec-if": "which swaync-client",
-			"exec": "swaync-client -swb",
-			"on-click": "swaync-client -t -sw",
-			"on-click-right": "swaync-client -d -sw",
-			"escape": true
-		}
-	}
-]
+{
+    "reload_style_on_change": true,
+    "layer": "top",
+    "position": "top",
+    "output": [
+        "DP-1"
+    ],
+    "modules-left": [
+        "cpu",
+        "memory",
+        "disk",
+        "custom/exchange-rates",
+        "niri/language"
+    ],
+    "modules-center": [
+        "niri/workspaces#numbers"
+    ],
+    "modules-right": [
+        "tray",
+        "privacy",
+        "pulseaudio",
+        "clock",
+        "custom/notifications"
+    ],
+    // MODULES
+    "cpu": {
+        "interval": 1,
+        "format": "  {usage:02} %",
+        "max-length": 10
+    },
+    "memory": {
+        "interval": 1,
+        "format": "  {used:0.2f} GiB"
+    },
+    "disk": {
+        "interval": 1,
+        "format": "  {specific_used:0.2f} GiB",
+        "unit": "GiB"
+    },
+    "custom/exchange-rates": {
+        "exec": "~/.config/waybar/exchange-rates.sh",
+        "return-type": "json",
+        "interval": 3600
+    },
+    "niri/language": {
+        "format": "<span text-transform='uppercase'>{shortDescription}</span>"
+    },
+    "cffi/niri-windows": {
+        "module_path": "/usr/lib/waybar-niri-windows.so",
+        "options": {
+            // set the module mode
+            // "graphical" (default): draw a minimap of windows in the current workspace
+            // "text": draws symbols and a focus indicator for each column (mirrors v1 behavior)
+            "mode": "graphical"
+        }
+    },
+    // Numbers Style workspace
+    "niri/workspaces#numbers": {
+        "all-outputs": true,
+        "show-special": false,
+        "on-click": "activate",
+        "on-scroll-up": "niri msg action focus-workspace-up",
+        "on-scroll-down": "niri msg action focus-workspace-down",
+        "persistent-workspaces": {
+            "1": [],
+            "2": [],
+            "3": [],
+            "4": [],
+            "5": []
+        },
+        "format": "{icon}",
+        "format-icons": {
+            "1": "1",
+            "2": "2",
+            "3": "3",
+            "4": "4",
+            "5": "5",
+            "6": "6",
+            "7": "7",
+            "8": "8",
+            "9": "9",
+            "10": "10",
+            "urgent": ""
+        }
+    },
+    "tray": {
+        "icon-size": 18,
+        "spacing": 8
+    },
+    "privacy": {
+        "icon-size": 15,
+        "icon-spacing": 8
+    },
+    "pulseaudio": {
+        "format": "{icon} {volume:02}%{format_source}",
+        "format-bluetooth": "󰂰 {volume:02}%{format_source}",
+        "format-muted": "󰖁 {format_source}",
+        "format-icons": {
+            "bluetooth": "󰥰 ",
+            "headphone": " ",
+            "hands-free": " ",
+            "headset": " ",
+            "phone": " ",
+            "phone-muted": " ",
+            "portable": " ",
+            "car": " ",
+            "default": [
+                " ",
+                " "
+            ]
+        },
+        "format-source": "",
+        "format-source-muted": " 󰍭",
+        "scroll-step": 1,
+        "on-click": "kitty --app-id wiremix -e wiremix",
+        "on-click-right": "kitty --app-id bluetui -e bluetui",
+        "on-click-middle": "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle",
+        "ignored-sinks": [
+            "Easy Effects Sink"
+        ]
+    },
+    "clock": {
+        "format": "{:%OI:%OM %p}",
+        "format-alt": "{:%A, %b %d}",
+        "tooltip-format": "<tt>{calendar}</tt>",
+        "calendar": {
+            "mode": "month",
+            "mode-mon-col": 3,
+            "on-scroll": 1,
+            "format": {
+                "months": "<span color='#f9e2af'><b>{}</b></span>",
+                "days": "<span color='#c0caf5'><b>{}</b></span>",
+                "weekdays": "<span color='#ffc777'><b>{}</b></span>",
+                "today": "<span color='#ff757f'><b>{}</b></span>"
+            }
+        },
+        "actions": {
+            "on-click-right": "mode",
+            "on-scroll-up": "shift_up",
+            "on-scroll-down": "shift_down"
+        }
+    },
+    "custom/notifications": {
+        "tooltip": true,
+        "format": "{icon}",
+        "format-icons": {
+            "notification": "󱅫",
+            "none": "󰂜",
+            "dnd-notification": "󰂠",
+            "dnd-none": "󰪓",
+            "inhibited-notification": "󰂛",
+            "inhibited-none": "󰪑",
+            "dnd-inhibited-notification": "󰂛",
+            "dnd-inhibited-none": "󰪑"
+        },
+        "return-type": "json",
+        "exec-if": "which swaync-client",
+        "exec": "swaync-client -swb",
+        "on-click": "swaync-client -t -sw",
+        "on-click-right": "swaync-client -d -sw",
+        "escape": true
+    }
+}

@@ -1,0 +1,47 @@
+-- ---@diagnostic disable: missing-fields, duplicate-set-field
+--
+-- local schedule, config = require("schedule"), require("config")
+-- local map = vim.keymap.set
+--
+-- schedule.later(function()
+--     vim.pack.add({
+--         config.github("EvWilson/spelunk.nvim"),
+--     })
+--
+--     local spelunk = require("spelunk")
+--     local markmgr = require("spelunk.markmgr")
+--     local persist = require("spelunk.persistence")
+--
+--     spelunk.setup({
+--         enable_persist = true,
+--         enable_status_col_display = true,
+--         base_mappings = {
+--             toggle = ";",
+--         },
+--         window_mappings = {
+--             close = { "q", "<Esc>" },
+--         },
+--     })
+--     spelunk.display_function = function(bookmark)
+--         ---@diagnostic disable-next-line: param-type-mismatch
+--         local ctx = require("spelunk.util").get_treesitter_context(bookmark)
+--         ctx = (ctx == "" and ctx) or (" - " .. ctx)
+--         local filename = spelunk.filename_formatter(bookmark.file)
+--         return string.format("%s:%d%s", filename, bookmark.line, ctx)
+--     end
+--
+--     map("n", "<Leader>l", function()
+--         local file = vim.api.nvim_buf_get_name(0)
+--         local line = vim.fn.line(".")
+--         local mark_idx = markmgr.get_mark_idx_from_line(1, file, line)
+--
+--         if mark_idx then
+--             markmgr.delete_mark(1, mark_idx)
+--             -- update_window(true)
+--             persist.save(markmgr.physical_stacks())
+--             vim.notify(string.format("[spelunk.nvim] Deleted bookmark %d from line %d", mark_idx, line))
+--         else
+--             spelunk.add_bookmark()
+--         end
+--     end)
+-- end)

@@ -1,0 +1,108 @@
+@import url("https://cdn.jsdelivr.net/gh/spicetify/spicetify-themes@master/Sleek/user.css");
+
+/* undo changes to playback bar from Sleek: */
+.playback-bar {
+  position: relative !important;
+  bottom: auto !important;
+  left: auto !important;
+}
+
+.playback-bar__progress-time-elapsed,
+.main-playbackBarRemainingTime-container {
+  opacity: 1 !important;
+  position: static !important;
+}
+
+.x-progressBar-fillColor,
+.progress-bar__slider {
+  transition: unset;
+}
+
+
+.main-home-filterChipsSection:after {
+  background-color: var(--spice-sidebar) !important;
+}
+
+.playlist-playlist-actionBarBackground-background {
+  display: none;
+}
+
+.e-10451-legacy-chip__inner,
+.main-nowPlayingView-actionButton {
+  color: var(--spice-text);
+  background-color: var(--spice-row-active-hover);
+}
+
+.e-10451-box--hover-custom.e-10451-box--interactive:hover:after {
+  background-color: var(--spice-row-active);
+}
+
+.main-trackList-trackListRow.q8suB2R_XkoUyIeZ,
+.main-trackList-trackListRow.q8suB2R_XkoUyIeZ:hover {
+  background-color: var(--spice-row-active-hover);
+}
+
+
+/* row in library panel: */
+.e-10451-box--interactive:hover:after /* unselected hover */ {
+  background-color: var(--spice-row-active) !important;
+}
+.e-10451-box--tinted:hover:after { /* selected hover */
+  background-color: var(--spice-row-active-hover);
+}
+.e-10451-box--tinted:after { /* selected */
+  background-color: var(--spice-row-active-hover);
+}
+
+
+[dir="ltr"] .main-actionBar-ActionBarRow > :first-child { /* play button on artist page */
+  margin-right: 20px !important;
+}
+.main-actionBar-exploreButton { /* disable spotify "shorts" */
+  display: none;
+}
+
+
+/* remove rounded borders: */
+.main-yourLibraryX-entryPoints, /* library panel */
+.eWU4JoxyECcwnSf_, /* current track panel */
+.main-nowPlayingView-section, /* current track panel section */
+.main-entityHeader-image, /* artist header image */
+.main-nowPlayingView-coverArt, /* currently playing cover */
+.main-coverSlotCollapsed-navAltContainer, /* cover container in player */
+.main-nowPlayingWidget-coverArtContainer, /* cover image container in player */
+.cover-art-image, /* cover image in player */
+.main-cardImage-image, /* cover image in browser */
+.view-homeShortcutsGrid-shortcut, /* artist/album/playlist shortcut in home */
+.main-trackList-trackListRow, /* track row */
+.main-trackList-rowImage, /* track row image */
+.x-entityImage-xsmall:not(.X6NnaANU7oS1TJpc), /* album image in library panel, not artist image */
+.main-actionBar-ActionBarContainer, /* panel container */
+.cS2oX60hERkVbAKR.Oi9oYhoIybYd9R1n, /* left panel square item */
+.e-10451-legacy-list-row, /* row in the search */
+.laOEpXn67bgflATz, /* personalized playlists in the bottom of the home page */
+.main-entityHeader-headerText > span:first-child, /* header of the scene */
+.iaaQKMqcyZQBT9bn, /* explore cards */
+.search-searchCategory-carouselButton, /* button in artist/album carousel */
+.e-10451-legacy-chip__inner, /* filter button */
+.main-contextMenu-menuItemButton, /* menu in the settings */
+.main-dropDown-dropDown, /* dropdown in the top right corner of the screen */
+.e-10451-legacy-button-secondary, /* action button in the settings */
+.x-toggle-indicatorWrapper, /* switch button in settings */
+.main-nowPlayingView-artistOnTourItem, /* artist tour card */
+.main-nowPlayingView-onTourTimeCard, /* artist tour time */
+.DdDQ_LY0sYLt8LxK, /* artist pick container */
+.gu0S9_98ZXIo5DaV, /* artist pick label */
+.PrxpYQpIB876tjO6, /* artist pick album */
+.D0FZYsUxTsVR4IUm, /* artist page music video thumbnail */
+.fA6CNWFY1WQBCde9, /* video thumbnail card */
+.pQNFcgJ2s9kVLLUo, /* video thumbnail box */
+.e-10451-box, /* notification */
+.main-contextMenu-menu, /* context menu */
+.ngY378uYekSqU8ij .znTd53DrNIcJnJvv, /* next in queue cover */
+#main-view, /* main (center) view */
+video,
+input,
+button {
+  border-radius: 0px !important;
+}

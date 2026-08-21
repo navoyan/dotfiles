@@ -69,6 +69,7 @@ workspace "3"
 workspace "4"
 workspace "5"
 workspace "6"
+workspace "7"
 
 // Settings that influence how windows are positioned and sized.
 // https://yalter.github.io/niri/Configuration:-Layout
@@ -150,6 +151,44 @@ layout {
     }
 }
 
+blur {
+    // off
+    passes 3
+    offset 1
+    noise 0.02
+    saturation 1.1
+}
+
+overview {
+    // Backdrop color visible between workspaces or in the overview.
+    backdrop-color "#1A1B26"
+}
+
+recent-windows {
+    debounce-ms 750
+    open-delay-ms 150
+
+    highlight {
+        active-color "#7AA2F7FF"
+        urgent-color "#DB4B4BFF"
+        padding 30
+        corner-radius 0
+    }
+
+    previews {
+        max-height 480
+        max-scale 0.5
+    }
+
+    binds {
+        Mod+Tab         { next-window scope="all"; }
+        Mod+Ctrl+Tab    { previous-window scope="all"; }
+
+        Alt+Tab         { next-window scope="workspace"; }
+        Alt+Ctrl+Tab    { previous-window scope="workspace"; }
+    }
+}
+
 spawn-at-startup "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1"
 
 spawn-sh-at-startup "swayidle -w timeout 900 'niri msg action power-off-monitors'"
@@ -194,6 +233,26 @@ animations {
 // Window rules adjust behavior for individual windows.
 // https://yalter.github.io/niri/Configuration:-Window-Rules
 
+// Indicate screencasted windows with red colors.
+window-rule {
+    match is-window-cast-target=true
+
+    border {
+        width 2
+        active-color "#DB4B4B"
+        inactive-color "#7d0d2d"
+    }
+
+    shadow {
+        color "#7d0d2d70"
+    }
+
+    tab-indicator {
+        active-color "#f38ba8"
+        inactive-color "#7d0d2d"
+    }
+}
+
 window-rule {
     match app-id="^kitty$"
     match app-id="^org.qutebrowser.qutebrowser$"
@@ -226,6 +285,7 @@ window-rule {
     match app-id="^bluetui$"
     match app-id="^wiremix$"
     match app-id="^me.kavishdevar.librepods$"
+    match app-id="^blueman-manager$"
 
     open-floating true
     default-column-width { proportion 0.25; }
@@ -249,7 +309,7 @@ window-rule {
     match title="^.* is sharing your screen.$"
 
     // ISSUE: https://github.com/YaLTeR/niri/issues/845
-    open-on-workspace "6"
+    open-on-workspace "7"
 }
 
 window-rule {
@@ -259,7 +319,9 @@ window-rule {
 }
 
 layer-rule {
-    match namespace="awww-daemon"
+    match namespace="^awww-daemon$"
+    match namespace="^rofi$"
+    match namespace="^swaync-notification-window$"
 
     block-out-from "screencast"
 }
@@ -281,14 +343,16 @@ binds {
     Mod+Ctrl+W repeat=false { spawn "pickwall"; }
     Mod+Ctrl+A repeat=false { spawn "awww-reset"; }
 
-    // The allow-when-locked=true property makes them work even when the session is locked.
-    Mod+Ctrl+M repeat=false allow-when-locked=true { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SINK@" "toggle"; }
-    Mod+M      repeat=false allow-when-locked=true { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SOURCE@" "toggle"; }
+    Mod+P      repeat=false { spawn-sh "hyprpicker | wl-copy"; }
+    Mod+Ctrl+N repeat=false { spawn "swaync-client" "-t"; }
+
+    Mod+N repeat=false allow-when-locked=true { spawn-sh "~/.config/niri/toggle_mute.sh"; }
 
     // Open/close the Overview: a zoomed-out view of workspaces and windows.
     Mod+O repeat=false { toggle-overview; }
 
     Mod+Q repeat=false { close-window; }
+    Mod+Shift+Q repeat=false { spawn-sh "kill -9 $(niri msg --json focused-window | jq '.pid')"; }
 
     Mod+H     { focus-column-left; }
     Mod+J     { focus-window-down; }
@@ -367,16 +431,12 @@ binds {
     Mod+Shift+R { switch-preset-window-height; }
     Mod+Ctrl+R  { reset-window-height; }
     Mod+F       { maximize-column; }
-    Mod+Shift+F { fullscreen-window; }
-
+    Mod+Ctrl+F { fullscreen-window; }
     // Expand the focused column to space not taken up by other fully visible columns.
     // Makes the column "fill the rest of the space".
-    Mod+Ctrl+F { expand-column-to-available-width; }
+    Mod+Shift+F { expand-column-to-available-width; }
 
     Mod+C { center-column; }
-
-    // Center all fully visible columns on screen.
-    Mod+Ctrl+C { center-visible-columns; }
 
     // Finer width adjustments.
     // This command can also:
@@ -406,8 +466,9 @@ binds {
     // Note: a matching layout switch hotkey configured in xkb options above.
     // Having both at once on the same hotkey will break the switching,
     // since it will switch twice upon pressing the hotkey (once by xkb, once by niri).
-    Mod+Space { switch-layout "next"; }
+    Mod+S { switch-layout "next"; }
 
+    Mod+Ctrl+C { set-dynamic-cast-window; }
 
     Mod+Ctrl+S { screenshot; }
 

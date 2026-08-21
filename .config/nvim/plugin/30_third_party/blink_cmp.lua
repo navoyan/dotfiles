@@ -63,22 +63,6 @@ schedule.later(function()
 
                 return { "lsp", "snippets", "path", "buffer" }
             end,
-
-            per_filetype = {
-                lua = {
-                    inherit_defaults = true,
-                    "lazydev",
-                },
-            },
-
-            providers = {
-                lazydev = {
-                    name = "LazyDev",
-                    module = "lazydev.integrations.blink",
-                    -- make lazydev completions top priority
-                    score_offset = 100,
-                },
-            },
         },
     })
 end)

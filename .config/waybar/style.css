@@ -13,7 +13,7 @@ window#waybar > box {
 
 * {
     font-family: JetBrainsMono NF;
-    font-weight: 600;
+    font-weight: 700;
     font-size: 16px;
     padding: 0;
 }
@@ -21,6 +21,8 @@ window#waybar > box {
 #cpu,
 #memory,
 #disk,
+#custom-exchange-rates,
+#privacy,
 #pulseaudio,
 #workspaces,
 #clock,
@@ -44,6 +46,10 @@ window#waybar > box {
     color: @module3;
 }
 
+#privacy-item {
+    color: @module3;
+}
+
 #pulseaudio {
     color: @module2;
 }
@@ -61,16 +67,16 @@ window#waybar > box {
 }
 
 
-#cpu, #memory, #disk, #tray, #pulseaudio, #clock, #custom-notifications {
+#cpu, #memory, #disk, #custom-exchange-rates, #language, #privacy, #tray, #pulseaudio, #clock, #custom-notifications {
     padding: 0 8px 0 8px;
     margin: 0;
 }
 
-#cpu, #memory, #disk {
+#cpu, #memory, #disk, #custom-exchange-rates {
     margin-right: 4px;
 }
 
-#pulseaudio, #clock {
+#privacy, #pulseaudio, #clock {
     margin-left: 4px;
 }
 
@@ -99,6 +105,14 @@ window#waybar > box {
 #workspaces button:hover {
     color: @color7;
     background-color: @background;
+}
+
+.cffi-niri-windows .tile {
+  background-color: #292E42;
+}
+
+.cffi-niri-windows .tile:active {
+  background-color: #7AA2F7;
 }
 
 #bluetooth {
