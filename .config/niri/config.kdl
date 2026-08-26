@@ -159,7 +159,6 @@ spawn-sh-at-startup "awww-daemon & sleep 1s && awww-reset"
 
 
 spawn-sh-at-startup "niri-float-sticky -app-id='^wiremix$|^blueman-manager$|^me.kavishdevar.librepods$'"
-spawn-at-startup "~/.config/niri/bluetooth_notify.sh"
 
 spawn-at-startup "waybar"
 
@@ -223,9 +222,9 @@ window-rule {
 }
 
 window-rule {
-    match app-id="^bluetui$"
     match app-id="^wiremix$"
     match app-id="^me.kavishdevar.librepods$"
+    match app-id="^blueman-manager$"
 
     open-floating true
     default-column-width { proportion 0.25; }
@@ -234,7 +233,6 @@ window-rule {
 }
 
 window-rule {
-    match app-id="^bluetui$"
     match app-id="^wiremix$"
 
     default-column-width { proportion 0.40; }
