@@ -21,6 +21,8 @@ c.content.site_specific_quirks.skip = ["ua-google"]
 c.url.searchengines = {
     "DEFAULT": "https://google.com/search?q={}",
     ":g": "https://google.com/search?q={}",
+    ":d": "https://www.deepl.com/en/translator#en/ru/{}",
+    ":dd": "https://duckduckgo.com/?ia=web&q={}",
     ":aw": "https://wiki.archlinux.org/?search={}",
     ":ar": "https://archlinux.org/packages/?sort=&q={}&maintainer=&flagged=",
     ":aur": "https://aur.archlinux.org/packages/?K={}",
@@ -88,6 +90,8 @@ c.aliases.update(
 c.input.insert_mode.auto_leave = False
 c.input.insert_mode.auto_enter = False
 
+config.bind("f", "fake-key f")
+
 config.bind("k", "scroll-page 0 -0.1")
 config.bind("j", "scroll-page 0 0.1")
 
@@ -97,9 +101,11 @@ config.bind("<Ctrl-J>", "scroll-page 0 0.5")
 config.bind("<Backspace>", "hint")
 config.bind("<Shift-Backspace>", "hint all tab")
 config.bind("w<Backspace>", "hint all window")
-config.bind("f", "fake-key f")
 
-config.bind(";v", "spawn mpv {url}")
+config.bind(
+    ";v",
+    "spawn mpv {url} ;; " + f"jseval -qf {config.configdir}/jseval/pause_video.js",
+)
 config.bind(";V", "hint links spawn mpv {hint-url}")
 
 config.bind("<Ctrl-O>", "back")
@@ -109,6 +115,7 @@ config.bind("H", "history")
 config.bind("<Ctrl-H>", "history -t")
 
 config.bind("go", "edit-url")
+config.bind("<Ctrl-E>", "edit-text")
 
 config.unbind("T")
 default_binds = c.bindings.default["normal"]
