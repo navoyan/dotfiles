@@ -346,6 +346,7 @@ binds {
     Mod+P      repeat=false { spawn-sh "hyprpicker | wl-copy"; }
     Mod+Ctrl+N repeat=false { spawn "swaync-client" "-t"; }
 
+    Mod+N repeat=false allow-when-locked=true { spawn-sh "~/.config/niri/toggle_mute.sh"; }
 
     // Open/close the Overview: a zoomed-out view of workspaces and windows.
     Mod+O repeat=false { toggle-overview; }
