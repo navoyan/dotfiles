@@ -5,6 +5,7 @@ schedule.later(function()
         config.github("neovim/nvim-lspconfig"),
     })
 
+    ---@type table<string, vim.lsp.Config>
     local servers = {
         lua_ls = {
             settings = {
@@ -15,6 +16,7 @@ schedule.later(function()
                 },
             },
         },
+        bashls = {},
         basedpyright = {
             settings = {
                 basedpyright = {
@@ -32,13 +34,25 @@ schedule.later(function()
             },
         },
         ts_ls = {
-            filetypes = { "javascript" },
+            on_attach = function(client)
+                client.server_capabilities.documentFormattingProvider = false
+            end,
         },
+        eslint = {},
         gopls = {},
+        clangd = {},
         helm_ls = {},
-        yamlls = {},
+        yamlls = {
+            settings = {
+                yaml = {
+                    format = {
+                        printWidth = 500,
+                    },
+                },
+            },
+        },
         jsonls = {},
-        taplo = {},
+        tombi = { root_markers = { "." } },
         typos_lsp = {
             init_options = {
                 diagnosticSeverity = "Warning",
