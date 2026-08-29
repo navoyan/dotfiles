@@ -46,7 +46,7 @@ process_image() {
         return 0
     fi
 
-    cur_hash=$(xxh64sum "$image")
+    cur_hash=$(sha256sum "$image")
     cur_hash=${cur_hash%% *}
     if [ "$cur_hash" = "$saved_hash" ] && [ -f "$cache_file" ]; then
         printf "%s %s %s\n" "$cur_mtime" "$cur_size" "$cur_hash" > "$meta_file"

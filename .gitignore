@@ -9,6 +9,8 @@
 .config/yazi/plugins/
 !.config/yazi/plugins/confirm-paste-force.yazi/
 
+.config/mpv/types/
+
 .config/qutebrowser/default.py
 .config/rofi/default.rasi
 .config/mpv/default/

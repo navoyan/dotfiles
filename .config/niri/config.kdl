@@ -200,12 +200,6 @@ spawn-sh-at-startup "wl-paste --type image --watch cliphist store"
 spawn-sh-at-startup "awww-daemon & sleep 1s && awww-reset"
 
 
-spawn-sh-at-startup "niri-float-sticky -app-id='^wiremix$|^blueman-manager$|^me.kavishdevar.librepods$'"
-
-spawn-at-startup "waybar"
-
-spawn-sh-at-startup "librepods --hide"
-
 hotkey-overlay {
     // Disable the "Important Hotkeys" pop-up at startup.
     skip-at-startup

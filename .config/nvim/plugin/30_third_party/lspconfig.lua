@@ -53,6 +53,7 @@ schedule.later(function()
         },
         jsonls = {},
         tombi = { root_markers = { "." } },
+        nixd = {},
         typos_lsp = {
             init_options = {
                 diagnosticSeverity = "Warning",

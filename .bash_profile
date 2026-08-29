@@ -7,11 +7,15 @@ export XDG_STATE_HOME="$HOME/.local/state"
 
 export PATH="$HOME/.local/share/firejail/bin:$HOME/.local/bin:$HOME/.local/share/goverlay/gameconfig/global:$PATH"
 
+export NIXOS_OZONE_WL=1
+
 export QT_QPA_PLATFORMTHEME="qtengine"
 export QT_QPA_PLATFORM="wayland"
 
 export GTK_THEME="TokyoNight"
 
+
+export TERMINAL=kitty
 
 if [ -n "$NVIM_LISTEN_ADDRESS" ]; then
     alias nvim="nvr -cc split --remote-wait +'set bufhidden=wipe'"
