@@ -8,6 +8,10 @@ noblacklist /tmp/.wine-*
 # for gamepad recognition:
 ignore private-dev
 
+# NOTE: `seccomp` can cause problems with something I can't remember anymore:
+#
+# ignore seccomp
+
 # for gamescope:
 include allow-lua.inc
 

@@ -5,7 +5,7 @@ export XDG_CACHE_HOME="$HOME/.cache"
 export XDG_DATA_HOME="$HOME/.local/share"
 export XDG_STATE_HOME="$HOME/.local/state"
 
-export PATH="$HOME/.local/share/firejail/bin:$HOME/.local/bin:$HOME/.local/share/goverlay/fgmod:$PATH"
+export PATH="$HOME/.local/share/firejail/bin:$HOME/.local/bin:$HOME/.local/share/goverlay/gameconfig/global:$PATH"
 
 export QT_QPA_PLATFORMTHEME="qtengine"
 export QT_QPA_PLATFORM="wayland"
@@ -56,7 +56,8 @@ export AWWW_TRANSITION="any"
 export AWWW_TRANSITION_FPS="180"
 
 if [[ $(tty) == "/dev/tty3" ]]; then
-    firejail --profile=~/.config/firejail/steam.profile scoperun --steam --hdr --mango -- steam -gamepadui
+    export MANGOHUD_CONFIGFILE=~/.config/MangoHud/MangoHud.conf
+    firejail --profile=steam scoperun --mango --steam --mango -- /usr/bin/steam -gamepadui
     chvt 2
     exit
 fi
