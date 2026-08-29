@@ -5,12 +5,13 @@ schedule.later(function()
     vim.pack.add({
         config.github("nvim-lua/plenary.nvim"),
         {
-            src = config.github("epwalsh/obsidian.nvim"),
+            src = config.github("obsidian-nvim/obsidian.nvim"),
             version = vim.version.range("*"),
         },
     })
 
     require("obsidian").setup({
+        legacy_commands = false,
         workspaces = {
             {
                 name = "work",
@@ -23,8 +24,8 @@ schedule.later(function()
         },
     })
 
-    map("n", "<Leader>of", "<Cmd>ObsidianQuickSwitch<CR>")
-    map("n", "<Leader>ot", "<Cmd>ObsidianToday<CR>")
-    map("n", "<Leader>od", "<Cmd>ObsidianDailies<CR>")
-    map("n", "<Leader>ow", "<Cmd>ObsidianWorkspace<CR>")
+    map("n", "<Leader>of", "<Cmd>Obsidian quick_switch<CR>")
+    map("n", "<Leader>ot", "<Cmd>Obsidian today<CR>")
+    map("n", "<Leader>od", "<Cmd>Obsidian dailies<CR>")
+    map("n", "<Leader>ow", "<Cmd>Obsidian workspace<CR>")
 end)

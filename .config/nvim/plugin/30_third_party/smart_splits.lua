@@ -6,7 +6,7 @@ schedule.later(function()
         local plugin_path = ev.data.path
 
         vim.system(
-            { "./kitty/install-kittens.bash" },
+            { "bash", "-c", "./kitty/install-kittens.bash" },
             { cwd = plugin_path },
             vim.schedule_wrap(function(result)
                 local code = result.code

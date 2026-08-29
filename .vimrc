@@ -8,7 +8,7 @@ set nowritebackup " Don't store backup while overwriting the file
 set noswapfile " Don't use swapfiles
 
 set number " Show line numbers
-set relativenumber " Show relative line numbers 
+set relativenumber " Show relative line numbers
 set cursorline " Highlight current line
 set cursorlineopt=number " Highlight only the number of the current line
 set signcolumn=yes " Always show sign column (otherwise it will shift text)
@@ -26,6 +26,7 @@ set linebreak " Wrap long lines at 'breakat' (if 'wrap' is set)
 set smartindent " Insert indents automatically
 set virtualedit=block " Allow going past the end of line in visual block mode
 set formatoptions=qjl1 " Don't autoformat comments
+set textwidth=120
 
 set infercase " Infer letter cases for a richer built-in keyword completion
 set completeopt=menu,menuone,noselect " Customize completions

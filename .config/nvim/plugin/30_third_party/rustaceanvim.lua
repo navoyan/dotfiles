@@ -9,7 +9,7 @@ local function rust_lsp_cmd_fn(...)
         local ok, _ = pcall(vim.cmd.RustLsp, args)
         if not ok then
             -- BUG: RustLsp command is not re-created after `:RustAnalyzer restart`
-            require("rustaceanvim.commands").create_rust_lsp_command()
+            require("rustaceanvim.commands").create_rust_lsp_command(0)
 
             vim.cmd.RustLsp(args)
         end
@@ -95,6 +95,7 @@ end
 
 schedule.now(function()
     vim.pack.add({
+        config.github("mrjones2014/codesettings.nvim"),
         {
             src = config.github("mrcjkb/rustaceanvim"),
             version = vim.version.range("*"),
@@ -125,6 +126,11 @@ schedule.now(function()
                             enforce = true,
                         },
                         prefix = "crate",
+                    },
+                    rustfmt = {
+                        extraArgs = {
+                            "+nightly",
+                        },
                     },
                 },
             },

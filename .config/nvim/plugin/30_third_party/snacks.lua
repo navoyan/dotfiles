@@ -156,10 +156,10 @@ local function picker_config()
         sources = {
             select = { focus = "list" },
             files = { preview = preview_with_full_filepath, hidden = true },
-            grep = { preview = preview_with_full_filepath, hidden = true },
             grep_word = { preview = preview_with_full_filepath, hidden = true },
             buffers = { preview = preview_with_full_filepath },
             grep_buffers = { preview = preview_with_full_filepath },
+            grep = { layout = "ivy", hidden = true },
             diagnostics_buffer = { layout = "ivy", focus = "list" },
             diagnostics = { layout = "ivy", focus = "list" },
             lsp_definitions = { layout = "ivy", focus = "list" },

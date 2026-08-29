@@ -6,7 +6,7 @@ end
 
 vim.diagnostic.config({ virtual_text = true }) -- Use virtual text for diagnostics
 
-require("vim._extui").enable({ -- Replace message grid with experimental UI
+require("vim._core.ui2").enable({ -- Replace message grid with experimental UI
     msg = {
         target = "msg",
         timeout = 5000, -- Time a message is visible in the message window.
