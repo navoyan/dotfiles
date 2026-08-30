@@ -1,4 +1,4 @@
-(function() {
+(function () {
     let retries = 0;
     function pauseVideo() {
         let video = document.querySelector("video");
@@ -9,5 +9,5 @@
             setTimeout(pauseVideo, 500);
         }
     }
-    pauseVideo()
-})()
+    pauseVideo();
+})();

@@ -1,16 +1,3 @@
-.config/nvim/target
-
-.config/fish/completions/**
-.config/fish/functions/**
-.config/fish/conf.d/**
-.config/fish/fish_variables
-.config/fish/fish_variables*
-
-.config/yazi/plugins/
-!.config/yazi/plugins/confirm-paste-force.yazi/
-
-.config/mpv/types/
-
 .config/qutebrowser/default.py
 .config/rofi/default.rasi
 .config/mpv/default/

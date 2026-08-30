@@ -37,7 +37,7 @@ desc = "Crop wallpaper"
 orphan = true
 
 [[open.prepend_rules]]
-url = "/home/narek/.config/wallpapers/**"
+url = "/home/narek/.local/share/wallpapers/**"
 use = ["set-wallpaper", "crop-wallpaper", "open-in-imv", "reveal"]
 
 [[open.prepend_rules]]

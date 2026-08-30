@@ -2,7 +2,7 @@
 
 set -uo pipefail
 
-wall_dir=~/.config/wallpapers
+wall_dir=~/.local/share/wallpapers
 cache_dir=~/.cache/pickwall
 thumb_w=640
 thumb_h=360

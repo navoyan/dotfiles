@@ -66,9 +66,12 @@ const MPV_CSS = css`
 
 // Generate protocol
 function generateProto(url) {
-    let btoaUrl = btoa(url).replace(/\//g, "_").replace(/\+/g, "-").replace(/\=/g, "");
+    let btoaUrl = btoa(url)
+        .replace(/\//g, "_")
+        .replace(/\+/g, "-")
+        .replace(/\=/g, "");
 
-    return "mpv-handler://play/" + btoaUrl;;
+    return "mpv-handler://play/" + btoaUrl;
 }
 
 // Check the URL is matched or not

@@ -5,7 +5,7 @@ local function detect_lang_and_run(title, callback)
         name = "subprocess",
         args = {
             "rust-script",
-            "/home/narek/.config/mpv/detect_lang.rs",
+            "/home/narek/dotfiles/.config/mpv/detect_lang.rs",
             title,
         },
         capture_stdout = true,

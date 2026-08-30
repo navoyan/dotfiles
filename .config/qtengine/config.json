@@ -1,6 +1,6 @@
 {
     "theme": {
-        "colorScheme": "~/.local/share/color-schemes/TokyoNight.colors",
+        "colorScheme": "~/.config/qtengine/TokyoNight.colors",
         "iconTheme": "breeze-dark",
         "style": "klassy",
         "font": {

@@ -236,7 +236,6 @@ in
       gettext
       dust
       just
-      stow
       fzf
       zoxide
       fishPlugins.tide

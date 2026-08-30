@@ -76,8 +76,8 @@ desc = "Go ~/.local/share/Trash/files"
 
 [[mgr.append_keymap]]
 on = ["g", "w"]
-run = "cd ~/.config/wallpapers"
-desc = "Go ~/.config/wallpapers"
+run = "cd ~/.local/share/wallpapers"
+desc = "Go ~/.local/share/wallpapers"
 
 [[mgr.append_keymap]]
 on = ["g", "G"]

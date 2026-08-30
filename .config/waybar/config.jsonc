@@ -104,7 +104,7 @@
         "format-source-muted": " 󰍭",
         "scroll-step": 1,
         "on-click": "kitty --app-id wiremix -e wiremix",
-        "on-click-right": "kitty --app-id bluetui -e bluetui",
+        "on-click-right": "blueman-manager",
         "on-click-middle": "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle",
         "ignored-sinks": [
             "Easy Effects Sink"
