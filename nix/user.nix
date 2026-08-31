@@ -21,14 +21,18 @@
       user = "narek";
       directory = "/home/narek";
 
-      files = genSymlinks "/home/narek/dotfiles" [
-        ".bash_profile"
-        ".local/bin"
-      ];
+      files =
+        let
+          symlinkTarget = "/home/narek/dotfiles";
+        in
+        {
+          ".bash_profile".source = "${symlinkTarget}/.bash_profile";
+          ".local/bin".source = "${symlinkTarget}/local/bin";
+        };
 
       xdg.config.files =
         let
-          symlinks = genSymlinks "/home/narek/dotfiles/.config" [
+          symlinks = genSymlinks "/home/narek/dotfiles/config" [
             "fish/config.fish"
             "fish/user_functions"
             "fish/themes"
@@ -111,7 +115,7 @@
 
       xdg.data.files =
         let
-          symlinks = genSymlinks "/home/narek/dotfiles/.local/share" [
+          symlinks = genSymlinks "/home/narek/dotfiles/local/share" [
             "themes"
 
             "applications/google-meet.desktop"

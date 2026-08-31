@@ -406,7 +406,7 @@ in
     enable = true;
     theme = {
       name = "Sleek";
-      src = ../.config/spicetify/Themes/Sleek;
+      src = ../config/spicetify/Themes/Sleek;
       injectCss = true;
       injectThemeJs = true;
       replaceColors = true;

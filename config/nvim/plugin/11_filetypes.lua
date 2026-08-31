@@ -12,7 +12,7 @@ vim.filetype.add({
 })
 
 -- NOT a glob, matches nested directories as well:
-local mpv_conf_pattern = vim.env.HOME .. "/{dotfiles/,}.config/mpv/*.conf"
+local mpv_conf_pattern = vim.env.HOME .. "/{dotfiles/config,.config}/mpv/*.conf"
 config.new_autocmd({ "BufNewFile", "BufRead" }, mpv_conf_pattern, function()
     vim.bo.filetype = "confini"
     vim.schedule(function()
