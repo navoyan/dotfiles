@@ -256,7 +256,6 @@ in
       libqalculate
       btop
       nvtopPackages.amd
-      claude-code
 
       hyprpicker
       awww
@@ -308,19 +307,11 @@ in
       shellcheck
 
       # work-specific:
+      claude-code
+      codegraph
+
+      kubectl
       mongodb-compass
-      (google-cloud-sdk.withExtraComponents [
-        pkgs.google-cloud-sdk.components.gke-gcloud-auth-plugin
-      ])
-      velero
-      minikube
-      (lib.hiPrio # otherwise minikube kubectl is used
-        kubectl
-      )
-      kubectl-view-secret
-      kubectx
-      k9s
-      kubernetes-helm
     ];
 
   fonts = {
