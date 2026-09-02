@@ -65,7 +65,7 @@ schedule.later(function()
 
     for server, ls_config in pairs(servers) do
         ls_config.capabilities = blink_cmp.get_lsp_capabilities()
-        vim.lsp.config(server, ls_config)
+        vim.lsp.config(server, require("codesettings").with_local_settings(server, ls_config))
         vim.lsp.enable(server)
     end
 

@@ -95,7 +95,6 @@ end
 
 schedule.now(function()
     vim.pack.add({
-        config.github("mrjones2014/codesettings.nvim"),
         {
             src = config.github("mrcjkb/rustaceanvim"),
             version = vim.version.range("*"),
@@ -127,13 +126,15 @@ schedule.now(function()
                         },
                         prefix = "crate",
                     },
-                    rustfmt = {
-                        extraArgs = {
-                            "+nightly",
-                        },
-                    },
                 },
             },
+            before_init = function(init_params, cfg)
+                require("codesettings").with_local_settings(cfg.name, cfg)
+                -- Some settings must be passed at init time, for example rust-analyzer.workspace.discoverConfig
+                if cfg.default_settings and cfg.default_settings[cfg.name] then
+                    init_params.initializationOptions = cfg.default_settings[cfg.name]
+                end
+            end,
         },
         -- DAP configuration
         dap = {},

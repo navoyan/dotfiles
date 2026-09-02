@@ -23,7 +23,7 @@
       "version": ">=0.0.0"
     },
     "codesettings.nvim": {
-      "rev": "f9fef80e55dd2d6c033eceebe4c8e9ef968ea1fb",
+      "rev": "82e0da4185c9972e0d05620f458356f4a40eb34f",
       "src": "https://github.com/mrjones2014/codesettings.nvim"
     },
     "conform.nvim": {
