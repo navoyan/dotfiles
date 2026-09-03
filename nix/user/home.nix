@@ -1,14 +1,9 @@
-{ pkgs, lib, ... }:
 {
-  users.users.narek = {
-    isNormalUser = true;
-    extraGroups = [
-      "networkmanager"
-      "wheel"
-      "docker"
-    ];
-  };
-
+  pkgs,
+  lib,
+  ...
+}:
+{
   hjem.users.narek =
     let
       genSymlinks =
@@ -20,15 +15,6 @@
     {
       user = "narek";
       directory = "/home/narek";
-
-      files =
-        let
-          symlinkTarget = "/home/narek/dotfiles";
-        in
-        {
-          ".bash_profile".source = "${symlinkTarget}/.bash_profile";
-          ".local/bin".source = "${symlinkTarget}/local/bin";
-        };
 
       xdg.config.files =
         let

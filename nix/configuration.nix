@@ -17,15 +17,21 @@ in
 {
   imports = [
     ./hardware-configuration.nix
-    ./user.nix
+    ./user
     inputs.spicetify-nix.nixosModules.default
   ];
 
-  nix.settings.experimental-features = [
-    "nix-command"
-    "flakes"
-    "pipe-operators"
-  ];
+  nix = {
+    channel.enable = false;
+    settings = {
+      use-xdg-base-directories = true;
+      experimental-features = [
+        "nix-command"
+        "flakes"
+        "pipe-operators"
+      ];
+    };
+  };
   nixpkgs.config.allowUnfree = true;
 
   boot.loader.limine.enable = true;
@@ -100,9 +106,12 @@ in
     };
   };
 
-  security.polkit = {
-    enable = true;
-    enablePkexecWrapper = true;
+  security = {
+    polkit = {
+      enable = true;
+      enablePkexecWrapper = true;
+    };
+    sudo-rs.enable = true;
   };
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -345,9 +354,6 @@ in
   programs.firejail = {
     enable = true;
     wrappedBinaries = {
-      claude = {
-        executable = "${pkgs.claude-code}/bin/claude";
-      };
       Telegram = {
         executable = "${pkgs.telegram-desktop}/bin/Telegram";
       };
