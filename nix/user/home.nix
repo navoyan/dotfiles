@@ -50,7 +50,6 @@
 
             "Vencord/themes"
 
-            "mimeapps.list"
             "rofi-rbw.rc"
             "lesskey"
 
