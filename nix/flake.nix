@@ -9,7 +9,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    spicetify-nix.url = "github:Gerg-L/spicetify-nix";
+    spicetify-nix = {
+      url = "github:Gerg-L/spicetify-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     apple-emoji-nix = {
       url = "github:oxcl/nix-flake-apple-emoji/ad1260acba5c30ab04ed9d3710d98d57a296d939";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -24,11 +27,7 @@
       nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
         inherit system;
         specialArgs = { inherit inputs; };
-        modules = [
-          inputs.hjem.nixosModules.default
-          { nixpkgs.overlays = [ inputs.apple-emoji-nix.overlays.default ]; }
-          ./configuration.nix
-        ];
+        modules = [ ./config.nix ];
       };
     };
 }

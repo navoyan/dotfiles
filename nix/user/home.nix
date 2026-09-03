@@ -13,9 +13,6 @@
         });
     in
     {
-      user = "narek";
-      directory = "/home/narek";
-
       xdg.config.files =
         let
           symlinks = genSymlinks "/home/narek/dotfiles/config" [

@@ -44,6 +44,3 @@ function fish_user_key_bindings
     bind m repeat-jump
     bind -M visual m repeat-jump
 end
-
-zoxide init fish --cmd j | source
-fzf --fish | source
