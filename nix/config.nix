@@ -1,6 +1,7 @@
-{inputs, ...}: {
+{
   imports = [
     ./hardware-config.nix
+    ./overlays
     ./system
     ./user
   ];
@@ -16,9 +17,6 @@
   };
 
   nixpkgs.config.allowUnfree = true;
-  nixpkgs.overlays = [
-    inputs.apple-emoji-nix.overlays.default
-  ];
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
