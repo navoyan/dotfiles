@@ -1,8 +1,4 @@
-{
-  pkgs,
-  ...
-}:
-{
+{pkgs, ...}: {
   security.polkit = {
     enable = true;
     enablePkexecWrapper = true;
@@ -24,8 +20,8 @@
   };
 
   environment.systemPackages = with pkgs; [
-    polkit_gnome
     pinentry-gnome3
+    polkit_gnome
 
     snapper
   ];

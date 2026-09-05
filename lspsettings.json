@@ -1,6 +1,11 @@
 {
-    // reference: https://github.com/LorenzBischof/nixfiles/blob/78464f793a2cfaf755ae6d2028f749b1707c54e7/modules/home/lspsettings.json
     "nixd": {
+        "formatting": {
+            "command": [
+                "alejandra"
+            ],
+        },
+        // reference: https://github.com/LorenzBischof/nixfiles/blob/78464f793a2cfaf755ae6d2028f749b1707c54e7/modules/home/lspsettings.json
         "nixpkgs": {
             "expr": "let findFlake = dir: if builtins.pathExists (dir + \"/flake.nix\") then dir else if builtins.pathExists (dir + \"/nix/flake.nix\") then dir + \"/nix\" else if toString dir == \"/\" then throw \"No flake.nix found\" else findFlake (dir + \"/..\"); flake = builtins.getFlake (\"path:\" + toString (findFlake ./.)); in import flake.inputs.nixpkgs { }"
         },

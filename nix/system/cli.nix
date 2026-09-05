@@ -1,8 +1,4 @@
-{
-  pkgs,
-  ...
-}:
-{
+{pkgs, ...}: {
   programs.fish.enable = true;
   programs.direnv = {
     enable = true;
@@ -10,7 +6,7 @@
   };
   programs.zoxide = {
     enable = true;
-    flags = [ "--cmd j" ];
+    flags = ["--cmd j"];
   };
   programs.fzf.keybindings = true;
 

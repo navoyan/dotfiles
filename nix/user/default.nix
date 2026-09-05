@@ -1,8 +1,4 @@
-{
-  inputs,
-  ...
-}:
-{
+{inputs, ...}: {
   imports = [
     inputs.hjem.nixosModules.default
     ./env.nix
@@ -26,7 +22,7 @@
   services.snapper.configs = {
     home = {
       SUBVOLUME = "/home";
-      ALLOW_USERS = [ "narek" ];
+      ALLOW_USERS = ["narek"];
       TIMELINE_CREATE = true;
       TIMELINE_CLEANUP = true;
       TIMELINE_LIMIT_HOURLY = 10;

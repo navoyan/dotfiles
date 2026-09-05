@@ -1,8 +1,4 @@
-{
-  pkgs,
-  ...
-}:
-{
+{pkgs, ...}: {
   networking.networkmanager.enable = true;
   networking.wireless.enable = true;
 
@@ -25,7 +21,7 @@
     enable = true;
     settings.Resolve = {
       DNSSEC = "true";
-      Domains = [ "~." ];
+      Domains = ["~."];
       DNSOverTLS = "true";
       FallbackDNS = [
         "1.1.1.1"

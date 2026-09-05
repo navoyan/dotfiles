@@ -4,7 +4,17 @@ repos:
     hooks:
       - id: trailing-whitespace
 
-  - repo: https://github.com/JohnnyMorganz/StyLua
-    rev: v2.0.2
+  - repo: local
     hooks:
+      - id: alejandra
+        name: alejandra
+        entry: alejandra
+        args: ["-q"]
+        types: [nix]
+        language: system
+
       - id: stylua
+        name: styLua
+        entry: stylua
+        types: [lua]
+        language: system

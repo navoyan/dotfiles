@@ -1,8 +1,4 @@
-{
-  pkgs,
-  ...
-}:
-{
+{pkgs, ...}: {
   programs.git = {
     enable = true;
     lfs.enable = true;
@@ -41,20 +37,20 @@
     gcc
     gdb
 
-    nixd
-    lua-language-server
     bash-language-server
+    helm-ls
+    lua-language-server
+    nixd
     ruff
+    tombi
     typescript-language-server
+    typos
     vscode-json-languageserver
     yaml-language-server
-    helm-ls
-    tombi
-    typos
 
-    nixfmt-rs
-    stylua
+    alejandra
     biome
+    stylua
 
     prek
     shellcheck

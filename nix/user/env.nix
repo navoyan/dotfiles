@@ -1,19 +1,17 @@
-{
-  config,
-  ...
-}:
-{
+{config, ...}: {
   hjem.users.narek.files = {
-    ".bash_profile".text = /* bash */ ''
-      source ${config.hjem.users.narek.environment.loadEnv}
+    ".bash_profile".text =
+      # bash
+      ''
+        source ${config.hjem.users.narek.environment.loadEnv}
 
-      if [[ $(tty) == "/dev/tty3" ]]; then
-          export MANGOHUD_CONFIGFILE=~/.config/MangoHud/MangoHud.conf
-          scoperun --mango --steam --mango -- steam -gamepadui
-          chvt 2
-          exit
-      fi
-    '';
+        if [[ $(tty) == "/dev/tty3" ]]; then
+            export MANGOHUD_CONFIGFILE=~/.config/MangoHud/MangoHud.conf
+            scoperun --mango --steam --mango -- steam -gamepadui
+            chvt 2
+            exit
+        fi
+      '';
   };
 
   hjem.users.narek.environment.sessionVariables = rec {

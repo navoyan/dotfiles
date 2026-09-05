@@ -1,13 +1,9 @@
-{
-  pkgs,
-  ...
-}:
-{
+{pkgs, ...}: {
   services.displayManager.ly.enable = true;
   programs.niri.enable = true;
 
   programs.waybar.enable = true;
-  systemd.user.services.waybar.path = [ "/run/current-system/sw" ];
+  systemd.user.services.waybar.path = ["/run/current-system/sw"];
 
   xdg.portal = {
     enable = true;
@@ -19,9 +15,9 @@
   };
   systemd.user.services.polkit-gnome-authentication-agent-1 = {
     description = "polkit-gnome-authentication-agent-1";
-    wantedBy = [ "graphical-session.target" ];
-    wants = [ "graphical-session.target" ];
-    after = [ "graphical-session.target" ];
+    wantedBy = ["graphical-session.target"];
+    wants = ["graphical-session.target"];
+    after = ["graphical-session.target"];
     serviceConfig = {
       Type = "simple";
       ExecStart = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1";
@@ -33,7 +29,7 @@
 
   xdg.terminal-exec = {
     enable = true;
-    settings.default = [ "kitty.desktop" ];
+    settings.default = ["kitty.desktop"];
   };
 
   fonts = {
@@ -45,10 +41,10 @@
     fontconfig = {
       enable = true;
       defaultFonts = {
-        serif = [ "Noto Serif" ];
-        sansSerif = [ "Noto Sans" ];
-        emoji = [ "Apple Color Emoji" ];
-        monospace = [ "JetBrainsMono Nerd Font" ];
+        serif = ["Noto Serif"];
+        sansSerif = ["Noto Sans"];
+        emoji = ["Apple Color Emoji"];
+        monospace = ["JetBrainsMono Nerd Font"];
       };
     };
   };
@@ -78,12 +74,12 @@
       ''
     ))
 
-    qtengine
-    klassy
     adwaita-icon-theme
+    klassy
+    qtengine
 
     (rofi.override {
-      plugins = [ rofi-calc ];
+      plugins = [rofi-calc];
     })
     rofi-rbw-wayland
     hyprpicker
