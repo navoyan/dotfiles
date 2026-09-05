@@ -1,10 +1,6 @@
-local schedule, config = require("schedule"), require("config")
+local schedule = require("schedule")
 
 schedule.now(function()
-    vim.pack.add({
-        config.github("nvim-mini/mini.icons"),
-    })
-
     local icons = require("mini.icons")
 
     icons.setup()

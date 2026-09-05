@@ -1,10 +1,6 @@
-local schedule, config = require("schedule"), require("config")
+local schedule = require("schedule")
 
 schedule.later(function()
-    vim.pack.add({
-        config.github("nvim-mini/mini.bracketed"),
-    })
-
     require("mini.bracketed").setup({
         comment = { suffix = "k" },
         buffer = { suffix = "" },

@@ -1,10 +1,6 @@
 local schedule, config = require("schedule"), require("config")
 
 schedule.later(function()
-    vim.pack.add({
-        config.github("nvim-mini/mini.statusline"),
-    })
-
     local statusline = require("mini.statusline")
 
     local function section_mode(args)

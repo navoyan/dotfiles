@@ -2,10 +2,6 @@ local schedule, config = require("schedule"), require("config")
 local map = vim.keymap.set
 
 schedule.now_if_args(function()
-    vim.pack.add({
-        config.github("nvim-mini/mini.files"),
-    })
-
     local files = require("mini.files")
 
     files.setup({

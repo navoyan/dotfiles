@@ -1,10 +1,6 @@
-local schedule, config = require("schedule"), require("config")
+local schedule = require("schedule")
 
 schedule.later(function()
-    vim.pack.add({
-        config.github("nvim-mini/mini.statusline"),
-    })
-
     local statusline = require("mini.statusline")
 
     local function content_active()

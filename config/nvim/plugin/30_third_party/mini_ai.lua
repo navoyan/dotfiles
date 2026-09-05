@@ -1,11 +1,6 @@
-local schedule, config = require("schedule"), require("config")
+local schedule = require("schedule")
 
 schedule.later(function()
-    vim.pack.add({
-        config.github("nvim-mini/mini.extra"),
-        config.github("nvim-mini/mini.ai"),
-    })
-
     local ai = require("mini.ai")
     local extra = require("mini.extra")
 

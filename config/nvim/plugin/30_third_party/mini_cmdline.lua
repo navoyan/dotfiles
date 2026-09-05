@@ -1,9 +1,5 @@
-local schedule, config = require("schedule"), require("config")
+local schedule = require("schedule")
 
 schedule.later(function()
-    vim.pack.add({
-        config.github("nvim-mini/mini.cmdline"),
-    })
-
     require("mini.cmdline").setup()
 end)

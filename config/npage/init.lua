@@ -1,1 +1,1 @@
-vim.cmd.source("~/.config/nvim/.vimrc")
+../nvim/init.lua

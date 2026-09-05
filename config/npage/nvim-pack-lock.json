@@ -9,9 +9,9 @@
       "rev": "e20f33507bd2d6c671b7273f797f2d3cf521ac61",
       "src": "https://codeberg.org/andyg/leap.nvim"
     },
-    "mini.statusline": {
-      "rev": "8c3829d4ef02b693f68e43fc131b433f11049b2b",
-      "src": "https://github.com/nvim-mini/mini.statusline"
+    "mini.nvim": {
+      "rev": "9d01f392b33fb2ba36fbc87fc0bf4453e63ffb0a",
+      "src": "https://github.com/nvim-mini/mini.nvim"
     },
     "tokyonight.nvim": {
       "rev": "cdc07ac78467a233fd62c493de29a17e0cf2b2b6",
