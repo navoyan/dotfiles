@@ -36,6 +36,7 @@
 
     gcc
     gdb
+    gammaray
 
     bash-language-server
     helm-ls

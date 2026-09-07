@@ -306,8 +306,19 @@ window-rule {
     open-on-workspace "7"
 }
 
+
+window-rule {
+    // lxqt polkit:
+    match title="^Authentication Required$"
+
+    open-floating true
+    default-column-width { proportion 0.25; }
+    block-out-from "screencast"
+}
+
 window-rule {
     match app-id="^Bitwarden$"
+    match app-id="^org.gnupg.pinentry-qt$"
 
     block-out-from "screen-capture"
 }

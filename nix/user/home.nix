@@ -50,7 +50,7 @@
         "firejail"
         "imv"
         "k9s"
-        "klassy"
+        "klassy/klassyrc"
         "lazygit"
         "niri"
         "npage"

@@ -1,3 +1,6 @@
 [Style]
 FrameCornerRadius=FCR_Custom
 FrameCustomCornerRadius=0
+
+[SystemIconGeneration]
+KlassyIconThemeInherits=breeze-dark

@@ -1,4 +1,8 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  lib,
+  ...
+}: {
   security.polkit = {
     enable = true;
     enablePkexecWrapper = true;
@@ -7,7 +11,26 @@
 
   programs.gnupg.agent = {
     enable = true;
-    pinentryPackage = pkgs.pinentry-qt; # options: pinentry-qt, pinentry-gtk2, pinentry-gnome3, pinentry-curses
+    pinentryPackage = pkgs.pinentry-qt;
+  };
+
+  systemd.user.services.lxqt-polkit = {
+    wantedBy = ["graphical-session.target"];
+    wants = ["graphical-session.target"];
+    after = ["graphical-session.target"];
+    environment = {
+      QT_PLUGIN_PATH = lib.makeSearchPath "lib/qt-6/plugins" [
+        pkgs.qtengine
+        pkgs.klassy
+      ];
+    };
+    serviceConfig = {
+      Type = "simple";
+      ExecStart = "${pkgs.lxqt.lxqt-policykit}/bin/lxqt-policykit-agent";
+      Restart = "on-failure";
+      RestartSec = 1;
+      TimeoutStopSec = 10;
+    };
   };
 
   programs.firejail = {
@@ -20,8 +43,8 @@
   };
 
   environment.systemPackages = with pkgs; [
-    pinentry-gnome3
-    polkit_gnome
+    pinentry-qt
+    lxqt.lxqt-policykit
 
     snapper
   ];
