@@ -1,4 +1,8 @@
-{config, ...}: {
+{
+  config,
+  lib,
+  ...
+}: {
   hjem.users.narek.files = {
     ".bash_profile".text =
       # bash
@@ -42,28 +46,29 @@
     MANPAGER = "env NVIM_APPNAME=npage nvim +Man!";
 
     FZF_DEFAULT_COMMAND = "fd --type f --hidden --exclude drive_c";
-    FZF_DEFAULT_OPTS =
+    FZF_DEFAULT_OPTS = lib.concatStringsSep " " [
       "--bind 'ctrl-backspace:backward-kill-word'"
-      + " --highlight-line"
-      + " --info=inline-right"
-      + " --ansi"
-      + " --layout=reverse"
-      + " --border=none"
-      + " --color=bg+:#283457"
-      + " --color=border:#27a1b9"
-      + " --color=fg:#c0caf5"
-      + " --color=gutter:#16161e"
-      + " --color=header:#ff9e64"
-      + " --color=hl+:#2ac3de"
-      + " --color=hl:#2ac3de"
-      + " --color=info:#545c7e"
-      + " --color=marker:#ff007c"
-      + " --color=pointer:#ff007c"
-      + " --color=prompt:#2ac3de"
-      + " --color=query:#c0caf5:regular"
-      + " --color=scrollbar:#27a1b9"
-      + " --color=separator:#ff9e64"
-      + " --color=spinner:#ff007c";
+      "--highlight-line"
+      "--info=inline-right"
+      "--ansi"
+      "--layout=reverse"
+      "--border=none"
+      "--color=bg+:#283457"
+      "--color=border:#27a1b9"
+      "--color=fg:#c0caf5"
+      "--color=gutter:#16161e"
+      "--color=header:#ff9e64"
+      "--color=hl+:#2ac3de"
+      "--color=hl:#2ac3de"
+      "--color=info:#545c7e"
+      "--color=marker:#ff007c"
+      "--color=pointer:#ff007c"
+      "--color=prompt:#2ac3de"
+      "--color=query:#c0caf5:regular"
+      "--color=scrollbar:#27a1b9"
+      "--color=separator:#ff9e64"
+      "--color=spinner:#ff007c"
+    ];
 
     AWWW_TRANSITION = "any";
     AWWW_TRANSITION_FPS = "180";

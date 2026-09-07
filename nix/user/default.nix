@@ -19,6 +19,8 @@
     directory = "/home/narek";
   };
 
+  programs.nh.flake = "/home/narek/dotfiles/nix";
+
   services.snapper.configs = {
     home = {
       SUBVOLUME = "/home";

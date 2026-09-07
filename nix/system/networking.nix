@@ -30,7 +30,10 @@
     };
   };
 
-  services.netbird.enable = true;
+  services.netbird = {
+    enable = true;
+    ui.enable = false;
+  };
 
   environment.systemPackages = with pkgs; [
     proton-vpn-cli

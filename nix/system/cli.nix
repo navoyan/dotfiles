@@ -10,6 +10,8 @@
   };
   programs.fzf.keybindings = true;
 
+  programs.nh.enable = true;
+
   environment.systemPackages = with pkgs; [
     kitty
 

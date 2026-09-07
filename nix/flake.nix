@@ -21,13 +21,18 @@
   outputs = {
     self,
     nixpkgs,
+    nixpkgs-qt6-10,
     ...
   } @ inputs: let
     system = "x86_64-linux";
+
+    pkgsQt610 = import inputs.nixpkgs-qt6-10 {inherit system;};
   in {
     nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
       inherit system;
-      specialArgs = {inherit inputs;};
+      specialArgs = {
+        inherit inputs pkgsQt610;
+      };
       modules = [./config.nix];
     };
   };
