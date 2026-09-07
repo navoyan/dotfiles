@@ -11,15 +11,18 @@
     powerOnBoot = true;
   };
 
+  hardware.keyboard.zsa.enable = true;
+
   programs.coolercontrol.enable = true;
 
   programs.librepods.enable = true;
   services.blueman.enable = true;
 
   environment.systemPackages = with pkgs; [
-    fastfetch
     gparted
     nvtopPackages.amd
     wiremix
+
+    keymapp
   ];
 }

@@ -22,6 +22,7 @@
     btop
     delta
     dust
+    fastfetch
     fd
     fishPlugins.tide
     fzf
