@@ -51,6 +51,7 @@
 
     alejandra
     biome
+    nixfmt-rs
     stylua
 
     prek

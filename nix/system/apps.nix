@@ -30,6 +30,7 @@
 
     drawy
     imv
+    libreoffice
     mpv
     mpv-handler
     obs-studio
@@ -41,5 +42,7 @@
     (discord.override {
       withVencord = true;
     })
+
+    protonplus
   ];
 }
