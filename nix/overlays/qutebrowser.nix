@@ -8,7 +8,7 @@ pkgsQt610: final: prev: {
         "--suffix"
         "QT_PLUGIN_PATH"
         ":"
-        "${pkgsQt610.qtengine}/lib/qt-6/plugins"
+        "${pkgsQt610.qt6Packages.qt6ct}/lib/qt-6/plugins"
       ];
   });
 }

@@ -20,7 +20,7 @@
     after = ["graphical-session.target"];
     environment = {
       QT_PLUGIN_PATH = lib.makeSearchPath "lib/qt-6/plugins" [
-        pkgs.qtengine
+        pkgs.qt6Packages.qt6ct
         pkgs.klassy
       ];
     };

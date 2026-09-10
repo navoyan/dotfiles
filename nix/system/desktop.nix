@@ -62,8 +62,9 @@
     ))
 
     adwaita-icon-theme
+    kdePackages.breeze-icons
     klassy
-    qtengine
+    qt6Packages.qt6ct
 
     (rofi.override {
       plugins = [rofi-calc];

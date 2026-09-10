@@ -1,3 +1,5 @@
+# vim:ft=confini
+
 [Style]
 FrameCornerRadius=FCR_Custom
 FrameCustomCornerRadius=0

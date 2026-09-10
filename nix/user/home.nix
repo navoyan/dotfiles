@@ -56,7 +56,7 @@
         "npage"
         "nvim"
         "pipewire"
-        "qtengine"
+        "qt6ct/qt6ct.conf"
         "rofi"
         "swaync"
         "tmux"
@@ -93,10 +93,10 @@
     xdg.data.files = let
       symlinks = genSymlinks "/home/narek/dotfiles/local/share" [
         "themes"
+        "color-schemes"
 
         "applications/google-meet.desktop"
         "applications/mongodb-compass.desktop"
-        "applications/org.telegram.desktop.desktop"
         "applications/wiremix.desktop"
       ];
 

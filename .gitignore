@@ -1,4 +1,6 @@
-.config/qutebrowser/default.py
-.config/rofi/default.rasi
-.config/mpv/default/
-.config/yazi/default/
+config/mpv/default/
+config/yazi/default/
+
+config/qt6ct/default.conf
+config/qutebrowser/default.py
+config/rofi/default.rasi

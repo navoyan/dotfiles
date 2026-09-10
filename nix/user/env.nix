@@ -33,7 +33,7 @@
     NIXOS_OZONE_WL = "1";
 
     QT_QPA_PLATFORM = "wayland";
-    QT_QPA_PLATFORMTHEME = "qtengine";
+    QT_QPA_PLATFORMTHEME = "qt6ct";
 
     GTK_THEME = "TokyoNight";
 
