@@ -302,6 +302,12 @@ c.colors.tabs.pinned.selected.even.fg = base05
 # Background color of pinned selected even tabs.
 c.colors.tabs.pinned.selected.even.bg = base02
 
+# Background color of tooltips.
+c.colors.tooltip.bg = base00
+
+# Foreground color of tooltips.
+c.colors.tooltip.fg = base05
+
 # Background color for webpages if unset (or empty to use the theme's
 # color).
 # c.colors.webpage.bg = base00

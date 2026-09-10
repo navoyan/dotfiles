@@ -46,6 +46,8 @@ c.tabs.title.format_pinned = "{aligned_index}  {audio}"
 
 c.fonts.default_size = "12pt"
 c.fonts.default_family = ["JetBrainsMono NFM"]
+c.fonts.contextmenu = "11pt JetBrainsMono NFM"
+c.fonts.tooltip = "11pt JetBrainsMono NFM"
 
 c.colors.webpage.preferred_color_scheme = "dark"
 c.colors.webpage.darkmode.enabled = True
