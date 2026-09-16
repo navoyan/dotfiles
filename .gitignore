@@ -1,6 +1,6 @@
-config/mpv/default/
-config/yazi/default/
+modules/programs/mpv/default/
+modules/programs/yazi/default/
 
-config/qt6ct/default.conf
-config/qutebrowser/default.py
-config/rofi/default.rasi
+modules/theming/qt/qt6ct/default.conf
+modules/programs/qutebrowser/default.py
+modules/programs/rofi/default.rasi

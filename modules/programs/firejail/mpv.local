@@ -1,0 +1,22 @@
+# redirects to: /etc/firejail/mpv.profile
+
+whitelist ${HOME}/Videos
+whitelist ${HOME}/Data/Videos
+
+whitelist ${HOME}/.config
+whitelist ${HOME}/dotfiles
+
+whitelist ${HOME}/.local/share/rustup
+whitelist ${HOME}/.local/share/cargo
+whitelist ${HOME}/.cache/rust-script
+
+# for yt-dlp cookies:
+noblacklist ${HOME}/.local/share/qutebrowser
+whitelist ${HOME}/.local/share/qutebrowser
+
+# incompatible with NixOS:
+ignore private-bin
+
+# needed for `thumbfast`/`thumbyt` to function:
+include allow-bin-sh.inc
+ignore noexec /tmp
