@@ -18,6 +18,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     import-tree.url = "github:denful/import-tree";
+    jail-nix.url = "sourcehut:~alexdavid/jail.nix";
 
     spicetify-nix = {
       url = "github:Gerg-L/spicetify-nix";
@@ -32,6 +33,7 @@
     self,
     nixpkgs,
     nixpkgs-qt6-10,
+    jail-nix,
     import-tree,
     ...
   } @ inputs: let
@@ -42,6 +44,11 @@
       overlays = [
         inputs.nur.repos.ilya-fedin.overlays.qt6ct
       ];
+    };
+
+    localLib = import ./lib {
+      inherit jail-nix;
+      inherit (nixosSystem) pkgs lib;
     };
 
     nixosSystem = nixpkgs.lib.nixosSystem {
@@ -55,11 +62,7 @@
         (import-tree ./hosts/desktop)
       ];
     };
-
-    localLib = import ./lib {
-      inherit (nixosSystem) pkgs lib;
-    };
   in {
-    nixosConfigurations.nixos = nixosSystem;
+    nixosConfigurations.nixos-desktop = nixosSystem;
   };
 }

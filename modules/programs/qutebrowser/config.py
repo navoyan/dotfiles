@@ -77,9 +77,10 @@ c.fileselect.single_file.command = [
 c.editor.command = [
     "kitty",
     "--app-id=kitty-popup-small",
-    "bash",
-    "-c",
-    "nvim '+set wrap' '+call cursor({line}, {column})' {file}",
+    "nvim",
+    "+set wrap",
+    "+call cursor({line}, {column})",
+    "{file}",
 ]
 
 

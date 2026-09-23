@@ -1,6 +1,7 @@
 {
   pkgs,
   pkgsQt610,
+  lib,
   localLib,
   ...
 }: let
@@ -18,18 +19,125 @@
         ];
     });
   };
+
+  qutebrowser = pkgs.qutebrowser.override {
+    withPdfReader = false;
+  };
+
+  thirdPartyScripts = {
+    ytAdsBypass = pkgs.fetchurl {
+      url = "https://update.greasyfork.org/scripts/575941/1849507/YouTube%20Ads-Bypass.user.js";
+      hash = "sha256-SdANPGG210MgZo6FZO0REUuzA6rBTHGbuQ7s8wEHUDA=";
+    };
+    removeYtShorts = pkgs.fetchurl {
+      url = "https://update.greasyfork.org/scripts/522057/1865541/Remove%20YouTube%20Shorts.user.js";
+      hash = "sha256-HAOh7QQm4SXT9X+fJ1x4paa2+P0KXoznZMm8Dxmd6gs=";
+    };
+  };
+
+  permissions = combinators:
+    with combinators; [
+      network
+      qt
+      gpu
+      xdg-desktop-portal
+      notifications
+
+      (add-pkg-deps [
+        thirdPartyScripts.ytAdsBypass
+        thirdPartyScripts.removeYtShorts
+      ])
+
+      (xdg-runtime "qutebrowser")
+      (dbus {
+        own = [
+          "org.mpris.MediaPlayer2.chromium.*"
+          "org.mpris.MediaPlayer2.qutebrowser.*"
+        ];
+      })
+
+      (readwrite (noescape "~/.config/qutebrowser"))
+      (readwrite (noescape "~/.cache/qutebrowser"))
+      (readwrite (noescape "~/.local/share/qutebrowser"))
+
+      (readwrite (noescape "~/Downloads"))
+      (readwrite (noescape "~/Documents"))
+      (readwrite (noescape "~/Pictures"))
+
+      ## integrations:
+
+      # mpv:
+      (jail-to-host-channel "mpv"
+        # bash
+        ''
+          mime=$(handlr mime "$1" --json | jq -r '.[0].mime')
+          if [[ "$mime" =~ ^x-scheme-handler/http(s)?$ ]]; then
+            mpv-dl "$1"
+          fi
+        '')
+
+      # mpv-handler:
+      (add-pkg-deps [
+        (pkgs.writeShellScriptBin "xdg-open" ''
+          exec xdgopenchannel "$1"
+        '')
+      ])
+      (jail-to-host-channel "xdgopenchannel"
+        # bash
+        ''
+          xdg-open "$1"
+        '')
+
+      # kitty:
+      (add-pkg-deps [pkgs.kitty])
+      (readonly (noescape "~/.config/kitty"))
+      (readwrite (noescape "~/.cache/kitty"))
+
+      # nvim:
+      (add-pkg-deps [pkgs.neovim pkgs.git])
+      (readonly (noescape "~/.config/nvim"))
+      (readwrite (noescape "~/.cache/nvim"))
+      (readonly (noescape "~/.local/share/nvim"))
+      (readonly (noescape "~/vaults"))
+
+      # yazi:
+      (add-pkg-deps [pkgs.yazi])
+      (readonly (noescape "~/.config/yazi"))
+      (readwrite (noescape "~/.cache/yazi"))
+    ];
+
+  qutebrowserJailed = localLib.jail.bin "qutebrowser" qutebrowser permissions;
+
+  runScript =
+    pkgs.writeShellScriptBin "qutebrowser"
+    # bash
+    ''
+      qute_runtime="$XDG_RUNTIME_DIR/qutebrowser"
+      mkdir -p "$qute_runtime"
+
+      open=$([[ "$1" == '--untrusted-args' ]] && echo "$2" || echo "$1")
+      mime=$(handlr mime "$open" --json | jq -r '.[0].mime')
+
+      if [[ "$mime" =~ ^x-scheme-handler/http(s)?$ ]] && fd --quiet . "$qute_runtime"; then
+          echo "Running unjailed qutebrowser to pass a link..." >&2
+          ${lib.getExe qutebrowser} "$@"
+          exit
+      fi
+
+      ${lib.getExe qutebrowserJailed} "$@"
+    '';
+
+  qutebrowserPkg = pkgs.symlinkJoin {
+    name = "qutebrowser";
+    paths = [
+      runScript
+      qutebrowser
+    ];
+  };
 in {
   nixpkgs.overlays = [overlay];
 
-  environment.systemPackages = [
-    (pkgs.qutebrowser.override {
-      withPdfReader = false;
-    })
-  ];
-
-  hj.environment.sessionVariables = {
-    BROWSER = "qutebrowser";
-  };
+  environment.systemPackages = [qutebrowserPkg];
 
   my.xdgDirectSymlinks.config.qutebrowser = localLib.path.join "programs/qutebrowser" [
     "./config.py"
@@ -39,14 +147,8 @@ in {
   ];
 
   hj.xdg.data.files = {
-    "qutebrowser/greasemonkey/yt_ads_bypass.js".source = pkgs.fetchurl {
-      url = "https://update.greasyfork.org/scripts/575941/1849507/YouTube%20Ads-Bypass.user.js";
-      hash = "sha256-SdANPGG210MgZo6FZO0REUuzA6rBTHGbuQ7s8wEHUDA=";
-    };
-    "qutebrowser/greasemonkey/remove_yt_shorts.js".source = pkgs.fetchurl {
-      url = "https://update.greasyfork.org/scripts/522057/1865541/Remove%20YouTube%20Shorts.user.js";
-      hash = "sha256-HAOh7QQm4SXT9X+fJ1x4paa2+P0KXoznZMm8Dxmd6gs=";
-    };
+    "qutebrowser/greasemonkey/yt_ads_bypass.js".source = thirdPartyScripts.ytAdsBypass;
+    "qutebrowser/greasemonkey/remove_yt_shorts.js".source = thirdPartyScripts.removeYtShorts;
   };
 
   hj.xdg.mime-apps = {

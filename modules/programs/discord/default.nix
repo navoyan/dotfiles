@@ -2,12 +2,34 @@
   pkgs,
   localLib,
   ...
-}: {
-  environment.systemPackages = [
-    (pkgs.discord.override {
-      withVencord = true;
-    })
-  ];
+}: let
+  discord = pkgs.discord.override {
+    withVencord = true;
+  };
+
+  permissions = combinators:
+    with combinators; [
+      network
+      gui
+      gpu
+      xdg-desktop-portal
+      notifications
+      tray
+      open-urls-in-browser
+
+      # otherwise refuses to start despite running natively on wayland:
+      xwayland
+
+      (readwrite (noescape "~/.config/discord"))
+      (readwrite (noescape "~/.config/Vencord"))
+
+      (readonly (noescape "~/Downloads"))
+      (readonly (noescape "~/Pictures"))
+    ];
+
+  discordJailed = localLib.jail.pkg "Discord" discord permissions;
+in {
+  environment.systemPackages = [discordJailed];
 
   my.xdgDirectSymlinks.config.Vencord = localLib.path.join "programs/discord" [
     "./themes"

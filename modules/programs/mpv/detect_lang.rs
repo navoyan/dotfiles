@@ -8,16 +8,17 @@
 use lingua::LanguageDetectorBuilder;
 use std::env;
 
-fn main() {
+fn main() -> Result<(), Box<dyn std::error::Error>> {
     let text = env::args()
         .nth(1)
-        .expect("single 'text' argument is required");
+        .ok_or("single 'text' argument is required")?;
 
     let detector = LanguageDetectorBuilder::from_all_spoken_languages().build();
 
     let lang = detector
         .detect_language_of(text)
-        .expect("undetectable language");
+        .ok_or("undetectable language")?;
 
-    print!("{}", lang.iso_code_639_1())
+    print!("{}", lang.iso_code_639_1());
+    Ok(())
 }

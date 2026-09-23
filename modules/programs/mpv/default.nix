@@ -1,4 +1,8 @@
-{pkgs, ...}: let
+{
+  pkgs,
+  localLib,
+  ...
+}: let
   overlay = self: super: {
     # use unreleased git version:
     mpv-unwrapped = super.mpv-unwrapped.overrideAttrs (old: {
@@ -30,7 +34,7 @@
 
   thirdPartyScripts = import ./_3rd-party-scripts.nix {inherit pkgs;};
 
-  mpvPkg = pkgs.mpv.override {
+  mpv = pkgs.mpv.override {
     scripts = [
       thirdPartyScripts.mfpbar
       thirdPartyScripts.thumbfast
@@ -38,12 +42,57 @@
       pkgs.mpvScripts.sponsorblock-minimal
     ];
   };
+
+  mpvHandler = pkgs.mpv-handler.override {
+    inherit mpv;
+  };
+
+  permissions = combinators:
+    with combinators; [
+      gui
+      gpu
+
+      (add-pkg-deps [
+        # for thumbyt:
+        pkgs.curl
+        pkgs.ffmpeg
+      ])
+
+      # rust-script:
+      (add-pkg-deps [
+        pkgs.rustup
+        pkgs.gcc
+        pkgs.rust-script
+      ])
+      (fwd-env "RUSTUP_HOME")
+      (fwd-env "CARGO_HOME")
+      (readwrite (noescape "~/.local/share/rustup"))
+      (readwrite (noescape "~/.local/share/cargo"))
+      (readwrite (noescape "~/.cache/rust-script"))
+
+      # mpv dirs:
+      (readonly (noescape "~/.config/mpv"))
+      (readwrite (noescape "~/.cache/mpv"))
+      (readwrite (noescape "~/.local/state/mpv"))
+
+      # media dirs:
+      (readwrite (noescape "~/Downloads"))
+      (readwrite (noescape "~/Data/Videos"))
+      (readwrite (noescape "~/Games"))
+    ];
+
+  permissionsWithNetwork = combinators: (permissions combinators) ++ [combinators.network];
+
+  mpvJailed = localLib.jail.pkg "mpv" mpv permissions;
+  mpvDlJailed = localLib.jail.bin "mpv-dl" mpv permissionsWithNetwork;
+  mpvHandlerJailed = localLib.jail.pkg "mpv-handler" mpvHandler permissionsWithNetwork;
 in {
   nixpkgs.overlays = [overlay];
 
   environment.systemPackages = [
-    mpvPkg
-    pkgs.mpv-handler
+    mpvJailed
+    mpvDlJailed
+    mpvHandlerJailed
   ];
 
   my.xdgDirectSymlinks.config.mpv = "programs/mpv";
