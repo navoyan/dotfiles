@@ -7,6 +7,7 @@
     enable = true;
     powerOnBoot = true;
   };
+  services.usbmuxd.enable = true;
 
   hardware.keyboard.zsa.enable = true;
 

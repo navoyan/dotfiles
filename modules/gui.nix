@@ -7,6 +7,7 @@
     obs-studio
     telegram-desktop
 
+    iloader
     protonplus
   ];
 }
