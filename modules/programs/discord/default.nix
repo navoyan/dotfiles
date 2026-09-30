@@ -12,10 +12,10 @@
       network
       gui
       gpu
+      xdg-open
       xdg-desktop-portal
       notifications
       tray
-      open-urls-in-browser
 
       # otherwise refuses to start despite running natively on wayland:
       xwayland

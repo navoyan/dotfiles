@@ -47,7 +47,7 @@
     };
 
     localLib = import ./lib {
-      inherit jail-nix;
+      inherit jail-nix import-tree;
       inherit (nixosSystem) pkgs lib;
     };
 

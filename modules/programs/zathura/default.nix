@@ -11,7 +11,7 @@
     with combinators; [
       gui
       gpu
-      open-urls-in-browser
+      xdg-open
 
       (readwrite (noescape "~/.config/zathura"))
       (readwrite (noescape "~/.local/share/zathura"))

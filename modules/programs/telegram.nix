@@ -8,7 +8,7 @@
       network
       qt
       gpu
-      open-urls-in-browser
+      xdg-open
       xdg-desktop-portal
       tray
 

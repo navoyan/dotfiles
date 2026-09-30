@@ -1,12 +1,17 @@
 {
   pkgs,
   jail-nix,
+  import-tree,
   ...
 }: rec {
   bin = jail-nix.lib.extend {
     inherit pkgs;
 
-    additionalCombinators = import ./combinators pkgs;
+    additionalCombinators = builtinCombinators:
+      (import-tree.leaves ./combinators)
+      |> map (x: import x pkgs builtinCombinators)
+      |> builtins.foldl' (acc: x: acc // x) {};
+
     basePermissions = combinators:
       with combinators; [
         # defaults:

@@ -12,8 +12,8 @@
       network
       gui
       gpu
+      xdg-open
       xdg-desktop-portal
-      open-urls-in-browser
 
       (dbus {
         own = ["org.mpris.MediaPlayer2.spotify"];

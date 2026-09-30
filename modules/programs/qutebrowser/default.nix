@@ -40,6 +40,7 @@
       network
       qt
       gpu
+      xdg-open
       xdg-desktop-portal
       notifications
 
@@ -74,18 +75,6 @@
           if [[ "$mime" =~ ^x-scheme-handler/http(s)?$ ]]; then
             mpv-dl "$1"
           fi
-        '')
-
-      # mpv-handler:
-      (add-pkg-deps [
-        (pkgs.writeShellScriptBin "xdg-open" ''
-          exec xdgopenchannel "$1"
-        '')
-      ])
-      (jail-to-host-channel "xdgopenchannel"
-        # bash
-        ''
-          xdg-open "$1"
         '')
 
       # kitty:
