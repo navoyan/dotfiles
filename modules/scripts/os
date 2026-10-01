@@ -1,6 +1,4 @@
 #!/usr/bin/env bash
 
-git -C "$NH_FLAKE" ls-files --others --exclude-standard -z \
-  | xargs -0 git -C "$NH_FLAKE" add --intent-to-add
-
+git -C "$NH_FLAKE" add --intent-to-add .
 nh os "$@"
