@@ -1,37 +1,30 @@
-{
-  pkgs,
-  localLib,
-  ...
-}: let
-  discord = pkgs.discord.override {
-    withVencord = true;
+{localLib, ...}: {
+  my.jail.vesktop = {
+    enable = true;
+    bootstrapService.enable = true;
+    permissions = combinators:
+      with combinators; [
+        network
+        gui
+        gpu
+        xdg-open
+        xdg-desktop-portal
+        notifications
+
+        tray
+        (dbus {
+          # to own `org.freedesktop.StatusNotifierItem-<pid>-<n>`:
+          own = ["org.freedesktop.*"];
+        })
+
+        (readwrite (noescape "~/.config/vesktop"))
+
+        (readonly (noescape "~/Downloads"))
+        (readonly (noescape "~/Pictures"))
+      ];
   };
 
-  permissions = combinators:
-    with combinators; [
-      network
-      gui
-      gpu
-      xdg-open
-      xdg-desktop-portal
-      notifications
-      tray
-
-      # otherwise refuses to start despite running natively on wayland:
-      xwayland
-
-      (readwrite (noescape "~/.config/discord"))
-      (readwrite (noescape "~/.config/Vencord"))
-
-      (readonly (noescape "~/Downloads"))
-      (readonly (noescape "~/Pictures"))
-    ];
-
-  discordJailed = localLib.jail.pkg "Discord" discord permissions;
-in {
-  environment.systemPackages = [discordJailed];
-
-  my.xdgDirectSymlinks.config.Vencord = localLib.path.join "programs/discord" [
+  my.xdgDirectSymlinks.config.vesktop = localLib.path.join "programs/discord" [
     "./themes"
   ];
 }

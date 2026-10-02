@@ -1,28 +1,23 @@
-{
-  pkgs,
-  localLib,
-  ...
-}: let
-  zathura = pkgs.zathura.override {
-    useMupdf = true;
+{pkgs, ...}: {
+  my.jail.zathura = {
+    enable = true;
+    bootstrapService.enable = true;
+    package = pkgs.zathura.override {
+      useMupdf = true;
+    };
+    permissions = combinators:
+      with combinators; [
+        gui
+        gpu
+        xdg-open
+
+        (readwrite (noescape "~/.config/zathura"))
+        (readwrite (noescape "~/.local/share/zathura"))
+
+        (readonly (noescape "~/Downloads"))
+        (readonly (noescape "~/Documents"))
+      ];
   };
-
-  permissions = combinators:
-    with combinators; [
-      gui
-      gpu
-      xdg-open
-
-      (readwrite (noescape "~/.config/zathura"))
-      (readwrite (noescape "~/.local/share/zathura"))
-
-      (readonly (noescape "~/Downloads"))
-      (readonly (noescape "~/Documents"))
-    ];
-
-  zathuraJailed = localLib.jail.pkg "zathura" zathura permissions;
-in {
-  environment.systemPackages = [zathuraJailed];
 
   my.xdgDirectSymlinks.config.zathura = "programs/zathura";
 

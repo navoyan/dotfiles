@@ -1,8 +1,4 @@
-{
-  pkgs,
-  localLib,
-  ...
-}: let
+{pkgs, ...}: let
   overlay = self: super: {
     # use unreleased git version:
     mpv-unwrapped = super.mpv-unwrapped.overrideAttrs (old: {
@@ -15,12 +11,14 @@
       };
       postPatch = self.lib.concatStringsSep "\n" [
         # Don't reference compile time dependencies or create a build outputs cycle between out and dev
+        # bash
         ''
           substituteInPlace meson.build \
             --replace-fail "conf_data.set_quoted('CONFIGURATION', meson.build_options().strip().replace('\\\\', '\\\\\\\\'))" \
                            "conf_data.set_quoted('CONFIGURATION', '<omitted>')"
         ''
         # A trick to patchShebang everything except mpv_identify.sh
+        # bash
         ''
           pushd TOOLS
           mv mpv_identify.sh mpv_identify
@@ -32,7 +30,7 @@
     });
   };
 
-  thirdPartyScripts = import ./_3rd-party-scripts.nix {inherit pkgs;};
+  thirdPartyScripts = import ./_3rd-party-scripts.nix pkgs;
 
   mpv = pkgs.mpv.override {
     scripts = [
@@ -41,10 +39,6 @@
       thirdPartyScripts.thumbyt
       pkgs.mpvScripts.sponsorblock-minimal
     ];
-  };
-
-  mpvHandler = pkgs.mpv-handler.override {
-    inherit mpv;
   };
 
   permissions = combinators:
@@ -82,18 +76,31 @@
     ];
 
   permissionsWithNetwork = combinators: (permissions combinators) ++ [combinators.network];
-
-  mpvJailed = localLib.jail.pkg "mpv" mpv permissions;
-  mpvDlJailed = localLib.jail.bin "mpv-dl" mpv permissionsWithNetwork;
-  mpvHandlerJailed = localLib.jail.pkg "mpv-handler" mpvHandler permissionsWithNetwork;
 in {
   nixpkgs.overlays = [overlay];
 
-  environment.systemPackages = [
-    mpvJailed
-    mpvDlJailed
-    mpvHandlerJailed
-  ];
+  my.jail.mpv = {
+    enable = true;
+    bootstrapService.enable = true;
+    package = mpv;
+    inherit permissions;
+  };
+
+  my.jail.mpv-dl = {
+    enable = true;
+    bootstrapService.enable = true;
+    package = mpv;
+    permissions = permissionsWithNetwork;
+  };
+
+  my.jail.mpv-handler = {
+    enable = true;
+    bootstrapService.enable = true;
+    package = pkgs.mpv-handler.override {
+      inherit mpv;
+    };
+    permissions = permissionsWithNetwork;
+  };
 
   my.xdgDirectSymlinks.config.mpv = "programs/mpv";
 }

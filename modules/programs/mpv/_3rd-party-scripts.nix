@@ -1,4 +1,4 @@
-{pkgs, ...}: {
+pkgs: {
   mfpbar = pkgs.mpvScripts.buildLua {
     pname = "mfpbar";
     version = "unstable-2026-09-11";

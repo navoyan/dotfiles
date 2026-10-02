@@ -1,7 +1,6 @@
 {
   pkgs,
   pkgsQt610,
-  lib,
   localLib,
   ...
 }: let
@@ -20,10 +19,6 @@
     });
   };
 
-  qutebrowser = pkgs.qutebrowser.override {
-    withPdfReader = false;
-  };
-
   thirdPartyScripts = {
     ytAdsBypass = pkgs.fetchurl {
       url = "https://update.greasyfork.org/scripts/575941/1849507/YouTube%20Ads-Bypass.user.js";
@@ -34,99 +29,74 @@
       hash = "sha256-HAOh7QQm4SXT9X+fJ1x4paa2+P0KXoznZMm8Dxmd6gs=";
     };
   };
-
-  permissions = combinators:
-    with combinators; [
-      network
-      qt
-      gpu
-      xdg-open
-      xdg-desktop-portal
-      notifications
-
-      (add-pkg-deps [
-        thirdPartyScripts.ytAdsBypass
-        thirdPartyScripts.removeYtShorts
-      ])
-
-      (xdg-runtime "qutebrowser")
-      (dbus {
-        own = [
-          "org.mpris.MediaPlayer2.chromium.*"
-          "org.mpris.MediaPlayer2.qutebrowser.*"
-        ];
-      })
-
-      (readwrite (noescape "~/.config/qutebrowser"))
-      (readwrite (noescape "~/.cache/qutebrowser"))
-      (readwrite (noescape "~/.local/share/qutebrowser"))
-
-      (readwrite (noescape "~/Downloads"))
-      (readwrite (noescape "~/Documents"))
-      (readwrite (noescape "~/Pictures"))
-
-      ## integrations:
-
-      # mpv:
-      (jail-to-host-channel "mpv"
-        # bash
-        ''
-          mime=$(handlr mime "$1" --json | jq -r '.[0].mime')
-          if [[ "$mime" =~ ^x-scheme-handler/http(s)?$ ]]; then
-            mpv-dl "$1"
-          fi
-        '')
-
-      # kitty:
-      (add-pkg-deps [pkgs.kitty])
-      (readonly (noescape "~/.config/kitty"))
-      (readwrite (noescape "~/.cache/kitty"))
-
-      # nvim:
-      (add-pkg-deps [pkgs.neovim pkgs.git])
-      (readonly (noescape "~/.config/nvim"))
-      (readwrite (noescape "~/.cache/nvim"))
-      (readonly (noescape "~/.local/share/nvim"))
-      (readonly (noescape "~/vaults"))
-
-      # yazi:
-      (add-pkg-deps [pkgs.yazi])
-      (readonly (noescape "~/.config/yazi"))
-      (readwrite (noescape "~/.cache/yazi"))
-    ];
-
-  qutebrowserJailed = localLib.jail.bin "qutebrowser" qutebrowser permissions;
-
-  runScript =
-    pkgs.writeShellScriptBin "qutebrowser"
-    # bash
-    ''
-      qute_runtime="$XDG_RUNTIME_DIR/qutebrowser"
-      mkdir -p "$qute_runtime"
-
-      open=$([[ "$1" == '--untrusted-args' ]] && echo "$2" || echo "$1")
-      mime=$(handlr mime "$open" --json | jq -r '.[0].mime')
-
-      if [[ "$mime" =~ ^x-scheme-handler/http(s)?$ ]] && fd --quiet . "$qute_runtime"; then
-          echo "Running unjailed qutebrowser to pass a link..." >&2
-          ${lib.getExe qutebrowser} "$@"
-          exit
-      fi
-
-      ${lib.getExe qutebrowserJailed} "$@"
-    '';
-
-  qutebrowserPkg = pkgs.symlinkJoin {
-    name = "qutebrowser";
-    paths = [
-      runScript
-      qutebrowser
-    ];
-  };
 in {
   nixpkgs.overlays = [overlay];
 
-  environment.systemPackages = [qutebrowserPkg];
+  my.jail.qutebrowser = {
+    enable = true;
+    bootstrapService.enable = true;
+    package = pkgs.qutebrowser.override {
+      withPdfReader = false;
+    };
+    permissions = combinators:
+      with combinators; [
+        network
+        qt
+        gpu
+        xdg-open
+        xdg-desktop-portal
+        notifications
+
+        (add-pkg-deps [
+          thirdPartyScripts.ytAdsBypass
+          thirdPartyScripts.removeYtShorts
+        ])
+
+        (dbus {
+          own = [
+            "org.mpris.MediaPlayer2.chromium.*"
+            "org.mpris.MediaPlayer2.qutebrowser.*"
+          ];
+        })
+
+        (readwrite (noescape "~/.config/qutebrowser"))
+        (readwrite (noescape "~/.cache/qutebrowser"))
+        (readwrite (noescape "~/.local/share/qutebrowser"))
+
+        (readwrite (noescape "~/Downloads"))
+        (readwrite (noescape "~/Documents"))
+        (readwrite (noescape "~/Pictures"))
+
+        ## integrations:
+
+        # mpv:
+        (jail-to-host-channel "mpv"
+          # bash
+          ''
+            mime=$(handlr mime "$1" --json | jq -r '.[0].mime')
+            if [[ "$mime" =~ ^x-scheme-handler/http(s)?$ ]]; then
+              mpv-dl "$1"
+            fi
+          '')
+
+        # kitty:
+        (add-pkg-deps [pkgs.kitty])
+        (readonly (noescape "~/.config/kitty"))
+        (readwrite (noescape "~/.cache/kitty"))
+
+        # nvim:
+        (add-pkg-deps [pkgs.neovim pkgs.git])
+        (readonly (noescape "~/.config/nvim"))
+        (readwrite (noescape "~/.cache/nvim"))
+        (readonly (noescape "~/.local/share/nvim"))
+        (readonly (noescape "~/vaults"))
+
+        # yazi:
+        (add-pkg-deps [pkgs.yazi])
+        (readonly (noescape "~/.config/yazi"))
+        (readwrite (noescape "~/.cache/yazi"))
+      ];
+  };
 
   my.xdgDirectSymlinks.config.qutebrowser = localLib.path.join "programs/qutebrowser" [
     "./config.py"

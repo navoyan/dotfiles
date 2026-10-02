@@ -1,24 +1,21 @@
-{
-  pkgs,
-  localLib,
-  ...
-}: let
-  permissions = combinators:
-    with combinators; [
-      network
-      qt
-      gpu
-      xdg-open
-      xdg-desktop-portal
-      tray
+{pkgs, ...}: {
+  my.jail.Telegram = {
+    enable = true;
+    bootstrapService.enable = true;
+    package = pkgs.telegram-desktop;
+    permissions = combinators:
+      with combinators; [
+        network
+        qt
+        gpu
+        xdg-open
+        xdg-desktop-portal
+        tray
 
-      (readwrite (noescape "~/.local/share/TelegramDesktop"))
+        (readwrite (noescape "~/.local/share/TelegramDesktop"))
 
-      (readonly (noescape "~/Downloads"))
-      (readonly (noescape "~/Pictures"))
-    ];
-
-  telegramJailed = localLib.jail.pkg "Telegram" pkgs.telegram-desktop permissions;
-in {
-  environment.systemPackages = [telegramJailed];
+        (readonly (noescape "~/Downloads"))
+        (readonly (noescape "~/Pictures"))
+      ];
+  };
 }

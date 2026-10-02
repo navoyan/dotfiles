@@ -21,6 +21,7 @@
 
         # essential env:
         (fwd-env "USER")
+        (fwd-env "XDG_RUNTIME_DIR")
         (fwd-env "XDG_CURRENT_DESKTOP")
         (fwd-env "NIXOS_OZONE_WL")
 

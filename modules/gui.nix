@@ -5,7 +5,6 @@
     drawy
     libreoffice
     obs-studio
-    telegram-desktop
 
     iloader
     protonplus
