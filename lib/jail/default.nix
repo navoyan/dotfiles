@@ -1,4 +1,5 @@
 {
+  config,
   pkgs,
   jail-nix,
   import-tree,
@@ -35,6 +36,7 @@
         (set-env "LOCALE_ARCHIVE" "${pkgs.glibcLocales}/lib/locale/locale-archive")
 
         # configs:
+        (set-hostname config.networking.hostName)
         (readonly (noescape "~/dotfiles"))
       ];
   };

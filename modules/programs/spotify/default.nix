@@ -13,7 +13,6 @@
     package = config.programs.spicetify.spicedSpotify;
     permissions = combinators:
       with combinators; [
-        (set-hostname config.networking.hostName)
         network
         gui
         gpu
