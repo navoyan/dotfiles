@@ -5,56 +5,32 @@
   config,
   ...
 }: let
-  cfg = config.my.jail;
+  enabledJails = config.my.jail |> lib.filterAttrs (_: jailCfg: jailCfg.enable);
+  bootstrappedJails = enabledJails |> lib.filterAttrs (_: jailCfg: jailCfg.bootstrapService.enable);
 
-  basePath = name: "$XDG_RUNTIME_DIR/h2jc/${name}";
-  fifoPath = name: "${basePath name}/fifo";
-
-  # runs on the host and forwards args via fifo:
-  jailTx = name:
-    pkgs.writeShellScriptBin name ''
-      fifo="${fifoPath name}"
-
-      if [[ ! -p "$fifo" ]]; then
-        echo "no jail listening on $fifo" >&2
-        exit 1
-      fi
-
-      printf "%s\0" "$#" "$@" > "$fifo"
+  # connects to the jail socket and passes argv
+  jailTx = jailName:
+    pkgs.writeShellScriptBin jailName ''
+      ${pkgs.s6}/bin/s6-sudo "$XDG_RUNTIME_DIR/h2jc/${jailName}/sock" "$@"
     '';
 
-  # runs inside the jail and executes args from fifo:
-  jailRx = name: jailCfg:
-    localLib.jail.bin "${name}-jail-rx" jailCfg.package (
+  # serves connections accepted on the jail socket:
+  jailRx = jailName: jailCfg:
+    localLib.jail.bin "${jailName}-jail-rx" jailCfg.package (
       combinators:
         (jailCfg.permissions combinators)
         ++ (with combinators; [
-          (add-runtime
-            # bash
-            ''
-              mkdir -p "${basePath name}"
-              fifo="${fifoPath name}"
-              if [[ ! -p "$fifo" ]]; then
-                mkfifo "$fifo"
-              fi
-            '')
-          (add-cleanup
-            # bash
-            ''
-              rm -rf "${basePath name}"
-            '')
-          (readonly (noescape "\"${basePath name}\""))
+          (add-pkg-deps [pkgs.s6])
           (wrap-entry (entry:
             # bash
             ''
-              fifo="${fifoPath name}"
-              while [[ -p "$fifo" ]]; do
-                readarray -d "" -t args < "$fifo"
-                set -- "''${args[@]}"
-                shift # skip count prefix
-                echo "Executing: " ${entry} >&2
-                ${entry} &
-              done
+              handler() {
+                ${entry}
+              }
+              export -f handler
+
+              exec s6-ipcserverd -c 8 \
+                s6-sudod "$BASH" -c 'handler "$@"' handler
             ''))
         ])
     );
@@ -93,33 +69,46 @@ in {
 
   config = {
     environment.systemPackages =
-      cfg
-      |> lib.filterAttrs (_: jailCfg: jailCfg.enable)
+      enabledJails
       |> lib.mapAttrsToList (
-        name: jailCfg:
+        jailName: jailCfg:
           if jailCfg.bootstrapService.enable
           then
             pkgs.symlinkJoin {
               name = "${jailCfg.package.name}-jail-tx";
               paths = [
-                (jailTx name)
+                (jailTx jailName)
                 jailCfg.package
               ];
             }
-          else (localLib.jail.pkg name jailCfg.package jailCfg.permissions)
+          else (localLib.jail.pkg jailName jailCfg.package jailCfg.permissions)
       );
 
+    systemd.user.sockets =
+      bootstrappedJails
+      |> lib.concatMapAttrs (jailName: _: {
+        "${lib.toLower jailName}-jail" = {
+          wantedBy = ["sockets.target"];
+          socketConfig = {
+            ListenStream = "%t/h2jc/${jailName}/sock";
+            Accept = false;
+            SocketMode = "0600";
+            DirectoryMode = "0700";
+          };
+        };
+      });
+
     systemd.user.services =
-      cfg
-      |> lib.filterAttrs (_: jailCfg: jailCfg.enable && jailCfg.bootstrapService.enable)
-      |> lib.concatMapAttrs (name: jailCfg: {
-        "${lib.toLower name}-jail" = {
+      bootstrappedJails
+      |> lib.concatMapAttrs (jailName: jailCfg: {
+        "${lib.toLower jailName}-jail" = {
           enable = true;
-          wantedBy = ["default.target"];
+          wantedBy = ["graphical-session.target"];
           path = ["/run/current-system/sw"];
           serviceConfig = {
             Type = "exec";
-            ExecStart = lib.getExe (jailRx name jailCfg);
+            StandardInput = "socket";
+            ExecStart = lib.getExe (jailRx jailName jailCfg);
             Restart = "on-failure";
             RestartSec = 1;
             TimeoutStopSec = 10;

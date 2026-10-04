@@ -1,6 +1,7 @@
 {
   config,
   pkgs,
+  lib,
   jail-nix,
   import-tree,
   ...
@@ -11,7 +12,7 @@
     additionalCombinators = builtinCombinators:
       (import-tree.leaves ./combinators)
       |> map (x: import x pkgs builtinCombinators)
-      |> builtins.foldl' (acc: x: acc // x) {};
+      |> lib.mergeAttrsList;
 
     basePermissions = combinators:
       with combinators; [
