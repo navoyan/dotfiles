@@ -24,6 +24,7 @@
   environment.systemPackages = with pkgs; [
     rustup
     rust-script
+    python3
 
     gcc
     gdb
@@ -31,6 +32,8 @@
 
     prek
     shellcheck
+
+    xh
 
     # work-specific:
     kubectl

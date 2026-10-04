@@ -7,7 +7,12 @@
     inputs.apple-emoji-nix.overlays.default
   ];
 
-  services.displayManager.ly.enable = true;
+  services.displayManager.ly = {
+    enable = true;
+    settings = {
+      session_log = ".local/state/ly/session.log";
+    };
+  };
 
   fonts = {
     packages = with pkgs; [

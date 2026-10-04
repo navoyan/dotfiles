@@ -27,6 +27,9 @@
     KUBECACHEDIR = "${XDG_CACHE_HOME}/kube";
     KUBECONFIG = "${XDG_CONFIG_HOME}/kube/config";
     MINIKUBE_HOME = "${XDG_DATA_HOME}/minikube";
+    NPM_CONFIG_CACHE = "${XDG_CACHE_HOME}/npm";
+    NPM_CONFIG_INIT_MODULE = "${XDG_CONFIG_HOME}/npm/config/npm-init.js";
+    NPM_CONFIG_TMP = "$XDG_RUNTIME_DIR/npm";
     PYTHON_HISTORY = "${XDG_STATE_HOME}/python_history";
     RUSTUP_HOME = "${XDG_DATA_HOME}/rustup";
     XCOMPOSECACHE = "${XDG_CACHE_HOME}/X11/xcompose";

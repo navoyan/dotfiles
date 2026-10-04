@@ -8,6 +8,7 @@
     btop
     libqalculate
 
+    _7zip-zstd-rar
     delta
     dust
     fastfetch

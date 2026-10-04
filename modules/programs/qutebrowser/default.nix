@@ -36,7 +36,7 @@
 
   thirdPartyScripts = {
     ytAdsBypass = pkgs.fetchurl {
-      url = "https://update.greasyfork.org/scripts/575941/1849507/YouTube%20Ads-Bypass.user.js";
+      url = "https://update.greasyfork.org/scripts/575941/1836031/YouTube%20Ads-Bypass.user.js";
       hash = "sha256-SdANPGG210MgZo6FZO0REUuzA6rBTHGbuQ7s8wEHUDA=";
     };
     removeYtShorts = pkgs.fetchurl {

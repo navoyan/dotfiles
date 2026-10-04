@@ -19,6 +19,7 @@
   environment.systemPackages = with pkgs; [
     gparted
     nvtopPackages.amd
+    alsa-utils
 
     keymapp
   ];
