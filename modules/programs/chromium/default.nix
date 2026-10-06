@@ -17,6 +17,14 @@
         notifications
         camera
 
+        # for webhid/webusb, should be relatively safe with
+        # chromium's permission system and my usecases for chromium:
+        (unsafe-dev "/dev")
+        (readonly "/sys/bus/usb")
+        (readonly "/sys/class/hidraw")
+        (readonly "/sys/class/input")
+        (readonly "/sys/devices")
+
         (readwrite (noescape "~/.config/chromium"))
         (readwrite (noescape "~/.cache/chromium"))
 
