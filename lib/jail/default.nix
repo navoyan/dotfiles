@@ -5,13 +5,22 @@
   jail-nix,
   import-tree,
   ...
-}: rec {
+} @ args: rec {
   bin = jail-nix.lib.extend {
     inherit pkgs;
 
     additionalCombinators = builtinCombinators:
       (import-tree.leaves ./combinators)
-      |> map (x: import x pkgs builtinCombinators)
+      |> map (
+        x:
+          import x (
+            args
+            // {
+              inherit builtinCombinators;
+              inherit (bin) combinators;
+            }
+          )
+      )
       |> lib.mergeAttrsList;
 
     basePermissions = combinators:

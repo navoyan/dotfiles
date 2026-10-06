@@ -1,5 +1,9 @@
-pkgs: builtinCombinators:
-with builtinCombinators; {
+{
+  pkgs,
+  combinators,
+  ...
+}:
+with combinators; {
   xdg-open = compose [
     (add-pkg-deps [
       (pkgs.writeShellScriptBin "xdg-open" ''

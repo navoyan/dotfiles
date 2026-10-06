@@ -1,5 +1,5 @@
-pkgs: builtinCombinators:
-with builtinCombinators; {
+{combinators, ...}:
+with combinators; {
   gtk = compose [
     gui
 

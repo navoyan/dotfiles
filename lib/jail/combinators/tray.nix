@@ -1,5 +1,5 @@
-pkgs: builtinCombinators:
-with builtinCombinators; {
+{combinators, ...}:
+with combinators; {
   tray = dbus {
     talk = ["org.kde.StatusNotifierWatcher"];
   };

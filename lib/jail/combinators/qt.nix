@@ -1,5 +1,9 @@
-pkgs: builtinCombinators:
-with builtinCombinators; {
+{
+  pkgs,
+  combinators,
+  ...
+}:
+with combinators; {
   qt = compose [
     gui
 
