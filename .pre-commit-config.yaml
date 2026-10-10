@@ -18,3 +18,16 @@ repos:
         entry: stylua
         types: [lua]
         language: system
+
+      - id: shfmt
+        name: shfmt
+        entry: shfmt
+        args:
+          - "--write"
+          # can also be configured with .editorconfig:
+          - "--indent=4"
+          - "--binary-next-line"
+          - "--case-indent"
+          - "--space-redirects"
+        types: [shell]
+        language: system

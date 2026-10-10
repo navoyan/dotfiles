@@ -18,7 +18,7 @@ rofi_cmd=(
     ~/.config/rofi/themes/pickwall.rasi
 )
 
-exec 8>"${cache_dir}/.wallselect.lock"
+exec 8> "${cache_dir}/.wallselect.lock"
 flock --nonblock 8 || exit 1
 
 process_image() {
@@ -89,8 +89,8 @@ for cached in "$cache_dir"/*; do
     fi
 done
 
-wall_selection=$(xargs -0 basename -a < "$file_list" |
-    while IFS='' read -r name; do
+wall_selection=$(xargs -0 basename -a < "$file_list" \
+    | while IFS='' read -r name; do
         printf '%s\000icon\037%s/%s\n' "$name" "$cache_dir" "$name"
     done | "${rofi_cmd[@]}")
 

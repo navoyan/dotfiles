@@ -32,6 +32,7 @@ schedule.later(function()
         notify_on_error = true,
         format_on_save = format_cfg,
         formatters_by_ft = {
+            sh = { "shfmt" },
             lua = { "stylua" },
             bzl = { "buildifier" },
             json = { "jq" },
@@ -42,8 +43,17 @@ schedule.later(function()
         },
         formatters = {
             jq = {
-                append_args = { "--indent", "4" },
+                append_args = { "--indent=4" },
                 condition = jq_condition,
+            },
+            shfmt = {
+                -- can also be configured with .editorconfig:
+                append_args = {
+                    "--indent=4",
+                    "--binary-next-line",
+                    "--case-indent",
+                    "--space-redirects",
+                },
             },
         },
     })

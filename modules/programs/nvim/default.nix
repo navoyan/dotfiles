@@ -21,6 +21,7 @@
     biome
     nixfmt-rs
     stylua
+    shfmt
 
     shellcheck
   ];
