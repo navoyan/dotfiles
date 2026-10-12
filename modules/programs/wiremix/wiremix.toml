@@ -1,7 +1,6 @@
-tab = "output" # default tab
+tab = "output"  # default tab
 
 tabs = ["output", "playback", "configuration", "input", "recording"]
-
 
 keybindings = [
   { key = "Left", action = "TabLeft" },
@@ -16,7 +15,6 @@ keybindings = [
 types = ["stream"]
 matches = [{ "client:application.name" = "spotify" }]
 templates = ["{client:application.name}"]
-
 
 ## filters
 

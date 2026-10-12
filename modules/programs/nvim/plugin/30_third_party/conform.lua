@@ -42,19 +42,7 @@ schedule.later(function()
             typescript = { "biome" },
         },
         formatters = {
-            jq = {
-                append_args = { "--indent=4" },
-                condition = jq_condition,
-            },
-            shfmt = {
-                -- can also be configured with .editorconfig:
-                append_args = {
-                    "--indent=4",
-                    "--binary-next-line",
-                    "--case-indent",
-                    "--space-redirects",
-                },
-            },
+            jq = { condition = jq_condition },
         },
     })
 

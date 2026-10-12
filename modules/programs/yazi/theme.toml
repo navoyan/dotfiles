@@ -137,11 +137,7 @@ hovered = { fg = "#c0caf5", bg = "#283457" }
 
 ## help menu
 [help]
-on = { fg = "#9ece6a" }
-run = { fg = "#bb9af7" }
-desc = { fg = "#7dcfff" }
 hovered = { bg = "#292e42" }
-footer = { fg = "#c0caf5", bg = "#1a1b26" }
 
 ## file-specific styles
 [filetype]
