@@ -8,10 +8,6 @@
       url = "github:nix-community/NUR";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nur-qt6-10 = {
-      url = "github:nix-community/NUR";
-      inputs.nixpkgs.follows = "nixpkgs-qt6-10";
-    };
 
     hjem = {
       url = "github:feel-co/hjem";
