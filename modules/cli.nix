@@ -21,5 +21,6 @@
     ripgrep
     tealdeer
     tokei
+    nix-index
   ];
 }
