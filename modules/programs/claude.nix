@@ -1,7 +1,7 @@
 {pkgs, ...}: {
   my.jail.claude = {
     enable = true;
-    bootstrapService.enable = true;
+    bootstrapService.enable = false;
     package = pkgs.claude-code;
     permissions = combinators:
       with combinators; [
@@ -30,6 +30,7 @@
         (rw-bind (noescape "~/.local/share/codegraph") (noescape "~/.codegraph"))
 
         # projects:
+        mount-cwd
         (readwrite (noescape "~/projects"))
         (readwrite (noescape "~/dotfiles"))
         (readwrite (noescape "~/vaults"))
