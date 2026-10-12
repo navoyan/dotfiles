@@ -9,6 +9,12 @@ schedule.now_if_args(function()
 
     local treesitter = require("nvim-treesitter")
 
+    -- ensuring these are installed even without visiting a file, for ts injection:
+    treesitter.install({
+        "bash",
+        "udev",
+    })
+
     ---@type table<string, string>
     local installed_for_fts = {}
 

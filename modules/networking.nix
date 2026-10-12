@@ -7,15 +7,6 @@
     "1.0.0.1"
   ];
 
-  networking.hosts = {
-    "127.0.0.1" = [
-      "minikube.localhost"
-      "minikube.info"
-      "api.minikube.info"
-      "grafana.minikube.info"
-    ];
-  };
-
   services.resolved = {
     enable = true;
     settings.Resolve = {
@@ -27,6 +18,22 @@
         "1.0.0.1"
       ];
     };
+  };
+
+  networking.hosts = {
+    "127.0.0.1" = [
+      "minikube.localhost"
+      "minikube.info"
+      "api.minikube.info"
+      "grafana.minikube.info"
+    ];
+  };
+
+  networking.firewall.allowedTCPPorts = [8900 8901 8902];
+
+  services.avahi = {
+    enable = true;
+    nssmdns4 = true;
   };
 
   services.netbird = {

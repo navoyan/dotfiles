@@ -10,6 +10,7 @@
 
     delta
     dust
+    eza
     fastfetch
     fd
     gettext
@@ -17,10 +18,10 @@
     jq
     libnotify
     moreutils
+    nix-index
     rbw
     ripgrep
     tealdeer
     tokei
-    nix-index
   ];
 }

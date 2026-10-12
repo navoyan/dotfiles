@@ -16,5 +16,13 @@ in {
   boot.loader.efi.canTouchEfiVariables = true;
 
   boot.kernelPackages = linuxPackages;
-  boot.extraModulePackages = [it87];
+  boot.extraModulePackages = [
+    it87 # for coolercontrol motherboard fan detection
+  ];
+  boot.kernelModules = [
+    "ntsync" # for proton performance
+  ];
+  boot.kernelParams = [
+    "clearcpuid=514" # for linuwux
+  ];
 }

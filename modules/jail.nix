@@ -69,20 +69,23 @@ in {
 
   config = {
     environment.systemPackages =
-      enabledJails
-      |> lib.mapAttrsToList (
-        jailName: jailCfg:
-          if jailCfg.bootstrapService.enable
-          then
-            pkgs.symlinkJoin {
-              name = "${jailCfg.package.name}-jail-tx";
-              paths = [
-                (jailTx jailName)
-                jailCfg.package
-              ];
-            }
-          else (localLib.jail.pkg jailName jailCfg.package jailCfg.permissions)
-      );
+      [
+        pkgs.bubblewrap # for man pages and tricks
+      ]
+      ++ (enabledJails
+        |> lib.mapAttrsToList (
+          jailName: jailCfg:
+            if jailCfg.bootstrapService.enable
+            then
+              pkgs.symlinkJoin {
+                name = "${jailCfg.package.name}-jail-tx";
+                paths = [
+                  (jailTx jailName)
+                  jailCfg.package
+                ];
+              }
+            else (localLib.jail.pkg jailName jailCfg.package jailCfg.permissions)
+        ));
 
     systemd.user.sockets =
       bootstrappedJails
@@ -115,5 +118,19 @@ in {
           };
         };
       });
+
+    # derive fake machine-id from host /etc/machine-id:
+    systemd.services.jail-fake-machine-id = {
+      wantedBy = ["multi-user.target"];
+      serviceConfig = {
+        Type = "oneshot";
+        RemainAfterExit = true;
+      };
+      path = [pkgs.coreutils];
+      script = ''
+        mkdir -p /run/jail
+        echo "jail:$(< /etc/machine-id)" | sha256sum | cut -c1-32 > /run/jail/fake-machine-id
+      '';
+    };
   };
 }

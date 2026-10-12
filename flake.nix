@@ -20,6 +20,10 @@
       url = "github:Gerg-L/spicetify-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    sls-steam = {
+      url = "github:AceSLS/SLSsteam";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     apple-emoji-nix = {
       url = "github:oxcl/nix-flake-apple-emoji/ad1260acba5c30ab04ed9d3710d98d57a296d939";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -50,7 +54,7 @@
     nixosSystem = nixpkgs.lib.nixosSystem {
       inherit system;
       specialArgs = {
-        inherit inputs pkgsQt610 localLib;
+        inherit system inputs pkgsQt610 localLib;
         user = "narek";
       };
       modules = [
