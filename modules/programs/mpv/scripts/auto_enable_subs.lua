@@ -3,11 +3,7 @@ local msg = require("mp.msg")
 local function detect_lang_and_run(title, callback)
     mp.command_native_async({
         name = "subprocess",
-        args = {
-            "rust-script",
-            os.getenv("HOME") .. "/dotfiles/modules/programs/mpv/detect_lang.rs",
-            title,
-        },
+        args = { "detect-lang", title },
         capture_stdout = true,
         capture_stderr = true,
         playback_only = false,

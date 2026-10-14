@@ -1,4 +1,8 @@
-{pkgs, ...}: let
+{
+  config,
+  pkgs,
+  ...
+}: let
   overlay = self: super: {
     # use unreleased git version:
     mpv-unwrapped = super.mpv-unwrapped.overrideAttrs (old: {
@@ -41,6 +45,19 @@
     ];
   };
 
+  detectLang = pkgs.writeShellApplication {
+    name = "detect-lang";
+    inheritPath = false;
+    runtimeInputs = with pkgs; [
+      cargo
+      gcc
+      rust-script
+    ];
+    text = ''
+      exec "${config.programs.nh.flake}/modules/programs/mpv/detect_lang.rs" "$@"
+    '';
+  };
+
   permissions = combinators:
     with combinators; [
       gui
@@ -52,15 +69,9 @@
         pkgs.ffmpeg
       ])
 
-      # rust-script:
-      (add-pkg-deps [
-        pkgs.rustup
-        pkgs.gcc
-        pkgs.rust-script
-      ])
-      (fwd-env "RUSTUP_HOME")
+      # detect-lang script:
+      (add-pkg-deps [detectLang])
       (fwd-env "CARGO_HOME")
-      (readwrite (noescape "~/.local/share/rustup"))
       (readwrite (noescape "~/.local/share/cargo"))
       (readwrite (noescape "~/.cache/rust-script"))
 
@@ -69,10 +80,19 @@
       (readwrite (noescape "~/.cache/mpv"))
       (readwrite (noescape "~/.local/state/mpv"))
 
+      # yt-dlp dirs:
+      (readonly (noescape "~/.config/yt-dlp"))
+      (readwrite (noescape "~/.cache/yt-dlp"))
+      # browser cookies:
+      (readwrite (noescape "~/.local/share/qutebrowser"))
+
       # media dirs:
-      (readwrite (noescape "~/Downloads"))
-      (readwrite (noescape "~/Data/Videos"))
-      (readwrite (noescape "~/Games"))
+      (readonly (noescape "~/Downloads"))
+      (readonly (noescape "~/Data/Videos"))
+      (readonly (noescape "~/Games"))
+
+      # screenshots:
+      (readwrite (noescape "~/Pictures/'MPV Screenshots'"))
     ];
 
   permissionsWithNetwork = combinators: (permissions combinators) ++ [combinators.network];
@@ -88,14 +108,14 @@ in {
 
   my.jail.mpv-dl = {
     enable = true;
-    bootstrapService.enable = true;
+    bootstrapService.enable = false;
     package = mpv;
     permissions = permissionsWithNetwork;
   };
 
   my.jail.mpv-handler = {
     enable = true;
-    bootstrapService.enable = true;
+    bootstrapService.enable = false;
     package = pkgs.mpv-handler.override {
       inherit mpv;
     };
