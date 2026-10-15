@@ -117,6 +117,7 @@ in {
     "./config.py"
     "./tokyonight.py"
     "./jseval"
+    "./content.css"
     "./greasemonkey"
   ];
 

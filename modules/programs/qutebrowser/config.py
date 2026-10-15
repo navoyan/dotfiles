@@ -53,6 +53,8 @@ c.colors.webpage.preferred_color_scheme = "dark"
 c.colors.webpage.darkmode.enabled = True
 c.colors.webpage.darkmode.policy.images = "never"
 
+c.content.user_stylesheets = [f"{config.configdir}/content.css"]
+
 
 c.fileselect.handler = "external"
 c.fileselect.folder.command = [

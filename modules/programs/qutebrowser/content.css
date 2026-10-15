@@ -1,0 +1,9 @@
+*,
+*::before,
+*::after,
+/* forgejo: */
+.label.issue-state-label,
+.ui.tabular.menu > .active.item
+{
+    border-radius: 0 !important;
+}
